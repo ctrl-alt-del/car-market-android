@@ -41,8 +41,13 @@ android {
 
 dependencies {
     //References all jars except android-support-v4.jar.  This jar will be reference via actionbarsherlock
-    compile fileTree(dir: 'car-market-android/libs', include: '*.jar', exclude: '**/android-support-v4.jar')
-    compile 'com.android.support:support-v4:20.0.+'
+    compile fileTree(
+        dir: 'car-market-android/libs', 
+        include: '*.jar', 
+        exclude: '**/android-support-v4.jar')
+    
+    compile('com.android.support:support-v4:20.0.+')
+    compile('com.android.support:support-v13:20.0.+')
     compile("joda-time:joda-time:2.3")
 }
 
