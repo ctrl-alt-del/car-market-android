@@ -49,6 +49,7 @@ dependencies {
     compile('com.android.support:support-v4:20.0.+')
     compile('com.android.support:support-v13:20.0.+')
     compile('commons-validator:commons-validator:1.4.0')
+    compile('org.apache.httpcomponents:httpclient-android:4.3.3')
     compile("joda-time:joda-time:2.3")
 }
 
