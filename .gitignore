@@ -1,14 +1,14 @@
-#built application files
+# Built application files
 *.apk
 *.ap_
 
-# files for the dex VM
+# Files for the dex VM
 *.dex
 
 # Java class files
 *.class
 
-# generated files
+# Generated files
 bin/
 gen/
 
@@ -25,3 +25,10 @@ gen/
 # Ignore gradle files
 .gradle/
 build/
+
+# Libraries on libs folder
+libs/
+
+# Except libs/android-support-v13.jar
+!libs/android-support-v4.jar
+!libs/android-support-v13.jar
