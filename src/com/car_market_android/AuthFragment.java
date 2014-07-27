@@ -1,8 +1,16 @@
 package com.car_market_android;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +77,61 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
 			break;
+		}
+	}
+	private class GetRequest extends AsyncTask<String, Void, HttpResponse> {
+		@Override
+		protected HttpResponse doInBackground(String... params) {
+			String link = params[0];
+
+			DefaultHttpClient client = new DefaultHttpClient();
+			HttpGet request = new HttpGet(link);
+			request.addHeader("accept", "application/json");
+			request.addHeader("content-type", "application/json");
+
+			try {
+				return client.execute(request);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			} finally {
+				client.getConnectionManager().shutdown();
+			}
+		}
+
+		@Override
+		protected void onPostExecute(HttpResponse response) {
+
+			if (response == null) {
+				Toast.makeText(getActivity(), "API response: null", Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			if (response.getStatusLine().getStatusCode() != 200) {
+				Toast.makeText(getActivity(), 
+						"Failed : HTTP error code : " + response.getStatusLine().getStatusCode(), 
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			try {
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader((response.getEntity().getContent())));
+
+				String output = "";
+				String line;
+
+				while ((line = br.readLine()) != null) {
+					output += line;
+				}
+
+				Toast.makeText(getActivity(), "API response: " + output, Toast.LENGTH_SHORT).show();
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				Toast.makeText(getActivity(), "API response: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 }
