@@ -64,15 +64,15 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.sign_in:
-			
+
 			String email = this.Email.getText().toString();
-			
+
 			if (!EMAIL_VALIDATOR.isValid(email)) {
 				Toast.makeText(getActivity(), "Email: " + email + " is not a valid email...", Toast.LENGTH_SHORT).show();
 				return;
 			}
-			
-			Toast.makeText(getActivity(), "Email: "+this.Email.getText()+"\nPassword: "+this.Password.getText(), Toast.LENGTH_SHORT).show();
+
+			new GetRequest().execute("http://10.0.2.2/");
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
