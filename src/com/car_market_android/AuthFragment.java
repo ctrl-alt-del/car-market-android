@@ -9,6 +9,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.car_market_android.util.EventsBus;
+import com.car_market_android.util.GetRequestResultEvent;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -124,35 +126,36 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		@Override
 		protected void onPostExecute(HttpResponse response) {
 
+			String result = "";
+
 			if (response == null) {
-				Toast.makeText(getActivity(), "API response: null", Toast.LENGTH_SHORT).show();
+				result = "No Response";
+				EventsBus.getInstance().post(new GetRequestResultEvent(this.caller, result));
 				return;
 			}
 
 			if (response.getStatusLine().getStatusCode() != 200) {
-				Toast.makeText(getActivity(), 
-						"Failed : HTTP error code : " + response.getStatusLine().getStatusCode(), 
-						Toast.LENGTH_SHORT).show();
+				result = "Failed : HTTP error code : " + response.getStatusLine().getStatusCode();
+				EventsBus.getInstance().post(new GetRequestResultEvent(this.caller, result));
 				return;
 			}
 
 			try {
 				BufferedReader br = new BufferedReader(
-						new InputStreamReader((response.getEntity().getContent())));
+						new InputStreamReader(response.getEntity().getContent()));
 
-				String output = "";
 				String line;
 
 				while ((line = br.readLine()) != null) {
-					output += line;
+					result += line;
 				}
 
-				Toast.makeText(getActivity(), "API response: " + output, Toast.LENGTH_SHORT).show();
+				EventsBus.getInstance().post(new GetRequestResultEvent(this.caller, result));
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				Toast.makeText(getActivity(), "API response: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+				result = e.getMessage();
+				EventsBus.getInstance().post(new GetRequestResultEvent(this.caller, result));
 			}
 		}
 	}
