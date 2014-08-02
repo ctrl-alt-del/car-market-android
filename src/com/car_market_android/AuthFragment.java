@@ -11,6 +11,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.car_market_android.util.EventsBus;
 import com.car_market_android.util.GetRequestResultEvent;
+import com.squareup.otto.Subscribe;
+
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -90,6 +92,12 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		EventsBus.getInstance().unregister(this);
 		super.onDestroy();
 	}
+
+	@Subscribe 
+	public void onGetRequestTaskResult(GetRequestResultEvent event) {
+		switch (event.getCaller()) {
+		case R.id.sign_in:
+			Toast.makeText(this.getActivity(), event.getResult(), Toast.LENGTH_LONG).show();
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
