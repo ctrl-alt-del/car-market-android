@@ -58,6 +58,8 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Sign_in = (Button) rootView.findViewById(R.id.sign_in);
 
 		this.Sign_in.setOnClickListener(this);
+		
+		EventsBus.getInstance().register(this);
 
 		return rootView;
 	}
@@ -75,6 +77,19 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			}
 
 			new GetRequest(R.id.sign_in).execute("http://10.0.2.2/");
+
+			break;
+		default:
+			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
+			break;
+		}
+	}
+
+	@Override
+	public void onDestroy() {
+		EventsBus.getInstance().unregister(this);
+		super.onDestroy();
+	}
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
