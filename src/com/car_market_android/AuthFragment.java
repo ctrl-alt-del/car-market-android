@@ -72,7 +72,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 				return;
 			}
 
-			new GetRequest().execute("http://10.0.2.2/");
+			new GetRequest(R.id.sign_in).execute("http://10.0.2.2/");
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
@@ -94,6 +94,14 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	 * @version 1.0
 	 * */
 	private class GetRequest extends AsyncTask<String, Void, HttpResponse> {
+
+		private final int caller;
+
+		public GetRequest(int caller) {
+			this.caller = caller;
+		}
+
+
 		@Override
 		protected HttpResponse doInBackground(String... params) {
 			String link = params[0];
