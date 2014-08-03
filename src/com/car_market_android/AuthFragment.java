@@ -35,6 +35,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	private EditText Email;
 	private EditText Password;
 	private Button Sign_in;
+	private Button Terms_and_policy;
 
 	/**
 	 * Returns a new instance of this fragment for the given section
@@ -58,8 +59,10 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Email = (EditText) rootView.findViewById(R.id.email);
 		this.Password = (EditText) rootView.findViewById(R.id.password);
 		this.Sign_in = (Button) rootView.findViewById(R.id.sign_in);
+		this.Terms_and_policy = (Button) rootView.findViewById(R.id.terms_and_policy);
 
 		this.Sign_in.setOnClickListener(this);
+		this.Terms_and_policy.setOnClickListener(this);
 		
 		EventsBus.getInstance().register(this);
 
@@ -81,6 +84,9 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			new GetRequest(R.id.sign_in).execute("http://10.0.2.2/");
 
 			break;
+		case R.id.terms_and_policy:
+			new GetRequest(R.id.terms_and_policy).execute("http://10.0.2.2/");
+			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
 			break;
@@ -97,6 +103,9 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	public void onGetRequestTaskResult(GetRequestResultEvent event) {
 		switch (event.getCaller()) {
 		case R.id.sign_in:
+			Toast.makeText(this.getActivity(), event.getResult(), Toast.LENGTH_LONG).show();
+			break;
+		case R.id.terms_and_policy:
 			Toast.makeText(this.getActivity(), event.getResult(), Toast.LENGTH_LONG).show();
 			break;
 		default:

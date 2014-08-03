@@ -54,5 +54,14 @@
         android:layout_below="@+id/tv_password"
         android:gravity="center"
         android:text="Sign In" />
+    
+    <Button
+        android:id="@+id/terms_and_policy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_password"
+        android:layout_below="@+id/sign_in"
+        android:gravity="center"
+        android:text="Terms and Policy" />
 
 </RelativeLayout>
