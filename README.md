@@ -30,3 +30,7 @@ If you don't have gradle in you computer yet, you can follow my instruction in [
 **Otto** - An enhanced event bus from [square](http://square.github.io/otto/)
 <br>
 I use it as a singleton to better organzie AsynTasks. Activities will register themselves onCreate() and unregister themselves onDestroy(), and they will subsribe to changes one they are available from the onPostExecute() of AsynTasks.
+
+**Apache Commons Validator** - An commons validator project from [Apache](http://commons.apache.org/proper/commons-validator/)
+<br>
+I use its EmailValidator class to validate the emails inputed by users.
