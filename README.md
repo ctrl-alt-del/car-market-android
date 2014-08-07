@@ -18,7 +18,7 @@ You can append these two lines to the end of your `~/.bash_profile`, just be awa
 export ANDROID_HOME=<path_to_your_sdk>
 export ANDROID_TOOLS=<path_to_your_sdk>/platform-tools:<path_to_your_sdk>/tools/
 ```
-<br><br>
+<br>
 **Build the project**
 <br>
 For the first time build after pulling or forking this repository, you need to navigate to the root folder of this repository and run `gradle build` to download all the dependencies to your `libs` folder.  Afterwards, you are free to build the project either using gradle from the command line or your IDE, such as Eclipse and IntelliJ.
@@ -27,9 +27,13 @@ If you don't have gradle in you computer yet, you can follow my instruction in [
 
 
 ## Dependencies
-**Otto** - An enhanced event bus from [square](http://square.github.io/otto/)
+**Otto** - An enhanced event bus from [Square](http://square.github.io/otto/)
 <br>
-I use it as a singleton to better organzie AsynTasks. Activities will register themselves onCreate() and unregister themselves onDestroy(), and they will subsribe to changes one they are available from the onPostExecute() of AsynTasks.
+When I started using AsyncTasks on my first project, I put them right under their corresponding activity class.  I soon found this way to be very inconvenient because the AsyncTasks have an implicit reference to their activity, and this implicit connection led the AsyncTasks to be destroyed if their activity changed, yet they are not garbage collected (GC) until they finish.  Such behavior could cause potnetial memory issue if there are multiple AsyncTasks on the activity and it could also cause the result of the AsyncTasks to be lost.
+<br><br>
+As more AsyncTasks needed, I started making classes for different AsyncTasks, but this effort soon became very troublesome to keep track of all the AsyncTasks and make sure their results got delivered properly.
+<br><br>
+Then, I found Otto, which saved me from headaches.  I use it as a singleton to better organzie AsynTasks. Activities will register themselves onCreate() and unregister themselves onDestroy(), and they will subscribe to the results of AsyncTasks once they are available.
 
 **Apache Commons Validator** - An commons validator project from [Apache](http://commons.apache.org/proper/commons-validator/)
 <br>
