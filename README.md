@@ -25,3 +25,8 @@ For the first time build after pulling or forking this repository, you need to n
 
 If you don't have gradle in you computer yet, you can follow my instruction in [here](https://github.com/ctrl-alt-del/devenv#gradle) on how to get gradle installed on different operating systems.
 
+
+## Features
+**Otto** - An enhanced event bus from [square](http://square.github.io/otto/)
+<br>
+I use it as a singleton to better organzie AsynTasks. Activities will register themselves onCreate() and unregister themselves onDestroy(), and they will subsribe to changes one they are available from the onPostExecute() of AsynTasks.
