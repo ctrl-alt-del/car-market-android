@@ -116,18 +116,18 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 	/**
 	 * Method to send a HTTP GET request to the specified url and grab its response
-	 * 
-	 * To access the localhost or 127.0.0.1 of your local server,such as 
+	 *
+	 * To access the localhost or 127.0.0.1 of your local server,such as
 	 * WAMP, MAMP, or LAMP, you need to route through 10.0.2.2 because
-	 * localhost and 127.0.0.1 is the emulator or the android device itself. 
+	 * localhost and 127.0.0.1 is the emulator or the android device itself.
 	 * <br><br>
-	 * For more details, you can visit the official document in 
+	 * For more details, you can visit the official document in
 	 * <a href="http://developer.android.com/tools/devices/emulator.html#networkaddresses">here</a>
 	 *
 	 * @since 2014-07-26
 	 * @version 1.0
 	 * */
-	private class GetRequest extends AsyncTask<String, Void, HttpResponse> {
+	private class GetRequest extends AsyncTask<String, Void, GetRequestResultEvent> {
 
 		private final int caller;
 
@@ -137,42 +137,28 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 
 		@Override
-		protected HttpResponse doInBackground(String... params) {
+		protected GetRequestResultEvent doInBackground(String... params) {
 			String link = params[0];
 
 			DefaultHttpClient client = new DefaultHttpClient();
 			HttpGet request = new HttpGet(link);
 			request.addHeader("accept", "application/json");
-			request.addHeader("content-type", "application/json");
-
-			try {
-				return client.execute(request);
-			} catch (IOException e) {
-				e.printStackTrace();
-				return null;
-			} finally {
-				client.getConnectionManager().shutdown();
-			}
-		}
-
-		@Override
-		protected void onPostExecute(HttpResponse response) {
+			request.addHeader("content-type", "application/x-www-form-urlencoded");
 
 			String result = "";
-
-			if (response == null) {
-				result = "No Response";
-				EventsBus.getInstance().post(new GetRequestResultEvent(this.caller, result));
-				return;
-			}
-
-			if (response.getStatusLine().getStatusCode() != 200) {
-				result = "Failed : HTTP error code : " + response.getStatusLine().getStatusCode();
-				EventsBus.getInstance().post(new GetRequestResultEvent(this.caller, result));
-				return;
-			}
-
 			try {
+				HttpResponse response = client.execute(request);
+
+				if (response == null) {
+					result = "No Response";
+					return new GetRequestResultEvent(this.caller, result);
+				}
+
+				if (response.getStatusLine().getStatusCode() != 200) {
+					result = "Failed : HTTP error code : " + response.getStatusLine().getStatusCode();
+					return new GetRequestResultEvent(this.caller, result);
+				}
+
 				BufferedReader br = new BufferedReader(
 						new InputStreamReader(response.getEntity().getContent()));
 
@@ -182,13 +168,21 @@ public class AuthFragment extends Fragment implements OnClickListener {
 					result += line;
 				}
 
-				EventsBus.getInstance().post(new GetRequestResultEvent(this.caller, result));
+				return new GetRequestResultEvent(this.caller, result);
 
 			} catch (IOException e) {
 				e.printStackTrace();
-				result = e.getMessage();
-				EventsBus.getInstance().post(new GetRequestResultEvent(this.caller, result));
+				return new GetRequestResultEvent(this.caller, e.getMessage());
+			} finally {
+				client.getConnectionManager().shutdown();
 			}
 		}
+
+		@Override
+		protected void onPostExecute(GetRequestResultEvent event) {
+			EventsBus.getInstance().post(event);
+		}
 	}
+
+	
 }
