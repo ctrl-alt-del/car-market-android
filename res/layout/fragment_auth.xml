@@ -64,4 +64,13 @@
         android:gravity="center"
         android:text="Terms and Policy" />
 
+    <TextView
+        android:id="@+id/json_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/terms_and_policy"
+        android:layout_below="@+id/terms_and_policy"
+        android:layout_marginTop="20dp"
+        android:text="Json Result" />
+
 </RelativeLayout>
