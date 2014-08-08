@@ -22,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -36,6 +37,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	private EditText Password;
 	private Button Sign_in;
 	private Button Terms_and_policy;
+	private TextView Json_result;
 
 	/**
 	 * Returns a new instance of this fragment for the given section
@@ -60,10 +62,11 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Password = (EditText) rootView.findViewById(R.id.password);
 		this.Sign_in = (Button) rootView.findViewById(R.id.sign_in);
 		this.Terms_and_policy = (Button) rootView.findViewById(R.id.terms_and_policy);
+		this.Json_result = (TextView) rootView.findViewById(R.id.json_result);
 
 		this.Sign_in.setOnClickListener(this);
 		this.Terms_and_policy.setOnClickListener(this);
-		
+
 		EventsBus.getInstance().register(this);
 
 		return rootView;
@@ -81,11 +84,10 @@ public class AuthFragment extends Fragment implements OnClickListener {
 				return;
 			}
 
-			new GetRequest(R.id.sign_in).execute("http://10.0.2.2/");
-
+			new GetRequest(R.id.sign_in).execute(getString(R.string.API_ADDRESS) + "/users/signin");
 			break;
 		case R.id.terms_and_policy:
-			new GetRequest(R.id.terms_and_policy).execute("http://10.0.2.2/");
+			new GetRequest(R.id.terms_and_policy).execute(getString(R.string.API_ADDRESS) + "/");
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
@@ -99,14 +101,14 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		super.onDestroy();
 	}
 
-	@Subscribe 
+	@Subscribe
 	public void onGetRequestTaskResult(GetRequestResultEvent event) {
 		switch (event.getCaller()) {
 		case R.id.sign_in:
-			Toast.makeText(this.getActivity(), event.getResult(), Toast.LENGTH_LONG).show();
+			this.Json_result.setText(event.getResult());
 			break;
 		case R.id.terms_and_policy:
-			Toast.makeText(this.getActivity(), event.getResult(), Toast.LENGTH_LONG).show();
+			this.Json_result.setText(event.getResult());
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
