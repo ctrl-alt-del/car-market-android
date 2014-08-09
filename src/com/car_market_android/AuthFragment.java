@@ -122,6 +122,21 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			break;
 		}
 	}
+	
+	@Subscribe
+	public void onPostRequestTaskResult(PostRequestResultEvent event) {
+		switch (event.getCaller()) {
+		case R.id.sign_in:
+			this.Json_result.setText(event.getResult());
+			break;
+		case R.id.terms_and_policy:
+			this.Json_result.setText(event.getResult());
+			break;
+		default:
+			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
+			break;
+		}
+	}
 
 	/**
 	 * Method to send a HTTP GET request to the specified url and grab its response
