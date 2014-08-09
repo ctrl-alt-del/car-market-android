@@ -38,3 +38,7 @@ Then, I found Otto, which saved me from headaches.  I use it as a singleton to b
 **Apache Commons Validator** - An commons validator project from [Apache](http://commons.apache.org/proper/commons-validator/)
 <br>
 I use its EmailValidator class to validate the emails inputed by users.
+
+[**Apache Commons Lang**](http://commons.apache.org/proper/commons-lang/)
+<br>
+An helper utilities with extra methods for the java.lang API.  I mainly use its extra methods to do verification and manipulation on strings.
