@@ -85,13 +85,19 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		case R.id.sign_in:
 
 			String email = this.Email.getText().toString();
+			String password = this.Password.getText().toString();
 
 			if (!EMAIL_VALIDATOR.isValid(email)) {
 				Toast.makeText(getActivity(), "Email: " + email + " is not a valid email...", Toast.LENGTH_SHORT).show();
 				return;
 			}
+			
+			List<NameValuePair> contents = new ArrayList<NameValuePair>();
 
-			new GetRequest(R.id.sign_in).execute(getString(R.string.API_ADDRESS) + "/users/signin");
+			contents.add(new BasicNameValuePair("user[email]", email));
+			contents.add(new BasicNameValuePair("user[password]", password));
+
+			new PostRequest(R.id.sign_in, contents).execute(getString(R.string.API_ADDRESS) + "/users/signin");
 			break;
 		case R.id.terms_and_policy:
 			new GetRequest(R.id.terms_and_policy).execute(getString(R.string.API_ADDRESS) + "/");
