@@ -1,10 +1,12 @@
 package com.car_market_android;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class MainFragment extends Fragment {
 	/**
@@ -12,6 +14,7 @@ public class MainFragment extends Fragment {
 	 * fragment.
 	 */
 	private static final String ARG_SECTION_NUMBER = "section_number";
+	private TextView Json_user_profile;
 
 	/**
 	 * Returns a new instance of this fragment for the given section
@@ -25,13 +28,30 @@ public class MainFragment extends Fragment {
 		return fragment;
 	}
 
-	public MainFragment() {
-	}
+	public MainFragment() {}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+		this.Json_user_profile = (TextView) rootView.findViewById(R.id.json_user_profile);
+		
+		this.Json_user_profile.setText(((MainActivity) getActivity()).getProfileResult());
+		
 		return rootView;
 	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Fragment#onAttach(android.app.Activity)
+	 */
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		if (this.Json_user_profile != null) {
+		this.Json_user_profile.setText(((MainActivity) getActivity()).getProfileResult());
+		}
+	}
+	
+	
 }
