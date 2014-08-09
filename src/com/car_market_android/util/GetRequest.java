@@ -26,9 +26,15 @@ import android.os.AsyncTask;
 public class GetRequest extends AsyncTask<String, Void, GetRequestResultEvent> {
 
 	private final int caller;
+	private String authToken;
 
 	public GetRequest(int caller) {
 		this.caller = caller;
+	}
+	
+	public GetRequest setAuthToken(String authToken) {
+		this.authToken = authToken;
+		return this;
 	}
 
 
