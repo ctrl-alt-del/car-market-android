@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -46,6 +47,11 @@ public class GetRequest extends AsyncTask<String, Void, GetRequestResultEvent> {
 		HttpGet request = new HttpGet(link);
 		request.addHeader("accept", "application/json");
 		request.addHeader("content-type", "application/x-www-form-urlencoded");
+		
+		
+		if (!StringUtils.isBlank(this.authToken)) {
+			request.addHeader("authorization", "Token " + this.authToken);
+		}
 
 		String result = "";
 		try {
