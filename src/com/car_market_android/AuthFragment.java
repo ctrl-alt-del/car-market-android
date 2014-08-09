@@ -92,6 +92,11 @@ public class AuthFragment extends Fragment implements OnClickListener {
 				return;
 			}
 			
+			if (email.length() < 6) {
+				Toast.makeText(getActivity(), "password is not valid...", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
 			List<NameValuePair> contents = new ArrayList<NameValuePair>();
 
 			contents.add(new BasicNameValuePair("user[email]", email));
