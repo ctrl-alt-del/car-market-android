@@ -37,9 +37,9 @@ As more AsyncTasks needed, I started making classes for different AsyncTasks, bu
 <br><br>
 Then, I found Otto, which saved me from headaches.
 
-**Apache Commons Validator** - An commons validator project from [Apache](http://commons.apache.org/proper/commons-validator/)
+[**Apache Commons Validator**](http://commons.apache.org/proper/commons-validator/)
 <br>
-I use its EmailValidator class to validate the emails inputed by users.
+An commons validator for data or user inputs.  I use its EmailValidator class to validate the emails inputed by users.
 
 [**Apache Commons Lang**](http://commons.apache.org/proper/commons-lang/)
 <br>
