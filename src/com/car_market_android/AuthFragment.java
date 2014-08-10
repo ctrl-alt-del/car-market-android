@@ -7,11 +7,14 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.EventsBus;
 import com.car_market_android.util.GetRequest;
 import com.car_market_android.util.GetRequestResultEvent;
 import com.car_market_android.util.PostRequest;
 import com.car_market_android.util.PostRequestResultEvent;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
 
 import android.app.Fragment;
@@ -119,6 +122,15 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			this.Json_result.setText(event.getResult());
 			break;
 		case R.id.show_vehicles:
+			Gson gson = new GsonBuilder().create();
+			Vehicle[] vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
+			
+			String msg = "";
+			for (Vehicle vehicle : vehicles) {
+				msg += vehicle.getVin() + " : ";
+			}
+			
+			this.Json_result.setText(msg);
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
