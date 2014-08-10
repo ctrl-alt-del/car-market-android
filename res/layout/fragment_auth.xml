@@ -56,20 +56,20 @@
         android:text="Sign In" />
     
     <Button
-        android:id="@+id/terms_and_policy"
+        android:id="@+id/show_vehicles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tv_password"
         android:layout_below="@+id/sign_in"
         android:gravity="center"
-        android:text="Terms and Policy" />
+        android:text="Show Vehicles" />
 
     <TextView
         android:id="@+id/json_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/terms_and_policy"
-        android:layout_below="@+id/terms_and_policy"
+        android:layout_alignLeft="@+id/show_vehicles"
+        android:layout_below="@+id/show_vehicles"
         android:layout_marginTop="20dp"
         android:text="Json Result" />
 

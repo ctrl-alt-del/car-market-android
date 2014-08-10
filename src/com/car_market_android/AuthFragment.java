@@ -36,7 +36,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	private EditText Email;
 	private EditText Password;
 	private Button Sign_in;
-	private Button Terms_and_policy;
+	private Button Show_Vehicles;
 	private TextView Json_result;
 
 	/**
@@ -61,11 +61,11 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Email = (EditText) rootView.findViewById(R.id.email);
 		this.Password = (EditText) rootView.findViewById(R.id.password);
 		this.Sign_in = (Button) rootView.findViewById(R.id.sign_in);
-		this.Terms_and_policy = (Button) rootView.findViewById(R.id.terms_and_policy);
+		this.Show_Vehicles = (Button) rootView.findViewById(R.id.show_vehicles);
 		this.Json_result = (TextView) rootView.findViewById(R.id.json_result);
 
 		this.Sign_in.setOnClickListener(this);
-		this.Terms_and_policy.setOnClickListener(this);
+		this.Show_Vehicles.setOnClickListener(this);
 
 		EventsBus.getInstance().register(this);
 
@@ -97,8 +97,8 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 			new PostRequest(R.id.sign_in, contents).execute(getString(R.string.API_ADDRESS) + "/users/signin");
 			break;
-		case R.id.terms_and_policy:
-			new GetRequest(R.id.terms_and_policy).execute(getString(R.string.API_ADDRESS) + "/");
+		case R.id.show_vehicles:
+			new GetRequest(R.id.show_vehicles).execute(getString(R.string.API_ADDRESS) + "/vehicles");
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
@@ -118,8 +118,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		case R.id.sign_in:
 			this.Json_result.setText(event.getResult());
 			break;
-		case R.id.terms_and_policy:
-			this.Json_result.setText(event.getResult());
+		case R.id.show_vehicles:
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
@@ -133,7 +132,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		case R.id.sign_in:
 			this.Json_result.setText(event.getResult());
 			break;
-		case R.id.terms_and_policy:
+		case R.id.show_vehicles:
 			this.Json_result.setText(event.getResult());
 			break;
 		default:
