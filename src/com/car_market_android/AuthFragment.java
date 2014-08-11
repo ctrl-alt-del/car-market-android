@@ -7,6 +7,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.car_market_android.model.ApiKey;
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.EventsBus;
 import com.car_market_android.util.GetRequest;
@@ -142,7 +143,10 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	public void onPostRequestTaskResult(PostRequestResultEvent event) {
 		switch (event.getCaller()) {
 		case R.id.sign_in:
-			this.Json_result.setText(event.getResult());
+			
+			Gson gson = new GsonBuilder().create();
+			ApiKey apiKey = gson.fromJson(event.getResult(), ApiKey.class);
+			this.Json_result.setText(apiKey.getToken());
 			break;
 		case R.id.show_vehicles:
 			this.Json_result.setText(event.getResult());
