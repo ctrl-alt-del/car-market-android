@@ -44,3 +44,7 @@ An commons validator for data or user inputs.  I use its EmailValidator class to
 [**Apache Commons Lang**](http://commons.apache.org/proper/commons-lang/)
 <br>
 An helper utilities with extra methods for the java.lang API.  I mainly use its extra methods to do verification and manipulation on strings.
+
+[**GSON**](https://code.google.com/p/google-gson/)
+<br>
+A Java library used to handle conversion between Java object and its JSON string, and vice versa.  I use it to parse the JSON string received from restful API calls into models in Java for convenient access.
