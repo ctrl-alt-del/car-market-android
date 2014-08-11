@@ -135,7 +135,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		}
 
 
-		String[] sections = {"Apple", "Blackberry", "Coconut", "Durian", "E"};
+		String[] sections = {"Profile", "Marketplace", "Garage", "Wishlist"};
 		@Override
 		public CharSequence getPageTitle(int position) {
 			Locale l = Locale.getDefault();
