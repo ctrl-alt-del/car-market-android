@@ -19,7 +19,10 @@ import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -146,7 +149,18 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			
 			Gson gson = new GsonBuilder().create();
 			ApiKey apiKey = gson.fromJson(event.getResult(), ApiKey.class);
-			this.Json_result.setText(apiKey.getToken());
+			
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+			
+			if (sharedPreferences.contains("car_market_token")) {
+				this.Json_result.setText("from ram: " + apiKey.getToken());
+			} else {
+				sharedPreferences.edit().putString("car_market_token", apiKey.getToken()).commit();
+				this.Json_result.setText("from net: " + sharedPreferences.getString("car_market_token", "Oops"));
+				
+			}
+			
+			
 			break;
 		case R.id.show_vehicles:
 			this.Json_result.setText(event.getResult());
