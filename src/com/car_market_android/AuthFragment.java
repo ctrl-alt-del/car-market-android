@@ -45,6 +45,8 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	private Button Sign_in;
 	private Button Show_Vehicles;
 	private TextView Json_result;
+	
+	private SharedPreferences sharedPreferences;
 
 	/**
 	 * Returns a new instance of this fragment for the given section
@@ -63,6 +65,9 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		
 		View rootView = inflater.inflate(R.layout.fragment_auth, container, false);
 
 		this.Email = (EditText) rootView.findViewById(R.id.email);
@@ -150,14 +155,11 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			Gson gson = new GsonBuilder().create();
 			ApiKey apiKey = gson.fromJson(event.getResult(), ApiKey.class);
 			
-			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-			
-			if (sharedPreferences.contains("car_market_token")) {
+			if (this.sharedPreferences.contains("car_market_token")) {
 				this.Json_result.setText("from ram: " + apiKey.getToken());
 			} else {
-				sharedPreferences.edit().putString("car_market_token", apiKey.getToken()).commit();
+				this.sharedPreferences.edit().putString("car_market_token", apiKey.getToken()).commit();
 				this.Json_result.setText("from net: " + sharedPreferences.getString("car_market_token", "Oops"));
-				
 			}
 			
 			
