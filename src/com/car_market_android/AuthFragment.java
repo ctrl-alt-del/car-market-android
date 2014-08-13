@@ -69,9 +69,9 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		EventsBus.getInstance().register(this);
 
-		if (this.sharedPreferences.contains("car_market_token")) {
+		if (this.sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
 
-			String token = sharedPreferences.getString("car_market_token", "");
+			String token = sharedPreferences.getString(getString(R.string.API_TOKEN_KEY), "");
 
 			// verify the token is still effective in local
 			if (!StringUtils.isBlank(token)) {
@@ -163,23 +163,22 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			break;
 		}
 	}
-	
+
 	@Subscribe
 	public void onPostRequestTaskResult(PostRequestResultEvent event) {
 		switch (event.getCaller()) {
 		case R.id.sign_in:
-			
+
 			Gson gson = new GsonBuilder().create();
 			ApiKey apiKey = gson.fromJson(event.getResult(), ApiKey.class);
-			
-			if (this.sharedPreferences.contains("car_market_token")) {
+
+			if (this.sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
 				this.Json_result.setText("from ram: " + apiKey.getToken());
 			} else {
-				this.sharedPreferences.edit().putString("car_market_token", apiKey.getToken()).commit();
-				this.Json_result.setText("from net: " + sharedPreferences.getString("car_market_token", "Oops"));
+				this.sharedPreferences.edit().putString(getString(R.string.API_TOKEN_KEY), apiKey.getToken()).commit();
+				this.Json_result.setText("from net: " + sharedPreferences.getString(getString(R.string.API_TOKEN_KEY), "Oops"));
 			}
-			
-			
+
 			break;
 		case R.id.show_vehicles:
 			this.Json_result.setText(event.getResult());
