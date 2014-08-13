@@ -3,6 +3,7 @@ package com.car_market_android;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -19,7 +20,6 @@ import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -67,7 +67,26 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		EventsBus.getInstance().register(this);
+
+		if (this.sharedPreferences.contains("car_market_token")) {
+
+			String token = sharedPreferences.getString("car_market_token", "");
+
+			// verify the token is still effective in local
+			if (!StringUtils.isBlank(token)) {
+				// verify the token is still effective in remote
+
+				//				if (remote verification pass) {
+				View rootView = inflater.inflate(R.layout.fragment_user, container, false);
+				// register UI items
+				// return rootView;
+				//				}
+			}
+		}
 		
+		
+
 		View rootView = inflater.inflate(R.layout.fragment_auth, container, false);
 
 		this.Email = (EditText) rootView.findViewById(R.id.email);
@@ -78,8 +97,6 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 		this.Sign_in.setOnClickListener(this);
 		this.Show_Vehicles.setOnClickListener(this);
-
-		EventsBus.getInstance().register(this);
 
 		return rootView;
 	}
