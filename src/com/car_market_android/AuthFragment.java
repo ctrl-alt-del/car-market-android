@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	private Button Authentication;
 	private Button Show_Vehicles;
 	private TextView Json_result;
+	private RelativeLayout User_layout;
 
 	private SharedPreferences sharedPreferences;
 
@@ -65,6 +67,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Authentication = (Button) rootView.findViewById(R.id.authentication);
 		this.Show_Vehicles = (Button) rootView.findViewById(R.id.show_vehicles);
 		this.Json_result = (TextView) rootView.findViewById(R.id.json_result);
+		this.User_layout = (RelativeLayout) rootView.findViewById(R.id.user_layout);
 
 		this.Authentication.setOnClickListener(this);
 		this.Show_Vehicles.setOnClickListener(this);
