@@ -8,16 +8,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.car_market_android.MainActivity$AuthFragment" >
 
-   
+    <RelativeLayout
+        android:id="@+id/user_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5sp"
+        android:layout_marginLeft="36dp" >
+
+        <TextView
+            android:id="@+id/disp_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:gravity="left"
+            android:text=""
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/disp_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/disp_email"
+            android:layout_margin="5sp"
+            android:gravity="left"
+            android:text=""
+            android:textSize="20sp" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/authentication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/user_layout"
         android:layout_margin="5sp"
         android:gravity="center"
         android:text="Sign In" />
-    
+
     <Button
         android:id="@+id/show_vehicles"
         android:layout_width="match_parent"
