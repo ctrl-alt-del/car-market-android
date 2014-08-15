@@ -108,14 +108,6 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		}
 	}
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-
-		
-
-	}
-
 	@Subscribe
 	public void onGetRequestTaskResult(GetRequestResultEvent event) {
 		switch (event.getCaller()) {
