@@ -8,8 +8,8 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="21" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -24,6 +24,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".Authentication"
+            android:label="Authentication"
+            android:screenOrientation="portrait"
+            android:theme="@style/PopupTheme" >     
+             <intent-filter>
+                <action android:name="com.car_market_android.Authentication" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        
     </application>
 
 </manifest>
