@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -73,7 +74,10 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Show_Vehicles.setOnClickListener(this);
 
 		if (sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
-			this.Authentication.setText("Sign Out");
+			this.setUserView();
+		} else {
+			this.Json_result.setText("Json Result");
+			this.setGusetView();
 		}
 
 
@@ -87,9 +91,10 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		case R.id.authentication:
 
 			if (sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
-				this.Authentication.setText("Sign In");
-				this.Json_result.setText("Json Result");
 				this.sharedPreferences.edit().remove(getString(R.string.API_TOKEN_KEY)).commit();
+				
+				this.Json_result.setText("Json Result");
+				this.setGusetView();
 			} else {
 				Intent myIntent = new Intent(getActivity(), Authentication.class);
 				startActivity(myIntent);
@@ -120,13 +125,17 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		super.onResume();
 		if (sharedPreferences != null) {
 			if (sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
-				this.Authentication.setText("Sign Out");
+				
 				String token = sharedPreferences.getString(getString(R.string.API_TOKEN_KEY), "Oops");
+
+				// make POST call to get user profile
 				this.Json_result.setText(token);
+				this.setUserView();
 			} else {
-				this.Authentication.setText("Sign In");
 				this.Json_result.setText("Json Result");
+				this.setGusetView();
 			}
+			
 		}
 	}
 
@@ -163,7 +172,6 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 		switch (event.getCaller()) {
 		case R.id.show_vehicles:
-			this.Json_result.setText(event.getResult());
 			break;
 		default:
 			break;
