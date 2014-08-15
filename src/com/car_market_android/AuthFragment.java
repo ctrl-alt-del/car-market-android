@@ -11,6 +11,7 @@ import com.squareup.otto.Subscribe;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -76,6 +77,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		return rootView;
 	}
 
+	private ProgressDialog dialog;
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -92,6 +94,10 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.show_vehicles:
 			new GetRequest(R.id.show_vehicles).execute(getString(R.string.API_ADDRESS) + "/vehicles");
+			this.dialog = new ProgressDialog(getActivity());
+			this.dialog.setMessage("Loding...");
+			this.dialog.show();
+			
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
@@ -135,6 +141,10 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			for (Vehicle vehicle : vehicles) {
 				msg += vehicle.getVin() + "\n";
 			}
+			
+			if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
 
 			this.Json_result.setText(msg);
 			break;
