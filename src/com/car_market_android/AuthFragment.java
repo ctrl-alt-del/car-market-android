@@ -83,6 +83,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 			if (sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
 				this.Authentication.setText("Sign In");
+				this.Json_result.setText("Json Result");
 				this.sharedPreferences.edit().remove(getString(R.string.API_TOKEN_KEY)).commit();
 			} else {
 				Intent myIntent = new Intent(getActivity(), Authentication.class);
