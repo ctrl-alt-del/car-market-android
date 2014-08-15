@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5sp"
         android:gravity="left"
-        android:text="email"
+        android:text=""
         android:textSize="20sp" />
     
     <TextView
@@ -24,16 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5sp"
         android:gravity="left"
-        android:text="nickname"
+        android:text=""
         android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/sign_out"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/disp_nickname"
-        android:layout_below="@+id/disp_nickname"
-        android:gravity="center"
-        android:text="Sign Out" />
-    
 </RelativeLayout>
