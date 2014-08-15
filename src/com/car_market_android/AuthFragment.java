@@ -169,4 +169,19 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			break;
 		}
 	}
+	
+	private void setUserView() {
+		this.Authentication.setText("Sign Out");
+		LayoutParams params = this.User_layout.getLayoutParams();
+		params.height = LayoutParams.WRAP_CONTENT;
+		this.User_layout.setLayoutParams(params);
+	}
+	
+	private void setGusetView() {
+		this.Authentication.setText("Sign In");
+		LayoutParams params = this.User_layout.getLayoutParams();
+		params.height = 0;
+		this.User_layout.setLayoutParams(params);
+	}
+	
 }
