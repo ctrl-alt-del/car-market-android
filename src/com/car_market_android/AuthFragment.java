@@ -68,6 +68,11 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Authentication.setOnClickListener(this);
 		this.Show_Vehicles.setOnClickListener(this);
 
+		if (sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
+			this.Authentication.setText("Sign Out");
+		}
+
+
 		return rootView;
 	}
 
@@ -76,9 +81,13 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		switch (view.getId()) {
 		case R.id.authentication:
 
-			Intent myIntent = new Intent(getActivity(), Authentication.class);
-			startActivity(myIntent);
-
+			if (sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
+				this.Authentication.setText("Sign In");
+				this.sharedPreferences.edit().remove(getString(R.string.API_TOKEN_KEY)).commit();
+			} else {
+				Intent myIntent = new Intent(getActivity(), Authentication.class);
+				startActivity(myIntent);
+			}
 			break;
 		case R.id.show_vehicles:
 			new GetRequest(R.id.show_vehicles).execute(getString(R.string.API_ADDRESS) + "/vehicles");
@@ -89,22 +98,25 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		}
 	}
 
-
 	@Override
 	public void onDestroy() {
 		EventsBus.getInstance().unregister(this);
 		super.onDestroy();
 	}
 
-
-
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		if (sharedPreferences != null) {
-			String token = sharedPreferences.getString(getString(R.string.API_TOKEN_KEY), "Oops");
-			this.Json_result.setText(token);
+			if (sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
+				this.Authentication.setText("Sign Out");
+				String token = sharedPreferences.getString(getString(R.string.API_TOKEN_KEY), "Oops");
+				this.Json_result.setText(token);
+			} else {
+				this.Authentication.setText("Sign In");
+				this.Json_result.setText("Json Result");
+			}
 		}
 	}
 
