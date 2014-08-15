@@ -17,6 +17,7 @@ import com.squareup.otto.Subscribe;
 
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -60,6 +61,7 @@ public class Authentication extends Activity implements OnClickListener {
 		super.onDestroy();
 	}
 
+	private ProgressDialog dialog;
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -83,6 +85,11 @@ public class Authentication extends Activity implements OnClickListener {
 			contents.add(new BasicNameValuePair("user[password]", password));
 
 			new PostRequest(R.id.sign_in, contents).execute(getString(R.string.API_ADDRESS) + "/users/signin");
+			
+			this.dialog = new ProgressDialog(this);
+			this.dialog.setMessage("Signing in...");
+			this.dialog.show();
+			
 			break;
 		case R.id.cancel:
 			this.onBackPressed();
@@ -100,6 +107,10 @@ public class Authentication extends Activity implements OnClickListener {
 
 			ApiKey apiKey = gson.fromJson(event.getResult(), ApiKey.class);
 
+			if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+			
 			if (apiKey.getToken() == null) {
 				Toast.makeText(this, "unable to sign in, make sure your email and password are correct.", Toast.LENGTH_SHORT).show();
 			} else {
