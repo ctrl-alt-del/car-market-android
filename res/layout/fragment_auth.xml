@@ -20,11 +20,11 @@
             android:layout_width="60sp"
             android:layout_height="60sp"
             android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/disp_email"
+            android:layout_alignTop="@+id/email_profile"
             android:src="@drawable/ic_launcher" />
 
         <TextView
-            android:id="@+id/disp_email"
+            android:id="@+id/email_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/user_icon"
@@ -34,11 +34,11 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/disp_nickname"
+            android:id="@+id/nickname_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/user_icon"
-            android:layout_below="@+id/disp_email"
+            android:layout_below="@+id/email_profile"
             android:layout_margin="5sp"
             android:gravity="left"
             android:text=""
