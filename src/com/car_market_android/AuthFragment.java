@@ -38,6 +38,8 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	private Button Authentication;
 	private Button Show_Vehicles;
 	private TextView Json_result;
+	private TextView Email_profile;
+	private TextView Nickname_profile;
 	private RelativeLayout User_layout;
 
 	private SharedPreferences sharedPreferences;
@@ -68,7 +70,10 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Authentication = (Button) rootView.findViewById(R.id.authentication);
 		this.Show_Vehicles = (Button) rootView.findViewById(R.id.show_vehicles);
 		this.Json_result = (TextView) rootView.findViewById(R.id.json_result);
+
 		this.User_layout = (RelativeLayout) rootView.findViewById(R.id.user_layout);
+		this.Email_profile = (TextView) rootView.findViewById(R.id.email_profile);
+		this.Nickname_profile = (TextView) rootView.findViewById(R.id.nickname_profile);
 
 		this.Authentication.setOnClickListener(this);
 		this.Show_Vehicles.setOnClickListener(this);
