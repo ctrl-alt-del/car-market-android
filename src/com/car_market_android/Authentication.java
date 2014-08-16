@@ -84,7 +84,7 @@ public class Authentication extends Activity implements OnClickListener {
 			contents.add(new BasicNameValuePair("user[email]", email));
 			contents.add(new BasicNameValuePair("user[password]", password));
 
-			new PostRequest(R.id.sign_in_auth, contents).execute(getString(R.string.API_ADDRESS) + "/users/signin");
+			new PostRequest(R.id.sign_in_auth, contents).execute(getString(R.string.CM_API_ADDRESS) + "/users/signin");
 			
 			this.dialog = new ProgressDialog(this);
 			this.dialog.setMessage("Signing in...");

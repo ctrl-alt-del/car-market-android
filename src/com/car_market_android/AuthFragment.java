@@ -101,7 +101,8 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			}
 			break;
 		case R.id.show_vehicles:
-			new GetRequest(R.id.show_vehicles).execute(getString(R.string.API_ADDRESS) + "/vehicles");
+			
+			new GetRequest(R.id.show_vehicles).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
 			this.dialog = new ProgressDialog(getActivity());
 			this.dialog.setMessage("Loding...");
 			this.dialog.show();
