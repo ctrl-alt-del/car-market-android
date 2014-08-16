@@ -46,10 +46,10 @@ public class Authentication extends Activity implements OnClickListener {
 
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-		this.Email = (EditText) this.findViewById(R.id.email);
-		this.Password = (EditText) this.findViewById(R.id.password);
-		this.Sign_in = (Button) this.findViewById(R.id.sign_in);
-		this.Cacnel = (Button) this.findViewById(R.id.cancel);
+		this.Email = (EditText) this.findViewById(R.id.email_auth);
+		this.Password = (EditText) this.findViewById(R.id.password_auth);
+		this.Sign_in = (Button) this.findViewById(R.id.sign_in_auth);
+		this.Cacnel = (Button) this.findViewById(R.id.cancel_auth);
 
 		this.Sign_in.setOnClickListener(this);
 		this.Cacnel.setOnClickListener(this);
@@ -65,7 +65,7 @@ public class Authentication extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-		case R.id.sign_in:
+		case R.id.sign_in_auth:
 			String email = this.Email.getText().toString();
 			String password = this.Password.getText().toString();
 
@@ -84,14 +84,14 @@ public class Authentication extends Activity implements OnClickListener {
 			contents.add(new BasicNameValuePair("user[email]", email));
 			contents.add(new BasicNameValuePair("user[password]", password));
 
-			new PostRequest(R.id.sign_in, contents).execute(getString(R.string.API_ADDRESS) + "/users/signin");
+			new PostRequest(R.id.sign_in_auth, contents).execute(getString(R.string.API_ADDRESS) + "/users/signin");
 			
 			this.dialog = new ProgressDialog(this);
 			this.dialog.setMessage("Signing in...");
 			this.dialog.show();
 			
 			break;
-		case R.id.cancel:
+		case R.id.cancel_auth:
 			this.onBackPressed();
 		default:
 			break;
@@ -103,7 +103,7 @@ public class Authentication extends Activity implements OnClickListener {
 
 		Gson gson = new GsonBuilder().create();
 		switch (event.getCaller()) {
-		case R.id.sign_in:
+		case R.id.sign_in_auth:
 
 			ApiKey apiKey = gson.fromJson(event.getResult(), ApiKey.class);
 
