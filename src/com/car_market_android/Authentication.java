@@ -114,7 +114,7 @@ public class Authentication extends Activity implements OnClickListener {
 			if (apiKey.getToken() == null) {
 				Toast.makeText(this, "unable to sign in, make sure your email and password are correct.", Toast.LENGTH_SHORT).show();
 			} else {
-				this.sharedPreferences.edit().putString(getString(R.string.API_TOKEN_KEY), apiKey.getToken()).commit();
+				this.sharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken()).commit();
 				this.onBackPressed();
 			}
 

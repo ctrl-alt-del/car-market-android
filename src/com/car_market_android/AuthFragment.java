@@ -73,7 +73,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Authentication.setOnClickListener(this);
 		this.Show_Vehicles.setOnClickListener(this);
 
-		if (sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
+		if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
 			this.setUserView();
 		} else {
 			this.Json_result.setText("Json Result");
@@ -90,8 +90,8 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		switch (view.getId()) {
 		case R.id.authentication:
 
-			if (sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
-				this.sharedPreferences.edit().remove(getString(R.string.API_TOKEN_KEY)).commit();
+			if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
+				this.sharedPreferences.edit().remove(getString(R.string.CM_API_TOKEN)).commit();
 				
 				this.Json_result.setText("Json Result");
 				this.setGusetView();
@@ -124,9 +124,9 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onResume();
 		if (sharedPreferences != null) {
-			if (sharedPreferences.contains(getString(R.string.API_TOKEN_KEY))) {
+			if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
 				
-				String token = sharedPreferences.getString(getString(R.string.API_TOKEN_KEY), "Oops");
+				String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), "Oops");
 
 				// make POST call to get user profile
 				this.Json_result.setText(token);
