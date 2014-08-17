@@ -2,6 +2,7 @@ package com.car_market_android;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.car_market_android.model.User;
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.EventsBus;
 import com.car_market_android.util.GetRequest;
@@ -11,7 +12,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -151,26 +151,32 @@ public class AuthFragment extends Fragment implements OnClickListener {
 				return;
 			}
 			
-			// TODO: make POST call to get user profile
+			// TODO: make GET call to get user profile
 			if (StringUtils.isBlank(this.Email_profile.getText()) || 
 					StringUtils.isBlank(this.Nickname_profile.getText())) {
+				new GetRequest(R.string.AuthFragment_Profile)
+							.setAuthToken(token)
+							.execute(getString(R.string.CM_API_ADDRESS) + "/users/" + user_id);
+				
+				this.dialog = new ProgressDialog(getActivity());
+				this.dialog.setMessage("Loading Profile...");
+				this.dialog.show();
 
 			}
-
-			this.Json_result.setText(token + "\n" + user_id);
-			this.setUserView();
-
 		}
 	}
 
 	@Subscribe
 	public void onGetRequestTaskResult(GetRequestResultEvent event) {
+		
+		Gson gson = new GsonBuilder().create();
+		
 		switch (event.getCaller()) {
 		case R.id.show_vehicles:
 
 			((MainActivity) getActivity()).setProfileResult(event.getResult());
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
-			Gson gson = new GsonBuilder().create();
+			
 			Vehicle[] vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
 
 			String msg = "";
@@ -183,6 +189,20 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			}
 
 			this.Json_result.setText(msg);
+			break;
+		case R.string.AuthFragment_Profile:
+			
+			User user = gson.fromJson(event.getResult(), User.class);
+			
+			this.Nickname_profile.setText(user.getNickname());
+			this.Email_profile.setText(user.getEmail());
+			
+			this.setUserView();
+			
+			if (dialog.isShowing()) {
+				dialog.dismiss();
+			}
+			
 			break;
 		default:
 			break;
