@@ -6,5 +6,6 @@
     <string name="CM_API_ADDRESS">http://car-market.herokuapp.com/api/v1</string>
     <string name="CM_API_TOKEN">car_market_token</string>
     <string name="CM_API_USER_ID">car_market_user_id</string>
+    <string name="AuthFragment_Profile">AuthFragment_Profile</string>
 
 </resources>
