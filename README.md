@@ -6,7 +6,7 @@ This is an demo mobile app that consumes this [API](https://github.com/ctrl-alt-
 **Android SDK**
 <br>
 First of all, make sure you have the **Android SDK** somewhere in your system.  If you don't have it, you can download it on [Google's developer page](http://developer.android.com/sdk/index.html).  If you need help on setting up the SDK, you can follow the instruction I wrote earlier in [here](https://github.com/ctrl-alt-del/devenv#sdk).
-
+<br><br>
 **$PATH setup**
 <br>
 Also, make sure you have exported the path of your Android SDK as an system environment variable `ANDROID_HOME`.  Gradle needs this variable in order to build the project.  For your convenient, you may also want to export another system variable called `ANDROID_TOOLS`, which contains the path to the tools and platform-tools of your Android SDK.
@@ -19,12 +19,23 @@ export ANDROID_HOME=<path_to_your_sdk>
 export ANDROID_TOOLS=<path_to_your_sdk>/platform-tools:<path_to_your_sdk>/tools/
 ```
 <br>
-**Build the project**
+**Build .apk**
 <br>
 For the first time build after pulling or forking this repository, you need to navigate to the root folder of this repository and run `gradle build` to download all the dependencies to your `libs` folder.  Afterwards, you are free to build the project either using gradle from the command line or your IDE, such as Eclipse and IntelliJ.
-
+<br><br>
 If you don't have gradle in you computer yet, you can follow my instruction in [here](https://github.com/ctrl-alt-del/devenv#gradle) on how to get gradle installed on different operating systems.
-
+<br><br>
+**Install .apk**
+<br>
+If you have followed the **$PATH setup** on above, installing the apk file to your **connected device** is as simple as running the command line in below:
+```sh
+adb -d install -r build/outputs/apk/car-market-android-debug.apk
+```
+The `-r` removes the package if it have been installed earlier, and then perform a clean install.
+<br><br>
+If you want to install the apk to your **running emulator**, you can do so by replacing `-d` with `-e` on the command in above. You can also check out all other options in the [developer page](http://developer.android.com/tools/help/adb.html)
+<br><br>
+If you are using IDE such as Eclipse with Android Plugin, you can also install the apk to your emulator or device directly
 
 ## Dependencies
 [**Otto**](http://square.github.io/otto/)
