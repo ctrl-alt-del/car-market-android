@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
 
-import android.app.ActionBar.LayoutParams;
+import android.view.ViewGroup.LayoutParams;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
