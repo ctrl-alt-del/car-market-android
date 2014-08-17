@@ -1,5 +1,7 @@
 package com.car_market_android;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.EventsBus;
 import com.car_market_android.util.GetRequest;
@@ -79,6 +81,8 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Show_Vehicles.setOnClickListener(this);
 
 		if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
+			// TODO: make POST call to get user profile
+			
 			this.setUserView();
 		} else {
 			this.Json_result.setText("Json Result");
@@ -97,7 +101,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 			if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
 				this.sharedPreferences.edit().remove(getString(R.string.CM_API_TOKEN)).commit();
-				
+
 				this.Json_result.setText("Json Result");
 				this.setGusetView();
 			} else {
@@ -106,12 +110,12 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			}
 			break;
 		case R.id.show_vehicles:
-			
+
 			new GetRequest(R.id.show_vehicles).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
 			this.dialog = new ProgressDialog(getActivity());
 			this.dialog.setMessage("Loding...");
 			this.dialog.show();
-			
+
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
@@ -127,21 +131,35 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		if (sharedPreferences != null) {
-			if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
-				
-				String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), "Oops");
+			
+			if (!sharedPreferences.contains(getString(R.string.CM_API_TOKEN)) || 
+					!sharedPreferences.contains(getString(R.string.CM_API_USER_ID))) {
 
-				// make POST call to get user profile
-				this.Json_result.setText(token);
-				this.setUserView();
-			} else {
 				this.Json_result.setText("Json Result");
 				this.setGusetView();
+				return;
 			}
 			
+			String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), "");
+			long user_id = sharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
+			
+			if (StringUtils.isBlank(token) || user_id == -1) {
+				this.Json_result.setText("Json Result");
+				this.setGusetView();
+				return;
+			}
+			
+			// TODO: make POST call to get user profile
+			if (StringUtils.isBlank(this.Email_profile.getText()) || 
+					StringUtils.isBlank(this.Nickname_profile.getText())) {
+
+			}
+
+			this.Json_result.setText(token + "\n" + user_id);
+			this.setUserView();
+
 		}
 	}
 
@@ -159,10 +177,10 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			for (Vehicle vehicle : vehicles) {
 				msg += vehicle.getVin() + "\n";
 			}
-			
+
 			if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
+				dialog.dismiss();
+			}
 
 			this.Json_result.setText(msg);
 			break;
@@ -183,19 +201,19 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			break;
 		}
 	}
-	
+
 	private void setUserView() {
 		this.Authentication.setText("Sign Out");
 		LayoutParams params = this.User_layout.getLayoutParams();
 		params.height = LayoutParams.WRAP_CONTENT;
 		this.User_layout.setLayoutParams(params);
 	}
-	
+
 	private void setGusetView() {
 		this.Authentication.setText("Sign In");
 		LayoutParams params = this.User_layout.getLayoutParams();
 		params.height = 0;
 		this.User_layout.setLayoutParams(params);
 	}
-	
+
 }
