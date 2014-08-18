@@ -55,24 +55,5 @@
         android:gravity="center"
         android:text="Sign In" />
 
-    <Button
-        android:id="@+id/show_vehicles"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/user_layout"
-        android:layout_below="@+id/authentication"
-        android:layout_marginRight="5sp"
-        android:gravity="center"
-        android:text="Show Vehicles" />
-
-    <TextView
-        android:id="@+id/json_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/user_layout"
-        android:layout_below="@+id/show_vehicles"
-        android:layout_marginRight="5sp"
-        android:layout_marginTop="20dp"
-        android:text="Json Result" />
 
 </RelativeLayout>
