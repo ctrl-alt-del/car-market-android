@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.car_market_android.Authentication" >
+
+    <android.widget.EditText
+        android:id="@+id/nickname_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="14"
+        android:hint="Nickname" >
+    </android.widget.EditText>
+    
+    <android.widget.EditText
+        android:id="@+id/email_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nickname_register"
+        android:layout_below="@+id/nickname_register"
+        android:ems="14"
+        android:inputType="textEmailAddress"
+        android:hint="Email" >
+    </android.widget.EditText>
+
+    <android.widget.EditText
+        android:id="@+id/password_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nickname_register"
+        android:layout_below="@+id/email_register"
+        android:ems="14"
+        android:inputType="textPassword"
+        android:hint="Password" >
+    </android.widget.EditText>
+    
+    <android.widget.EditText
+        android:id="@+id/password_confirmation_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nickname_register"
+            android:layout_below="@+id/password_register"
+        android:ems="14"
+        android:inputType="textPassword"
+        android:hint="Password Conformation" >
+    </android.widget.EditText>
+
+     <Button
+            android:id="@+id/terms_and_policy_register"
+            android:layout_width="match_parent"
+            android:layout_height="12sp"
+            android:layout_alignLeft="@+id/nickname_register"
+            android:layout_below="@+id/password_confirmation_register"
+            android:gravity="right|bottom"
+            android:textSize="12sp"
+            android:background="@color/transparent"
+            android:text="Terms and Policy" />
+     
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nickname_register"
+        android:layout_below="@+id/terms_and_policy_register"
+        android:layout_marginTop="20sp"
+        android:orientation="horizontal" 
+        android:weightSum="1.0">
+
+        <Button
+            android:id="@+id/sign_in_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Sign In" 
+            android:layout_weight="0.5"/>
+
+        <Button
+            android:id="@+id/cancel_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Cancel" 
+            android:layout_weight="0.5"/>
+    </LinearLayout>
+
+</RelativeLayout>
