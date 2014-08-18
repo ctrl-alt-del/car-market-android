@@ -3,7 +3,6 @@ package com.car_market_android;
 import org.apache.commons.lang3.StringUtils;
 
 import com.car_market_android.model.User;
-import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.EventsBus;
 import com.car_market_android.util.GetRequest;
 import com.car_market_android.util.GetRequestResultEvent;
@@ -38,8 +37,6 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 
 	private Button Authentication;
-	private Button Show_Vehicles;
-	private TextView Json_result;
 	private TextView Email_profile;
 	private TextView Nickname_profile;
 	private RelativeLayout User_layout;
@@ -70,25 +67,18 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		View rootView = inflater.inflate(R.layout.fragment_auth, container, false);
 
 		this.Authentication = (Button) rootView.findViewById(R.id.authentication);
-		this.Show_Vehicles = (Button) rootView.findViewById(R.id.show_vehicles);
-		this.Json_result = (TextView) rootView.findViewById(R.id.json_result);
 
 		this.User_layout = (RelativeLayout) rootView.findViewById(R.id.user_layout);
 		this.Email_profile = (TextView) rootView.findViewById(R.id.email_profile);
 		this.Nickname_profile = (TextView) rootView.findViewById(R.id.nickname_profile);
 
 		this.Authentication.setOnClickListener(this);
-		this.Show_Vehicles.setOnClickListener(this);
 
 		if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
-			// TODO: make POST call to get user profile
-			
 			this.setUserView();
 		} else {
-			this.Json_result.setText("Json Result");
 			this.setGusetView();
 		}
-
 
 		return rootView;
 	}
@@ -102,20 +92,11 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
 				this.sharedPreferences.edit().remove(getString(R.string.CM_API_TOKEN)).commit();
 
-				this.Json_result.setText("Json Result");
 				this.setGusetView();
 			} else {
 				Intent myIntent = new Intent(getActivity(), Authentication.class);
 				startActivity(myIntent);
 			}
-			break;
-		case R.id.show_vehicles:
-
-			new GetRequest(R.id.show_vehicles).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
-			this.dialog = new ProgressDialog(getActivity());
-			this.dialog.setMessage("Loding...");
-			this.dialog.show();
-
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
@@ -137,7 +118,6 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			if (!sharedPreferences.contains(getString(R.string.CM_API_TOKEN)) || 
 					!sharedPreferences.contains(getString(R.string.CM_API_USER_ID))) {
 
-				this.Json_result.setText("Json Result");
 				this.setGusetView();
 				return;
 			}
@@ -146,7 +126,6 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			long user_id = sharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
 			
 			if (StringUtils.isBlank(token) || user_id == -1) {
-				this.Json_result.setText("Json Result");
 				this.setGusetView();
 				return;
 			}
@@ -172,24 +151,6 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		Gson gson = new GsonBuilder().create();
 		
 		switch (event.getCaller()) {
-		case R.id.show_vehicles:
-
-			((MainActivity) getActivity()).setProfileResult(event.getResult());
-			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
-			
-			Vehicle[] vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
-
-			String msg = "";
-			for (Vehicle vehicle : vehicles) {
-				msg += vehicle.getVin() + "\n";
-			}
-
-			if (dialog.isShowing()) {
-				dialog.dismiss();
-			}
-
-			this.Json_result.setText(msg);
-			break;
 		case R.string.AuthFragment_Profile:
 			
 			User user = gson.fromJson(event.getResult(), User.class);
@@ -215,8 +176,6 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		Gson gson = new GsonBuilder().create();
 
 		switch (event.getCaller()) {
-		case R.id.show_vehicles:
-			break;
 		default:
 			break;
 		}
