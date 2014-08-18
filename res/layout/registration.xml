@@ -70,7 +70,7 @@
         android:weightSum="1.0">
 
         <Button
-            android:id="@+id/sign_in_auth"
+            android:id="@+id/sign_up_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -78,7 +78,7 @@
             android:layout_weight="0.5"/>
 
         <Button
-            android:id="@+id/cancel_auth"
+            android:id="@+id/cancel_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
