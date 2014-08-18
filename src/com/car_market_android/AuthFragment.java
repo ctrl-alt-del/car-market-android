@@ -114,56 +114,60 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 		if (sharedPreferences != null) {
-			
-			if (!sharedPreferences.contains(getString(R.string.CM_API_TOKEN)) || 
-					!sharedPreferences.contains(getString(R.string.CM_API_USER_ID))) {
 
-				this.setGusetView();
-				return;
-			}
-			
 			String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), "");
 			long user_id = sharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
-			
+
 			if (StringUtils.isBlank(token) || user_id == -1) {
 				this.setGusetView();
 				return;
 			}
 			
-			// TODO: make GET call to get user profile
-			if (StringUtils.isBlank(this.Email_profile.getText()) || 
-					StringUtils.isBlank(this.Nickname_profile.getText())) {
+			String nickname = sharedPreferences.getString(getString(R.string.CM_USER_NICKNAME), "");
+			String email = sharedPreferences.getString(getString(R.string.CM_USER_EMAIL), "");
+			
+			if (StringUtils.isBlank(nickname) || StringUtils.isBlank(email)) {
+				this.setUserView();
+				
 				new GetRequest(R.string.AuthFragment_Profile)
-							.setAuthToken(token)
-							.execute(getString(R.string.CM_API_ADDRESS) + "/users/" + user_id);
+				.setAuthToken(token) //"7c14a5e93644b85923df1d90d8c2dcf7"
+				.execute(getString(R.string.CM_API_ADDRESS) + "/users/" + user_id);
 				
 				this.dialog = new ProgressDialog(getActivity());
 				this.dialog.setMessage("Loading Profile...");
 				this.dialog.show();
+				
+				return;
+			} else {
+				this.setUserView();
+				
+				this.Nickname_profile.setText(nickname);
+				this.Email_profile.setText(email);
 
+				return;
 			}
 		}
 	}
 
 	@Subscribe
 	public void onGetRequestTaskResult(GetRequestResultEvent event) {
-		
+
 		Gson gson = new GsonBuilder().create();
-		
+
 		switch (event.getCaller()) {
 		case R.string.AuthFragment_Profile:
-			
+
 			User user = gson.fromJson(event.getResult(), User.class);
-			
+
 			this.Nickname_profile.setText(user.getNickname());
 			this.Email_profile.setText(user.getEmail());
-			
+
 			this.setUserView();
-			
+
 			if (dialog.isShowing()) {
 				dialog.dismiss();
 			}
-			
+
 			break;
 		default:
 			break;
