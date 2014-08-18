@@ -161,6 +161,9 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 			this.Nickname_profile.setText(user.getNickname());
 			this.Email_profile.setText(user.getEmail());
+			
+			this.sharedPreferences.edit().putString(getString(R.string.CM_USER_NICKNAME), user.getNickname()).commit();
+			this.sharedPreferences.edit().putString(getString(R.string.CM_USER_EMAIL), user.getEmail()).commit();
 
 			this.setUserView();
 
