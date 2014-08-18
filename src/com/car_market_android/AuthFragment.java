@@ -127,7 +127,6 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			String email = sharedPreferences.getString(getString(R.string.CM_USER_EMAIL), "");
 			
 			if (StringUtils.isBlank(nickname) || StringUtils.isBlank(email)) {
-				this.setUserView();
 				
 				new GetRequest(R.string.AuthFragment_Profile)
 				.setAuthToken(token) //"7c14a5e93644b85923df1d90d8c2dcf7"
@@ -139,10 +138,11 @@ public class AuthFragment extends Fragment implements OnClickListener {
 				
 				return;
 			} else {
-				this.setUserView();
 				
 				this.Nickname_profile.setText(nickname);
 				this.Email_profile.setText(email);
+				
+				this.setUserView();
 
 				return;
 			}
