@@ -37,6 +37,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 
 	private Button Authentication;
+	private Button Registration;
 	private TextView Email_profile;
 	private TextView Nickname_profile;
 	private RelativeLayout User_layout;
@@ -67,12 +68,14 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		View rootView = inflater.inflate(R.layout.fragment_auth, container, false);
 
 		this.Authentication = (Button) rootView.findViewById(R.id.authentication);
+		this.Registration = (Button) rootView.findViewById(R.id.registration);
 
 		this.User_layout = (RelativeLayout) rootView.findViewById(R.id.user_layout);
 		this.Email_profile = (TextView) rootView.findViewById(R.id.email_profile);
 		this.Nickname_profile = (TextView) rootView.findViewById(R.id.nickname_profile);
 
 		this.Authentication.setOnClickListener(this);
+		this.Registration.setOnClickListener(this);
 
 		if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
 			this.setUserView();
@@ -97,6 +100,8 @@ public class AuthFragment extends Fragment implements OnClickListener {
 				Intent myIntent = new Intent(getActivity(), Authentication.class);
 				startActivity(myIntent);
 			}
+			break;
+		case R.id.registration:
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
