@@ -7,6 +7,7 @@ public class User {
 	private String email;
 	private String created_at;
 	private String updated_at;
+	private String message;
 	
 	public String getFirst_name() {
 		return this.first_name;
@@ -48,6 +49,13 @@ public class User {
 	}
 	public User setUpdated_at(String updated_at) {
 		this.updated_at = updated_at;
+		return this;
+	}
+	public String getMessage() {
+		return this.message;
+	}
+	public User setMessage(String message) {
+		this.message = message;
 		return this;
 	}
 }
