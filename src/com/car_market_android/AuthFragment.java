@@ -97,11 +97,13 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 				this.setGusetView();
 			} else {
-				Intent myIntent = new Intent(getActivity(), Authentication.class);
-				startActivity(myIntent);
+				Intent authentication_intent = new Intent(getActivity(), Authentication.class);
+				startActivity(authentication_intent);
 			}
 			break;
 		case R.id.registration:
+			Intent registration_intent = new Intent(getActivity(), Registration.class);
+			startActivity(registration_intent);
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
