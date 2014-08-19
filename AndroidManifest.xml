@@ -37,6 +37,18 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name=".Registration"
+            android:label="Registration"
+            android:screenOrientation="portrait"
+            android:theme="@style/PopupTheme" >     
+             <intent-filter>
+                <action android:name="com.car_market_android.Registration" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         
     </application>
 
