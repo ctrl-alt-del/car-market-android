@@ -200,6 +200,9 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		LayoutParams params = this.User_layout.getLayoutParams();
 		params.height = LayoutParams.WRAP_CONTENT;
 		this.User_layout.setLayoutParams(params);
+		
+		this.Registration.setVisibility(View.INVISIBLE);
+		this.Registration.setEnabled(false);
 	}
 
 	private void setGusetView() {
@@ -207,6 +210,9 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		LayoutParams params = this.User_layout.getLayoutParams();
 		params.height = 0;
 		this.User_layout.setLayoutParams(params);
+		
+		this.Registration.setVisibility(View.VISIBLE);
+		this.Registration.setEnabled(true);
 	}
 
 }
