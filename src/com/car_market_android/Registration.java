@@ -1,6 +1,17 @@
 package com.car_market_android;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import com.car_market_android.model.ApiKey;
+import com.car_market_android.model.User;
 import com.car_market_android.util.EventsBus;
+import com.car_market_android.util.PostRequest;
 import com.car_market_android.util.PostRequestResultEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,6 +31,7 @@ import android.widget.Toast;
 
 public class Registration extends Activity implements OnClickListener {
 
+	private static final EmailValidator EMAIL_VALIDATOR = EmailValidator.getInstance();
 	private EditText Nickname;
 	private EditText Email;
 	private EditText Password;
@@ -63,6 +75,55 @@ public class Registration extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.sign_up_register:
+
+			String nickname = this.Nickname.getText().toString();
+			String email = this.Email.getText().toString();
+			String password = this.Password.getText().toString();
+			String password_confirmation = this.Password_Confirmation.getText().toString();
+
+			if (StringUtils.isBlank(nickname)) {
+				Toast.makeText(this, "nickname cannot be empty...", Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			if (!EMAIL_VALIDATOR.isValid(email)) {
+				Toast.makeText(this, "Email: " + email + " is not a valid email...", Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			if (password.length() < 6) {
+				Toast.makeText(this, "password is not valid...", Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			if (password_confirmation.length() < 6) {
+				Toast.makeText(this, "password confirmation is not valid...", Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			if (!password.equals(password_confirmation)) {
+				Toast.makeText(this, "password and password confirmation do not match...", Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+
+			List<NameValuePair> contents = new ArrayList<NameValuePair>();
+
+			contents.add(new BasicNameValuePair("user[nickname]", nickname));
+			contents.add(new BasicNameValuePair("user[first_name]", "n/a"));
+			contents.add(new BasicNameValuePair("user[last_name]", "n/a"));
+			contents.add(new BasicNameValuePair("user[email]", email));
+			contents.add(new BasicNameValuePair("user[password]", password));
+			contents.add(new BasicNameValuePair("user[password_confirmation]", password_confirmation));
+			contents.add(new BasicNameValuePair("user[status]", "active"));
+
+
+			new PostRequest(R.id.sign_up_register, contents).execute(getString(R.string.CM_API_ADDRESS) + "/users");
+
+			this.dialog = new ProgressDialog(this);
+			this.dialog.setMessage("Signing up...");
+			this.dialog.show();
+
 			break;
 		case R.id.terms_and_policy_register:
 			break;
@@ -79,6 +140,21 @@ public class Registration extends Activity implements OnClickListener {
 		Gson gson = new GsonBuilder().create();
 		switch (event.getCaller()) {
 		case R.id.sign_up_register:
+
+			ApiKey apiKey = gson.fromJson(event.getResult(), ApiKey.class);
+
+			if (dialog.isShowing()) {
+				dialog.dismiss();
+			}
+
+			if (!StringUtils.isBlank(apiKey.getMessage())) {
+				Toast.makeText(this, apiKey.getMessage(), Toast.LENGTH_LONG).show();
+			} else {
+				this.sharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken()).commit();
+				this.sharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUser_id()).commit();
+				this.onBackPressed();
+			}
+
 			break;
 		default:
 			break;
