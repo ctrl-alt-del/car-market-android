@@ -94,7 +94,9 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 			if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
 				this.sharedPreferences.edit().remove(getString(R.string.CM_API_TOKEN)).commit();
-
+				this.sharedPreferences.edit().remove(getString(R.string.CM_USER_NICKNAME)).commit();
+				this.sharedPreferences.edit().remove(getString(R.string.CM_USER_EMAIL)).commit();
+				
 				this.setGusetView();
 			} else {
 				Intent authentication_intent = new Intent(getActivity(), Authentication.class);
