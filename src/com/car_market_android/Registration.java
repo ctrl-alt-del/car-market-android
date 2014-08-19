@@ -9,7 +9,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.car_market_android.model.ApiKey;
-import com.car_market_android.model.User;
 import com.car_market_android.util.EventsBus;
 import com.car_market_android.util.PostRequest;
 import com.car_market_android.util.PostRequestResultEvent;
@@ -85,6 +84,21 @@ public class Registration extends Activity implements OnClickListener {
 				Toast.makeText(this, "nickname cannot be empty...", Toast.LENGTH_SHORT).show();
 				return;
 			}
+			
+			if (StringUtils.isBlank(email)) {
+				Toast.makeText(this, "email cannot be empty...", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
+			if (StringUtils.isBlank(password)) {
+				Toast.makeText(this, "password cannot be empty...", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
+			if (StringUtils.isBlank(password_confirmation)) {
+				Toast.makeText(this, "password confirmation cannot be empty...", Toast.LENGTH_SHORT).show();
+				return;
+			}
 
 			if (!EMAIL_VALIDATOR.isValid(email)) {
 				Toast.makeText(this, "Email: " + email + " is not a valid email...", Toast.LENGTH_SHORT).show();
@@ -92,12 +106,7 @@ public class Registration extends Activity implements OnClickListener {
 			}
 
 			if (password.length() < 6) {
-				Toast.makeText(this, "password is not valid...", Toast.LENGTH_SHORT).show();
-				return;
-			}
-
-			if (password_confirmation.length() < 6) {
-				Toast.makeText(this, "password confirmation is not valid...", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "password must be at least 6 characters long...", Toast.LENGTH_SHORT).show();
 				return;
 			}
 
@@ -105,7 +114,6 @@ public class Registration extends Activity implements OnClickListener {
 				Toast.makeText(this, "password and password confirmation do not match...", Toast.LENGTH_SHORT).show();
 				return;
 			}
-
 
 			List<NameValuePair> contents = new ArrayList<NameValuePair>();
 
