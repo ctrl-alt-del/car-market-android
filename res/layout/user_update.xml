@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.car_market_android.UserUpdate" >
+
+    <android.widget.EditText
+        android:id="@+id/nickname_user_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="14"
+        android:hint="Nickname" >
+    </android.widget.EditText>
+
+    <android.widget.EditText
+        android:id="@+id/email_user_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nickname_user_update"
+        android:layout_below="@+id/nickname_user_update"
+        android:ems="14"
+        android:hint="Email"
+        android:inputType="textEmailAddress" >
+    </android.widget.EditText>
+
+    <android.widget.EditText
+        android:id="@+id/first_name_user_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nickname_user_update"
+        android:layout_below="@+id/email_user_update"
+        android:ems="14"
+        android:hint="First Name"
+        android:inputType="textPassword" >
+    </android.widget.EditText>
+
+    <android.widget.EditText
+        android:id="@+id/last_name_user_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nickname_user_update"
+        android:layout_below="@+id/first_name_user_update"
+        android:ems="14"
+        android:hint="Last Name"
+        android:inputType="textPassword" >
+    </android.widget.EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nickname_user_update"
+        android:layout_below="@+id/last_name_user_update"
+        android:layout_marginTop="20sp"
+        android:orientation="horizontal"
+        android:weightSum="1.0" >
+
+        <Button
+            android:id="@+id/sign_up_user_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="Update" />
+
+        <Button
+            android:id="@+id/cancel_user_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="Cancel" />
+    </LinearLayout>
+
+</RelativeLayout>
