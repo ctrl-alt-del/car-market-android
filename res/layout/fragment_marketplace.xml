@@ -27,4 +27,13 @@
         android:layout_marginTop="20dp"
         android:text="Json Result" />
 
+    <ListView
+        android:id="@+id/vehicle_list_marketplace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/json_result"
+        android:layout_below="@+id/json_result"
+        android:layout_marginTop="5sp" >
+    </ListView>
+
 </RelativeLayout>
