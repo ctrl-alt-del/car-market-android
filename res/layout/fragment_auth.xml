@@ -20,7 +20,7 @@
             android:layout_width="60sp"
             android:layout_height="60sp"
             android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/nickname_profile"
+            android:layout_alignParentTop="true"
             android:src="@drawable/ic_launcher" />
 
         <TextView
@@ -28,7 +28,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/user_icon"
-            android:layout_margin="5sp"
+            android:layout_alignTop="@+id/user_icon"
+            android:layout_marginRight="5sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
             android:gravity="left"
             android:text=""
             android:textSize="16sp" />
@@ -37,9 +40,11 @@
             android:id="@+id/email_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5sp"
+            android:layout_marginRight="5sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
             android:layout_below="@+id/nickname_profile"
-            android:layout_toRightOf="@+id/user_icon"
+            android:layout_alignLeft="@+id/nickname_profile"
             android:gravity="left"
             android:text=""
             android:textSize="14sp" />
