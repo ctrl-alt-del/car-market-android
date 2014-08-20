@@ -28,7 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Registration extends Activity implements OnClickListener {
+public class UserCreate extends Activity implements OnClickListener {
 
 	private static final EmailValidator EMAIL_VALIDATOR = EmailValidator.getInstance();
 	private EditText Nickname;

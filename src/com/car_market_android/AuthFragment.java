@@ -104,7 +104,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			}
 			break;
 		case R.id.registration:
-			Intent registration_intent = new Intent(getActivity(), Registration.class);
+			Intent registration_intent = new Intent(getActivity(), UserCreate.class);
 			startActivity(registration_intent);
 			break;
 		default:

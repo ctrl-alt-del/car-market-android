@@ -38,7 +38,7 @@
         </activity>
         
         <activity
-            android:name=".Registration"
+            android:name=".UserCreate"
             android:label="Registration"
             android:screenOrientation="portrait"
             android:theme="@style/PopupTheme" >     
