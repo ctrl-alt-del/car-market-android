@@ -99,7 +99,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 				
 				this.setGusetView();
 			} else {
-				Intent authentication_intent = new Intent(getActivity(), Authentication.class);
+				Intent authentication_intent = new Intent(getActivity(), UserAuth.class);
 				startActivity(authentication_intent);
 			}
 			break;

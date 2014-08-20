@@ -27,7 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Authentication extends Activity implements OnClickListener {
+public class UserAuth extends Activity implements OnClickListener {
 
 	private static final EmailValidator EMAIL_VALIDATOR = EmailValidator.getInstance();
 	private EditText Email;
@@ -39,7 +39,7 @@ public class Authentication extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.authentication);
+		setContentView(R.layout.user_auth);
 
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		EventsBus.getInstance().register(this);

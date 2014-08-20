@@ -26,7 +26,7 @@
         </activity>
         
         <activity
-            android:name=".Authentication"
+            android:name=".UserAuth"
             android:label="Authentication"
             android:screenOrientation="portrait"
             android:theme="@style/PopupTheme" >     
