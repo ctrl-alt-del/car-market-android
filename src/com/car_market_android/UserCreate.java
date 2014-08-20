@@ -50,13 +50,13 @@ public class UserCreate extends Activity implements OnClickListener {
 
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-		this.Nickname = (EditText) this.findViewById(R.id.nickname_register);
-		this.Email = (EditText) this.findViewById(R.id.email_register);
-		this.Password = (EditText) this.findViewById(R.id.password_register);
-		this.Password_Confirmation = (EditText) this.findViewById(R.id.password_confirmation_register);
-		this.Terms_and_policy = (Button) this.findViewById(R.id.terms_and_policy_register);
-		this.Sign_up = (Button) this.findViewById(R.id.sign_up_register);
-		this.Cacnel = (Button) this.findViewById(R.id.cancel_register);
+		this.Nickname = (EditText) this.findViewById(R.id.nickname_user_create);
+		this.Email = (EditText) this.findViewById(R.id.email_user_create);
+		this.Password = (EditText) this.findViewById(R.id.password_user_create);
+		this.Password_Confirmation = (EditText) this.findViewById(R.id.password_confirmation_user_create);
+		this.Terms_and_policy = (Button) this.findViewById(R.id.terms_and_policy_user_create);
+		this.Sign_up = (Button) this.findViewById(R.id.sign_up_user_create);
+		this.Cacnel = (Button) this.findViewById(R.id.cancel_user_create);
 
 		this.Terms_and_policy.setOnClickListener(this);
 		this.Sign_up.setOnClickListener(this);
@@ -73,7 +73,7 @@ public class UserCreate extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-		case R.id.sign_up_register:
+		case R.id.sign_up_user_create:
 
 			String nickname = this.Nickname.getText().toString();
 			String email = this.Email.getText().toString();
@@ -126,16 +126,16 @@ public class UserCreate extends Activity implements OnClickListener {
 			contents.add(new BasicNameValuePair("user[status]", "active"));
 
 
-			new PostRequest(R.id.sign_up_register, contents).execute(getString(R.string.CM_API_ADDRESS) + "/users");
+			new PostRequest(R.id.sign_up_user_create, contents).execute(getString(R.string.CM_API_ADDRESS) + "/users");
 
 			this.dialog = new ProgressDialog(this);
 			this.dialog.setMessage("Signing up...");
 			this.dialog.show();
 
 			break;
-		case R.id.terms_and_policy_register:
+		case R.id.terms_and_policy_user_create:
 			break;
-		case R.id.cancel_register:
+		case R.id.cancel_user_create:
 			this.onBackPressed();
 		default:
 			break;
@@ -147,7 +147,7 @@ public class UserCreate extends Activity implements OnClickListener {
 
 		Gson gson = new GsonBuilder().create();
 		switch (event.getCaller()) {
-		case R.id.sign_up_register:
+		case R.id.sign_up_user_create:
 
 			ApiKey apiKey = gson.fromJson(event.getResult(), ApiKey.class);
 
