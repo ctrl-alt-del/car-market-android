@@ -43,7 +43,7 @@ public class Registration extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.registration);
+		setContentView(R.layout.user_create);
 
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		EventsBus.getInstance().register(this);
