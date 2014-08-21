@@ -72,7 +72,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		//		this.Show_Vehicles.setOnClickListener(this);
 
 		this.swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_vehicle_index);
-		this.swipeRefreshLayout.setColorScheme(R.color.bottomBlue, R.color.bottomGreen, R.color.bottomRed, R.color.bottomYellow);
+		this.swipeRefreshLayout.setColorScheme(R.color.dark_blue, R.color.dark_green, R.color.dark_red, R.color.dark_yellow);
 		this.swipeRefreshLayout.setEnabled(false);
 
 		this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.list);
