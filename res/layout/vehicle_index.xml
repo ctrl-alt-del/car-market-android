@@ -2,11 +2,7 @@
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_vehicle_index"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/fragment_vertical_margin"
-    android:paddingLeft="@dimen/fragment_horizontal_margin"
-    android:paddingRight="@dimen/fragment_horizontal_margin"
-    android:paddingTop="@dimen/fragment_vertical_margin" >
+    android:layout_height="match_parent" >
 
     <ListView
         android:id="@+id/list"

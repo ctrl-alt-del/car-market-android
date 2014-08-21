@@ -209,10 +209,19 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	}
 
 	@Override
-	public void onScrollStateChanged(AbsListView absListView, int i) {}
+	public void onScrollStateChanged(AbsListView absListView, int scrollState) {}
 
 	@Override
 	public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		this.swipeRefreshLayout.setEnabled(firstVisibleItem == 0);
+
+		boolean loadMore = (firstVisibleItem + visibleItemCount >= totalItemCount);
+		
+		// TODO: add swipe to load more feature
+		if(loadMore) {
+			// 1. download additional data
+			// 2. append new data to the current data that is given to the adapter
+			// 3. run notifyDataSetChanged() for the adapter
+		}
 	}
 }
