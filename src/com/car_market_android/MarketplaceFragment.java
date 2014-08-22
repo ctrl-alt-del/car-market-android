@@ -1,5 +1,8 @@
 package com.car_market_android;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.EventsBus;
 import com.car_market_android.util.GetRequest;
@@ -9,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -40,6 +44,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	private TextView Json_result;
 	private ListView Vehicle_Listview;
 	private SwipeRefreshLayout swipeRefreshLayout;
+	private VehicleAdapter vadp;
 
 	/**
 	 * Returns a new instance of this fragment for the given section
@@ -77,48 +82,16 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 		this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.list);
 
-		this.Vehicle_Listview.setAdapter(new BaseAdapter() {
-
-			private String[] rows = new String[]{
-					"01", "02", "03", "04", "05", 
-					"06", "07", "08", "09", "10", 
-					"11", "12"};
-
-			@Override
-			public int getCount() {
-				// TODO Auto-generated method stub
-				return rows.length;
-			}
-
-			@Override
-			public Object getItem(int arg0) {
-				// TODO Auto-generated method stub
-				return rows[arg0];
-			}
-
-			@Override
-			public long getItemId(int arg0) {
-				// TODO Auto-generated method stub
-				return arg0;
-			}
-
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				// TODO Auto-generated method stub
-
-				TextView title;
-				if (convertView == null) {
-					convertView = View.inflate(getActivity(), R.layout.row_vehicle, null);
-					title = (TextView) convertView.findViewById(R.id.mmy_row_vehicle);
-					convertView.setTag(title);
-				} else {
-					title = (TextView) convertView.getTag();
-				}
-
-				title.setText(rows[position]);
-
-				return convertView;
-			}});
+		
+		this.data.add(1);
+		this.data.add(2);
+		this.data.add(3);
+		this.data.add(4);
+		this.data.add(5);
+		this.data.add(6);
+		
+		this.vadp = new VehicleAdapter(getActivity(), data);
+		this.Vehicle_Listview.setAdapter(this.vadp);
 
 		this.swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -221,7 +194,63 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		if(loadMore) {
 			// 1. download additional data
 			// 2. append new data to the current data that is given to the adapter
+			int lastRowOfData = this.data.getLast();
+			for (int i = 1; i <= 5; i++) {
+				this.data.add(lastRowOfData + i);
+			}
+			
 			// 3. run notifyDataSetChanged() for the adapter
+			this.vadp.notifyDataSetChanged();
 		}
 	}
+	
+	private LinkedList<Integer> data = new LinkedList<Integer>();
+	
+			
+	
+	public class VehicleAdapter extends BaseAdapter {
+		
+		Activity activity;
+		List<Integer> rows;
+		
+		public VehicleAdapter(Activity activity, List<Integer> rows) {
+			this.activity = activity;
+			this.rows = rows;
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return rows.size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+			return rows.get(arg0);
+		}
+
+		@Override
+		public long getItemId(int arg0) {
+			// TODO Auto-generated method stub
+			return arg0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+
+			TextView title;
+			if (convertView == null) {
+				convertView = View.inflate(getActivity(), R.layout.row_vehicle, null);
+				title = (TextView) convertView.findViewById(R.id.mmy_row_vehicle);
+				convertView.setTag(title);
+			} else {
+				title = (TextView) convertView.getTag();
+			}
+
+			title.setText("Row #" + rows.get(position));
+
+			return convertView;
+		}}
 }
