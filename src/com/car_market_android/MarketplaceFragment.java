@@ -177,6 +177,14 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		(new Handler()).postDelayed(new Runnable() {
 			@Override
 			public void run() {
+				
+				// TODO: add swipe to reload feature
+				data.clear();
+				data.add(1);
+				data.add(2);
+				data.add(3);
+				vadp.notifyDataSetChanged();
+				
 				swipeRefreshLayout.setRefreshing(false);
 
 			}
