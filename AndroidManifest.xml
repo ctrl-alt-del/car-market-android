@@ -27,11 +27,11 @@
         
         <activity
             android:name=".UserAuth"
-            android:label="Authentication"
+            android:label="UserAuth"
             android:screenOrientation="portrait"
             android:theme="@style/PopupTheme" >     
              <intent-filter>
-                <action android:name="com.car_market_android.Authentication" />
+                <action android:name="com.car_market_android.UserAuth" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -39,11 +39,11 @@
         
         <activity
             android:name=".UserCreate"
-            android:label="Registration"
+            android:label="UserCreate"
             android:screenOrientation="portrait"
             android:theme="@style/PopupTheme" >     
              <intent-filter>
-                <action android:name="com.car_market_android.Registration" />
+                <action android:name="com.car_market_android.UserCreate" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
