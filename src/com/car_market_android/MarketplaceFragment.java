@@ -195,6 +195,12 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			// 1. download additional data
 			// 2. append new data to the current data that is given to the adapter
 			int lastRowOfData = this.data.getLast();
+			
+			// limiter used to stop the load more feature
+			if (lastRowOfData > 10) {
+				return;
+			}
+			
 			for (int i = 1; i <= 5; i++) {
 				this.data.add(lastRowOfData + i);
 			}
