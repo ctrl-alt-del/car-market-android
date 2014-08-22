@@ -45,6 +45,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	private ListView Vehicle_Listview;
 	private SwipeRefreshLayout swipeRefreshLayout;
 	private VehicleAdapter vadp;
+	private LinkedList<Integer> data = new LinkedList<Integer>();
 
 	/**
 	 * Returns a new instance of this fragment for the given section
@@ -190,30 +191,25 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		this.swipeRefreshLayout.setEnabled(firstVisibleItem == 0);
 
 		boolean loadMore = (firstVisibleItem + visibleItemCount >= totalItemCount);
-		
+
 		// TODO: add swipe to load more feature
 		if(loadMore) {
 			// 1. download additional data
 			// 2. append new data to the current data that is given to the adapter
 			int lastRowOfData = this.data.getLast();
-			
+
 			// limiter used to stop the load more feature
 			if (this.vadp.getCount() > 10) {
 				return;
 			}
-			
+
 			for (int i = 1; i <= 5; i++) {
 				this.data.add(lastRowOfData + i);
 			}
-			
+
 			// 3. run notifyDataSetChanged() for the adapter
 			this.vadp.notifyDataSetChanged();
 		}
 	}
-	
-	private LinkedList<Integer> data = new LinkedList<Integer>();
-	
-			
-	
 
 }

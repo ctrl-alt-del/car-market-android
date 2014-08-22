@@ -44,7 +44,7 @@ public class VehicleAdapter extends BaseAdapter {
 
 			TextView title;
 			if (convertView == null) {
-				convertView = View.inflate(this.activity, R.layout.row_vehicle, null);
+				convertView = View.inflate(this.activity, R.layout.vehicle_index_row, null);
 				title = (TextView) convertView.findViewById(R.id.mmy_row_vehicle);
 				convertView.setTag(title);
 			} else {
