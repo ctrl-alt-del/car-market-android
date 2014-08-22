@@ -82,14 +82,15 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 		this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.list);
 
-		
-		this.data.add(1);
-		this.data.add(2);
-		this.data.add(3);
-		this.data.add(4);
-		this.data.add(5);
-		this.data.add(6);
-		
+		if (this.data.size() == 0) {
+			this.data.add(1);
+			this.data.add(2);
+			this.data.add(3);
+			this.data.add(4);
+			this.data.add(5);
+			this.data.add(6);
+		}
+
 		this.vadp = new VehicleAdapter(getActivity(), data);
 		this.Vehicle_Listview.setAdapter(this.vadp);
 
@@ -197,7 +198,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			int lastRowOfData = this.data.getLast();
 			
 			// limiter used to stop the load more feature
-			if (lastRowOfData > 10) {
+			if (this.vadp.getCount() > 10) {
 				return;
 			}
 			
