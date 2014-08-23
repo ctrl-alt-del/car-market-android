@@ -40,7 +40,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	private ListView Vehicle_Listview;
 	private SwipeRefreshLayout swipeRefreshLayout;
 	private VehicleAdapter vadp;
-	private LinkedList<Integer> data = new LinkedList<Integer>();
+	private LinkedList<Vehicle> data = new LinkedList<Vehicle>();
 
 	/**
 	 * Returns a new instance of this fragment for the given section
@@ -117,15 +117,8 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	public void onResume() {
 		super.onResume();
 		
-
 		if (this.data.size() == 0) {
-			this.data.add(1);
-			this.data.add(2);
-			this.data.add(3);
-			this.data.add(4);
-			this.data.add(5);
-			this.data.add(6);
-			this.vadp.notifyDataSetChanged();
+			new GetRequest(R.id.show_vehicles).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
 		}
 	}
 
@@ -141,17 +134,17 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
 
 			Vehicle[] vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
-
-			String msg = "";
-			for (Vehicle vehicle : vehicles) {
-				msg += vehicle.getVin() + "\n";
+			
+			for (Vehicle each : vehicles) {
+				this.data.add(each);
 			}
 
-			if (dialog.isShowing()) {
-				dialog.dismiss();
-			}
+			this.vadp.notifyDataSetChanged();
 
-			this.Json_result.setText(msg);
+//			if (dialog.isShowing()) {
+//				dialog.dismiss();
+//			}
+
 			break;
 		default:
 			break;
