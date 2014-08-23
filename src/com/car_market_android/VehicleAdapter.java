@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.car_market_android.R;
 import com.car_market_android.model.Vehicle;
 
 
-public class VehicleAdapter extends BaseAdapter {
+public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 	Activity activity;
 	List<Vehicle> vehicles;
@@ -72,7 +73,28 @@ public class VehicleAdapter extends BaseAdapter {
 		likeAH.vehicle = vehicle;
 
 		holder.Like.setTag(likeAH);
+		holder.Like.setOnClickListener(this);
+		
 		return convertView;
+	}
+
+	@Override
+	public void onClick(View view) {
+
+		// User reflection to verify the casting is appropriate
+		if (view.getTag() instanceof VehicleIndexRowButtonActionHolder) {
+			
+			VehicleIndexRowButtonActionHolder btnActionHolder = (VehicleIndexRowButtonActionHolder) view.getTag();
+
+			switch (btnActionHolder.buttonAction) {
+			case LIKE:
+				Vehicle vehicle = btnActionHolder.vehicle;
+				Toast.makeText(this.activity, vehicle.getVin() + " is clicked!", Toast.LENGTH_LONG).show();
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	private class VehicleIndexRowViewHolder {
