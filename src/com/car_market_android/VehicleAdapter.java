@@ -67,6 +67,11 @@ public class VehicleAdapter extends BaseAdapter {
 		holder.Vin.setText(vehicle.getVin());
 
 
+		VehicleIndexRowButtonActionHolder likeAH = new VehicleIndexRowButtonActionHolder();
+		likeAH.buttonAction = ButtonAction.LIKE;
+		likeAH.vehicle = vehicle;
+
+		holder.Like.setTag(likeAH);
 		return convertView;
 	}
 
