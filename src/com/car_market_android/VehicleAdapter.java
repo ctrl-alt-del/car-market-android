@@ -78,4 +78,9 @@ public class VehicleAdapter extends BaseAdapter {
 		protected Button Review;
 		protected Button Save;
 	}
+
+	private class VehicleIndexRowButtonActionHolder {
+		protected ButtonAction buttonAction;
+		protected Vehicle vehicle;
+	}
 }
