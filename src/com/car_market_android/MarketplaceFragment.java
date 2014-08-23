@@ -173,11 +173,11 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			public void run() {
 				
 				// TODO: add swipe to reload feature
-				data.clear();
-				data.add(1);
-				data.add(2);
-				data.add(3);
-				vadp.notifyDataSetChanged();
+//				data.clear();
+//				data.add(1);
+//				data.add(2);
+//				data.add(3);
+//				vadp.notifyDataSetChanged();
 				
 				swipeRefreshLayout.setRefreshing(false);
 
@@ -196,21 +196,21 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 		// TODO: add swipe to load more feature
 		if(loadMore && this.data.size() > 0) {
-			// 1. download additional data
-			// 2. append new data to the current data that is given to the adapter
-			int lastRowOfData = this.data.getLast();
-
-			// limiter used to stop the load more feature
-			if (this.vadp.getCount() > 10) {
-				return;
-			}
-
-			for (int i = 1; i <= 5; i++) {
-				this.data.add(lastRowOfData + i);
-			}
-
-			// 3. run notifyDataSetChanged() for the adapter
-			this.vadp.notifyDataSetChanged();
+//			// 1. download additional data
+//			// 2. append new data to the current data that is given to the adapter
+//			int lastRowOfData = this.data.getLast();
+//
+//			// limiter used to stop the load more feature
+//			if (this.vadp.getCount() > 10) {
+//				return;
+//			}
+//
+//			for (int i = 1; i <= 5; i++) {
+//				this.data.add(lastRowOfData + i);
+//			}
+//
+//			// 3. run notifyDataSetChanged() for the adapter
+//			this.vadp.notifyDataSetChanged();
 		}
 	}
 
