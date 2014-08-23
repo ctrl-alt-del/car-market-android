@@ -1,7 +1,6 @@
 package com.car_market_android;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.EventsBus;
@@ -12,7 +11,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -23,10 +21,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,15 +78,6 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 		this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.list);
 
-		if (this.data.size() == 0) {
-			this.data.add(1);
-			this.data.add(2);
-			this.data.add(3);
-			this.data.add(4);
-			this.data.add(5);
-			this.data.add(6);
-		}
-
 		this.vadp = new VehicleAdapter(getActivity(), data);
 		this.Vehicle_Listview.setAdapter(this.vadp);
 
@@ -126,7 +112,22 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		EventsBus.getInstance().unregister(this);
 		super.onDestroy();
 	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
 
+		if (this.data.size() == 0) {
+			this.data.add(1);
+			this.data.add(2);
+			this.data.add(3);
+			this.data.add(4);
+			this.data.add(5);
+			this.data.add(6);
+			this.vadp.notifyDataSetChanged();
+		}
+	}
 
 	@Subscribe
 	public void onGetRequestTaskResult(GetRequestResultEvent event) {
@@ -201,7 +202,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		boolean loadMore = (firstVisibleItem + visibleItemCount >= totalItemCount);
 
 		// TODO: add swipe to load more feature
-		if(loadMore) {
+		if(loadMore && this.data.size() > 0) {
 			// 1. download additional data
 			// 2. append new data to the current data that is given to the adapter
 			int lastRowOfData = this.data.getLast();
