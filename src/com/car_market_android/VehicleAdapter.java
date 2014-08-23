@@ -97,6 +97,12 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		}
 	}
 
+	/**
+	 * Class to hold the views of vehicle_index_row.xml.
+	 * 
+	 * @since 2014-08-23
+	 * @version 1.0
+	 * */
 	private class VehicleIndexRowViewHolder {
 
 		protected TextView Title;
