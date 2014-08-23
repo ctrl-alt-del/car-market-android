@@ -9,28 +9,29 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.car_market_android.R;
+import com.car_market_android.model.Vehicle;
 
 
 public class VehicleAdapter extends BaseAdapter {
 
 	Activity activity;
-	List<Integer> rows;
+	List<Vehicle> vehicles;
 
-	public VehicleAdapter(Activity activity, List<Integer> rows) {
+	public VehicleAdapter(Activity activity, List<Vehicle> rows) {
 		this.activity = activity;
-		this.rows = rows;
+		this.vehicles = rows;
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return rows.size();
+		return vehicles.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
-		return rows.get(arg0);
+		return vehicles.get(arg0);
 	}
 
 	@Override
@@ -43,6 +44,8 @@ public class VehicleAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 
+		Vehicle vehicle = vehicles.get(position);
+
 		VehicleIndexRowViewHolder holder;
 		if (convertView == null) {
 
@@ -50,12 +53,19 @@ public class VehicleAdapter extends BaseAdapter {
 
 			convertView = View.inflate(this.activity, R.layout.vehicle_index_row, null);
 			holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_row_mmy);
+			holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_row_vin);
+			holder.Like = (Button) convertView.findViewById(R.id.vehicle_index_row_like);
+			holder.Save = (Button) convertView.findViewById(R.id.vehicle_index_row_save);
+			holder.Review = (Button) convertView.findViewById(R.id.vehicle_index_row_review);
+
 			convertView.setTag(holder);
 		} else {
 			holder = (VehicleIndexRowViewHolder) convertView.getTag();
 		}
 
-		holder.Title.setText("Row #" + rows.get(position));
+		holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
+		holder.Vin.setText(vehicle.getVin());
+
 
 		return convertView;
 	}
