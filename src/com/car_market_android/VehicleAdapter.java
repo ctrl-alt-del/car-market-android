@@ -12,26 +12,27 @@ import com.car_market_android.R;
 
 
 public class VehicleAdapter extends BaseAdapter {
-		
-		Activity activity;
-		List<Integer> rows;
-		
-		public VehicleAdapter(Activity activity, List<Integer> rows) {
-			this.activity = activity;
-			this.rows = rows;
-		}
 
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return rows.size();
-		}
+	Activity activity;
+	List<Integer> rows;
 
-		@Override
-		public Object getItem(int arg0) {
-			// TODO Auto-generated method stub
-			return rows.get(arg0);
-		}
+	public VehicleAdapter(Activity activity, List<Integer> rows) {
+		this.activity = activity;
+		this.rows = rows;
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return rows.size();
+	}
+
+	@Override
+	public Object getItem(int arg0) {
+		// TODO Auto-generated method stub
+		return rows.get(arg0);
+	}
+
 	@Override
 	public long getItemId(int arg0) {
 		// TODO Auto-generated method stub
