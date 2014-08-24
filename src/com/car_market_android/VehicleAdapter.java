@@ -109,7 +109,17 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		protected Button Review;
 		protected Button Save;
 	}
-
+	
+	/**
+	 * Class to hold vehicle information along with button action, so button
+	 * action can be identified by OnClickListener.
+	 
+	 * @param buttonAction identifies which button perform the action
+	 * @param vehicle stores the {@link Vehicle} information 
+	 * 
+	 * @since 2014-08-23
+	 * @version 1.0
+	 * */
 	private class VehicleIndexRowButtonActionHolder {
 		
 		private final ButtonAction buttonAction;
