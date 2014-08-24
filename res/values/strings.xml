@@ -11,5 +11,6 @@
    
     <string name="SIGN_IN">sign_in</string>
     <string name="REFRESH">refresh</string>
+    <string name="LOAD_MORE">load_more</string>
 
 </resources>
