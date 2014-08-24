@@ -21,9 +21,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -35,8 +33,6 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	 */
 	private static final String ARG_SECTION_NUMBER = "section_number";
 
-	private Button Show_Vehicles;
-	private TextView Json_result;
 	private ListView Vehicle_Listview;
 	private SwipeRefreshLayout swipeRefreshLayout;
 	private VehicleAdapter vadp;
@@ -69,14 +65,6 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		EventsBus.getInstance().register(this);
 
 		View rootView = inflater.inflate(R.layout.vehicle_index, container, false);
-		//		View rootView = inflater.inflate(R.layout.fragment_marketplace, container, false);
-
-		//		this.Show_Vehicles = (Button) rootView.findViewById(R.id.show_vehicles);
-		//		this.Json_result = (TextView) rootView.findViewById(R.id.json_result);
-		//		this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.vehicle_list_marketplace);
-		//
-		//		this.Json_result.setText("MarketplaceFragment");
-		//		this.Show_Vehicles.setOnClickListener(this);
 
 		this.swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_vehicle_index);
 		this.swipeRefreshLayout.setColorScheme(R.color.dark_blue, R.color.dark_green, R.color.dark_red, R.color.dark_yellow);
@@ -149,9 +137,6 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			this.vadp.notifyDataSetChanged();
 			this.swipeRefreshLayout.setRefreshing(false);
 
-//			if (dialog.isShowing()) {
-//				dialog.dismiss();
-//			}
 			break;
 		case R.string.LOAD_MORE:
 
