@@ -10,5 +10,6 @@
     <string name="CM_USER_EMAIL">car_market_user_email</string>
    
     <string name="SIGN_IN">sign_in</string>
+    <string name="REFRESH">refresh</string>
 
 </resources>

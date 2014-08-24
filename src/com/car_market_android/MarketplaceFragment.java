@@ -93,9 +93,9 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-		case R.id.show_vehicles:
+		case R.string.REFRESH:
 
-			new GetRequest(R.id.show_vehicles).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+			new GetRequest(R.string.REFRESH).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
 			this.dialog = new ProgressDialog(getActivity());
 			this.dialog.setMessage("Loading Vehicles...");
 			this.dialog.show();
@@ -128,7 +128,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		Gson gson = new GsonBuilder().create();
 
 		switch (event.getCaller()) {
-		case R.id.show_vehicles:
+		case R.string.REFRESH:
 
 			((MainActivity) getActivity()).setProfileResult(event.getResult());
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
@@ -158,7 +158,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		//Gson gson = new GsonBuilder().create();
 
 		switch (event.getCaller()) {
-		case R.id.show_vehicles:
+		case R.string.REFRESH:
 			break;
 		default:
 			break;
@@ -175,10 +175,9 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 				// TODO: add swipe to reload feature
 				data.clear();
-				new GetRequest(R.id.show_vehicles).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+				new GetRequest(R.string.REFRESH).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
 
 				// swipeRefreshLayout.setRefreshing(false);
-
 			}
 		}, 3000);
 	}
