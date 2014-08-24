@@ -41,6 +41,12 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	private SwipeRefreshLayout swipeRefreshLayout;
 	private VehicleAdapter vadp;
 	private LinkedList<Vehicle> data = new LinkedList<Vehicle>();
+	
+	/** 
+	 * isLoadingMore is used to prevent the LOAD_MORE action being perform again
+	 * while it is performing.
+	 * */
+	private boolean isLoadingMore = false;
 
 	/**
 	 * Returns a new instance of this fragment for the given section
@@ -126,6 +132,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	public void onGetRequestTaskResult(GetRequestResultEvent event) {
 
 		Gson gson = new GsonBuilder().create();
+		Vehicle[] vehicles;
 
 		switch (event.getCaller()) {
 		case R.string.REFRESH:
@@ -133,7 +140,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			((MainActivity) getActivity()).setProfileResult(event.getResult());
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
 
-			Vehicle[] vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
+			vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
 
 			for (Vehicle each : vehicles) {
 				this.data.add(each);
@@ -145,6 +152,25 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 //			if (dialog.isShowing()) {
 //				dialog.dismiss();
 //			}
+			break;
+		case R.string.LOAD_MORE:
+
+			((MainActivity) getActivity()).setProfileResult(event.getResult());
+			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
+			
+			vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
+
+			for (Vehicle each : vehicles) {
+				this.data.add(each);
+			}
+
+			this.vadp.notifyDataSetChanged();
+
+
+			if (dialog.isShowing()) {
+				dialog.dismiss();
+			}
+			this.isLoadingMore = false;
 
 			break;
 		default:
@@ -192,22 +218,21 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		boolean loadMore = (firstVisibleItem + visibleItemCount >= totalItemCount);
 
 		// TODO: add swipe to load more feature
-		if(loadMore && this.data.size() > 0) {
-//			// 1. download additional data
-//			// 2. append new data to the current data that is given to the adapter
-//			int lastRowOfData = this.data.getLast();
-//
-//			// limiter used to stop the load more feature
-//			if (this.vadp.getCount() > 10) {
-//				return;
-//			}
-//
-//			for (int i = 1; i <= 5; i++) {
-//				this.data.add(lastRowOfData + i);
-//			}
-//
-//			// 3. run notifyDataSetChanged() for the adapter
-//			this.vadp.notifyDataSetChanged();
+		if(loadMore && !isLoadingMore && this.data.size() > 0) {
+
+			// 1. limiter used to stop the load more feature
+			if (this.data.size() >= 6) {
+				return;
+			}
+			
+			this.isLoadingMore = true;
+
+			// 2. download additional data
+			new GetRequest(R.string.LOAD_MORE).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+
+			this.dialog = new ProgressDialog(getActivity());
+			this.dialog.setMessage("Loading More Vehicles...");
+			this.dialog.show();
 		}
 	}
 
