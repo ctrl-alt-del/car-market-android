@@ -112,13 +112,13 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		EventsBus.getInstance().unregister(this);
 		super.onDestroy();
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		
+
 		if (this.data.size() == 0) {
-			new GetRequest(R.id.show_vehicles).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+			this.onRefresh();
 		}
 	}
 
@@ -134,12 +134,13 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
 
 			Vehicle[] vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
-			
+
 			for (Vehicle each : vehicles) {
 				this.data.add(each);
 			}
 
 			this.vadp.notifyDataSetChanged();
+			this.swipeRefreshLayout.setRefreshing(false);
 
 //			if (dialog.isShowing()) {
 //				dialog.dismiss();
@@ -171,15 +172,12 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		(new Handler()).postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				
+
 				// TODO: add swipe to reload feature
-//				data.clear();
-//				data.add(1);
-//				data.add(2);
-//				data.add(3);
-//				vadp.notifyDataSetChanged();
-				
-				swipeRefreshLayout.setRefreshing(false);
+				data.clear();
+				new GetRequest(R.id.show_vehicles).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+
+				// swipeRefreshLayout.setRefreshing(false);
 
 			}
 		}, 3000);
