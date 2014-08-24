@@ -137,7 +137,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			
 			if (StringUtils.isBlank(nickname) || StringUtils.isBlank(email)) {
 				
-				new GetRequest(R.string.AuthFragment_Profile)
+				new GetRequest(R.string.SIGN_IN)
 				.setAuthToken(token) //"7c14a5e93644b85923df1d90d8c2dcf7"
 				.execute(getString(R.string.CM_API_ADDRESS) + "/users/" + user_id);
 				
@@ -164,7 +164,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		Gson gson = new GsonBuilder().create();
 
 		switch (event.getCaller()) {
-		case R.string.AuthFragment_Profile:
+		case R.string.SIGN_IN:
 
 			User user = gson.fromJson(event.getResult(), User.class);
 
