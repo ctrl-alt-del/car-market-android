@@ -68,9 +68,7 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		holder.Vin.setText(vehicle.getVin());
 
 
-		VehicleIndexRowButtonActionHolder likeAH = new VehicleIndexRowButtonActionHolder();
-		likeAH.buttonAction = ButtonAction.LIKE;
-		likeAH.vehicle = vehicle;
+		VehicleIndexRowButtonActionHolder likeAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);
 
 		holder.Like.setTag(likeAH);
 		holder.Like.setOnClickListener(this);
@@ -86,10 +84,10 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 			
 			VehicleIndexRowButtonActionHolder btnActionHolder = (VehicleIndexRowButtonActionHolder) view.getTag();
 
-			switch (btnActionHolder.buttonAction) {
+			switch (btnActionHolder.getButtonAction()) {
 			case LIKE:
-				Vehicle vehicle = btnActionHolder.vehicle;
-				Toast.makeText(this.activity, vehicle.getVin() + " is clicked!", Toast.LENGTH_LONG).show();
+				Vehicle vehicle = btnActionHolder.getVehicle();
+				Toast.makeText(this.activity, "Like is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 				break;
 			default:
 				break;
