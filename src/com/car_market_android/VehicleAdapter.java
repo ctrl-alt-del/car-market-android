@@ -113,7 +113,21 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 	}
 
 	private class VehicleIndexRowButtonActionHolder {
-		protected ButtonAction buttonAction;
-		protected Vehicle vehicle;
+		
+		private final ButtonAction buttonAction;
+		private final Vehicle vehicle;
+		
+		public VehicleIndexRowButtonActionHolder(ButtonAction buttonAction, Vehicle vehicle) {
+			this.buttonAction = buttonAction;
+			this.vehicle = vehicle;
+		}
+		
+		public ButtonAction getButtonAction() {
+			return this.buttonAction;
+		}
+		
+		public Vehicle getVehicle() {
+			return this.vehicle;
+		}
 	}
 }
