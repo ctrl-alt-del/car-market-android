@@ -11,7 +11,7 @@
     <string name="CM_USER_WISHLIST">car_market_user_wishlist</string>
    
     <string name="SIGN_IN">sign_in</string>
-    <string name="REFRESH">refresh</string>
-    <string name="LOAD_MORE">load_more</string>
+    <string name="REFRESH_MARKETPLACE">refresh_marketplace</string>
+    <string name="LOAD_MORE_MARKETPLACE">load_more_marketplace</string>
 
 </resources>

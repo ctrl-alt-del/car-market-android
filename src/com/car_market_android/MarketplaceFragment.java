@@ -87,9 +87,9 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-		case R.string.REFRESH:
+		case R.string.REFRESH_MARKETPLACE:
 
-			new GetRequest(R.string.REFRESH).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+			new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
 			this.dialog = new ProgressDialog(getActivity());
 			this.dialog.setMessage("Loading Vehicles...");
 			this.dialog.show();
@@ -123,7 +123,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		Vehicle[] vehicles;
 
 		switch (event.getCaller()) {
-		case R.string.REFRESH:
+		case R.string.REFRESH_MARKETPLACE:
 
 			((MainActivity) getActivity()).setProfileResult(event.getResult());
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
@@ -138,7 +138,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			this.swipeRefreshLayout.setRefreshing(false);
 
 			break;
-		case R.string.LOAD_MORE:
+		case R.string.LOAD_MORE_MARKETPLACE:
 
 			((MainActivity) getActivity()).setProfileResult(event.getResult());
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
@@ -169,7 +169,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		//Gson gson = new GsonBuilder().create();
 
 		switch (event.getCaller()) {
-		case R.string.REFRESH:
+		case R.string.REFRESH_MARKETPLACE:
 			break;
 		default:
 			break;
@@ -186,7 +186,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 				// TODO: add swipe to reload feature
 				data.clear();
-				new GetRequest(R.string.REFRESH).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+				new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
 
 				// swipeRefreshLayout.setRefreshing(false);
 			}
@@ -213,7 +213,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			this.isLoadingMore = true;
 
 			// 2. download additional data
-			new GetRequest(R.string.LOAD_MORE).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+			new GetRequest(R.string.LOAD_MORE_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
 
 			this.dialog = new ProgressDialog(getActivity());
 			this.dialog.setMessage("Loading More Vehicles...");
