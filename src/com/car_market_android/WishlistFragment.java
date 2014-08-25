@@ -86,15 +86,6 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-		case R.string.REFRESH:
-
-			// TODO: load it from cache or database
-			// new GetRequest(R.string.REFRESH).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
-			this.dialog = new ProgressDialog(getActivity());
-			this.dialog.setMessage("Loading Vehicles...");
-			this.dialog.show();
-
-			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
 			break;
@@ -123,7 +114,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		Vehicle[] vehicles;
 
 		switch (event.getCaller()) {
-		case R.string.REFRESH:
+		case R.string.REFRESH_WISHLIST:
 
 			((MainActivity) getActivity()).setProfileResult(event.getResult());
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
@@ -138,11 +129,11 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			this.swipeRefreshLayout.setRefreshing(false);
 
 			break;
-		case R.string.LOAD_MORE:
+		case R.string.LOAD_MORE_WISHLIST:
 
 			((MainActivity) getActivity()).setProfileResult(event.getResult());
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
-			
+
 			vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
 
 			for (Vehicle each : vehicles) {
@@ -169,7 +160,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		//Gson gson = new GsonBuilder().create();
 
 		switch (event.getCaller()) {
-		case R.string.REFRESH:
+		case R.string.REFRESH_WISHLIST:
 			break;
 		default:
 			break;
