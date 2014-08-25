@@ -152,9 +152,9 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			this.vadp.notifyDataSetChanged();
 
 
-			if (dialog.isShowing()) {
-				dialog.dismiss();
-			}
+			//			if (dialog.isShowing()) {
+			//				dialog.dismiss();
+			//			}
 			this.isLoadingMore = false;
 
 			break;
@@ -205,23 +205,23 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		boolean loadMore = (firstVisibleItem + visibleItemCount >= totalItemCount);
 
 		// TODO: add swipe to load more feature
-		if(loadMore && !isLoadingMore && this.data.size() > 0) {
-
-			// 1. limiter used to stop the load more feature
-			if (this.data.size() >= 6) {
-				return;
-			}
-			
-			this.isLoadingMore = true;
-
-			// 2. download additional data
-			// TODO: load it from cache or database
-			// new GetRequest(R.string.LOAD_MORE).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
-
-			this.dialog = new ProgressDialog(getActivity());
-			this.dialog.setMessage("Loading More Vehicles...");
-			this.dialog.show();
-		}
+		//		if(loadMore && !isLoadingMore && this.data.size() > 0) {
+		//
+		//			// 1. limiter used to stop the load more feature
+		//			if (this.data.size() >= 6) {
+		//				return;
+		//			}
+		//			
+		//			this.isLoadingMore = true;
+		//
+		//			// 2. download additional data
+		//			// TODO: load it from cache or database
+		//			// new GetRequest(R.string.LOAD_MORE).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+		//
+		//			this.dialog = new ProgressDialog(getActivity());
+		//			this.dialog.setMessage("Loading More Vehicles...");
+		//			this.dialog.show();
+		//		}
 	}
 
 }
