@@ -136,6 +136,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 				return AuthFragment.newInstance(position + 1);
 			case 1:
 				return MarketplaceFragment.newInstance(position + 1);
+			case 3:
+				return WishlistFragment.newInstance(position + 1);
 			default:
 				return MainFragment.newInstance(position + 1);
 			}
