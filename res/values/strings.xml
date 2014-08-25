@@ -14,4 +14,5 @@
     <string name="REFRESH_MARKETPLACE">refresh_marketplace</string>
     <string name="LOAD_MORE_MARKETPLACE">load_more_marketplace</string>
 
+    <string name="REFRESH_WISHLIST">refresh_wishlist</string>
 </resources>
