@@ -1,7 +1,12 @@
 package com.car_market_android;
+import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,16 +16,20 @@ import android.widget.Toast;
 
 import com.car_market_android.R;
 import com.car_market_android.model.Vehicle;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 	Activity activity;
 	List<Vehicle> vehicles;
+	private SharedPreferences sharedPreferences;
 
 	public VehicleAdapter(Activity activity, List<Vehicle> rows) {
 		this.activity = activity;
 		this.vehicles = rows;
+		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
 	}
 
 	@Override
@@ -72,17 +81,17 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 		holder.Like.setTag(likeAH);
 		holder.Like.setOnClickListener(this);
-		
+
 		VehicleIndexRowButtonActionHolder saveAH = new VehicleIndexRowButtonActionHolder(ButtonAction.SAVE, vehicle);
 
 		holder.Save.setTag(saveAH);
 		holder.Save.setOnClickListener(this);
-		
+
 		VehicleIndexRowButtonActionHolder reviewAH = new VehicleIndexRowButtonActionHolder(ButtonAction.REVIEW, vehicle);
 
 		holder.Review.setTag(reviewAH);
 		holder.Review.setOnClickListener(this);
-		
+
 		return convertView;
 	}
 
@@ -91,14 +100,35 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 		// User reflection to verify the casting is appropriate
 		if (view.getTag() instanceof VehicleIndexRowButtonActionHolder) {
-			
+
 			VehicleIndexRowButtonActionHolder btnActionHolder = (VehicleIndexRowButtonActionHolder) view.getTag();
 
 			Vehicle vehicle = btnActionHolder.getVehicle();
-			
+
 			switch (btnActionHolder.getButtonAction()) {
 			case LIKE:
 				Toast.makeText(this.activity, "Like is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+
+				
+				LinkedList<Vehicle> data = new LinkedList<Vehicle>();
+				String JSON_DB = sharedPreferences.getString(this.activity.getString(R.string.CM_USER_WISHLIST), "");
+
+				Gson gson = new GsonBuilder().create();
+				
+				if (!StringUtils.isBlank(JSON_DB)) {
+					
+					Vehicle[] vehicles = gson.fromJson(JSON_DB, Vehicle[].class);
+
+					for (Vehicle each : vehicles) {
+						data.add(each);
+					}
+				}
+				
+				data.add(vehicle);
+				
+				JSON_DB = gson.toJson(data.toArray(new Vehicle[]{}));
+				this.sharedPreferences.edit().putString(this.activity.getString(R.string.CM_USER_WISHLIST), JSON_DB).commit();
+				
 				break;
 			case SAVE:
 				Toast.makeText(this.activity, "Save is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
@@ -126,11 +156,11 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		protected Button Review;
 		protected Button Save;
 	}
-	
+
 	/**
 	 * Class to hold vehicle information along with button action, so button
 	 * action can be identified by OnClickListener.
-	 
+
 	 * @param buttonAction identifies which button perform the action
 	 * @param vehicle stores the {@link Vehicle} information 
 	 * 
@@ -138,19 +168,19 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 	 * @version 1.0
 	 * */
 	private class VehicleIndexRowButtonActionHolder {
-		
+
 		private final ButtonAction buttonAction;
 		private final Vehicle vehicle;
-		
+
 		public VehicleIndexRowButtonActionHolder(ButtonAction buttonAction, Vehicle vehicle) {
 			this.buttonAction = buttonAction;
 			this.vehicle = vehicle;
 		}
-		
+
 		public ButtonAction getButtonAction() {
 			return this.buttonAction;
 		}
-		
+
 		public Vehicle getVehicle() {
 			return this.vehicle;
 		}
