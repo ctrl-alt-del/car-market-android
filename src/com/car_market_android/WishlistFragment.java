@@ -2,8 +2,11 @@ package com.car_market_android;
 
 import java.util.LinkedList;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.EventsBus;
+import com.car_market_android.util.GetRequest;
 import com.car_market_android.util.GetRequestResultEvent;
 import com.car_market_android.util.PostRequestResultEvent;
 import com.google.gson.Gson;
@@ -12,8 +15,10 @@ import com.squareup.otto.Subscribe;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +41,9 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	private SwipeRefreshLayout swipeRefreshLayout;
 	private VehicleAdapter vadp;
 	private LinkedList<Vehicle> data = new LinkedList<Vehicle>();
-	
+
+	private SharedPreferences sharedPreferences;
+
 	/** 
 	 * isLoadingMore is used to prevent the LOAD_MORE action being perform again
 	 * while it is performing.
@@ -61,6 +68,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		EventsBus.getInstance().register(this);
 
 		View rootView = inflater.inflate(R.layout.vehicle_index_wishlist, container, false);
@@ -101,9 +109,12 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	@Override
 	public void onResume() {
 		super.onResume();
+		if (sharedPreferences != null) {
 
-		if (this.data.size() == 0) {
-			this.onRefresh();
+			if (this.data.size() == 0) {
+				this.onRefresh();
+			}
+
 		}
 	}
 
@@ -177,7 +188,23 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 				// TODO: add swipe to reload feature
 				data.clear();
-				
+
+				String JSON_DB = sharedPreferences.getString(getString(R.string.CM_USER_WISHLIST), "");
+
+				if (StringUtils.isBlank(JSON_DB)) {
+					return;
+				}
+
+				Gson gson = new GsonBuilder().create();
+				Vehicle[] vehicles = gson.fromJson(JSON_DB, Vehicle[].class);
+
+				for (Vehicle each : vehicles) {
+					data.add(each);
+				}
+
+				vadp.notifyDataSetChanged();
+				swipeRefreshLayout.setRefreshing(false);
+
 				// TODO: load it from cache or database
 				// new GetRequest(R.string.REFRESH).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
 
