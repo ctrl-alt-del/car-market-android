@@ -160,4 +160,10 @@ public class VehicleAdapterWishlist extends BaseAdapter implements View.OnClickL
 			return this.vehicle;
 		}
 	}
+	
+	private void writeToJsonDB(List<Vehicle> data, SharedPreferences sharedPreferences) {
+		Gson gson = new GsonBuilder().create();
+		String JSON_DB = gson.toJson(data.toArray(new Vehicle[]{}));
+		sharedPreferences.edit().putString(this.activity.getString(R.string.CM_USER_WISHLIST), JSON_DB).commit();
+	}
 }
