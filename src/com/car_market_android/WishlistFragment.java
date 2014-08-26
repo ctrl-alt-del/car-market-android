@@ -255,5 +255,24 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		//			this.dialog.show();
 		//		}
 	}
+	
+	private LinkedList<Vehicle> readFromJsonDB(SharedPreferences sharedPreferences) {
+		
+		LinkedList<Vehicle> data = new LinkedList<Vehicle>();
+		
+		String JSON_DB = sharedPreferences.getString(getString(R.string.CM_USER_WISHLIST), "");
 
+		if (StringUtils.isBlank(JSON_DB)) {
+			return data;
+		}
+
+		Gson gson = new GsonBuilder().create();
+		Vehicle[] vehicles = gson.fromJson(JSON_DB, Vehicle[].class);
+
+		for (Vehicle each : vehicles) {
+			data.add(each);
+		}
+		
+		return data;
+	}
 }
