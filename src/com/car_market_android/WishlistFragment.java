@@ -1,12 +1,10 @@
 package com.car_market_android;
 
 import java.util.LinkedList;
-
 import org.apache.commons.lang3.StringUtils;
 
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.EventsBus;
-import com.car_market_android.util.GetRequest;
 import com.car_market_android.util.GetRequestResultEvent;
 import com.car_market_android.util.PostRequestResultEvent;
 import com.google.gson.Gson;
@@ -202,19 +200,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 				}
 				
 				data.clear();
-
-				String JSON_DB = sharedPreferences.getString(getString(R.string.CM_USER_WISHLIST), "");
-
-				if (StringUtils.isBlank(JSON_DB)) {
-					return;
-				}
-
-				Gson gson = new GsonBuilder().create();
-				Vehicle[] vehicles = gson.fromJson(JSON_DB, Vehicle[].class);
-
-				for (Vehicle each : vehicles) {
-					data.add(each);
-				}
+				data.addAll(readFromJsonDB(sharedPreferences));
 
 				vadp.notifyDataSetChanged();
 				swipeRefreshLayout.setRefreshing(false);
