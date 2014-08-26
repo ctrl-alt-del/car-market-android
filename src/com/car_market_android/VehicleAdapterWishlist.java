@@ -25,12 +25,22 @@ public class VehicleAdapterWishlist extends BaseAdapter implements View.OnClickL
 	Activity activity;
 	List<Vehicle> vehicles;
 	private SharedPreferences sharedPreferences;
+	private boolean dataChanged = false;
 
 	public VehicleAdapterWishlist(Activity activity, List<Vehicle> rows) {
 		this.activity = activity;
 		this.vehicles = rows;
 		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
 	}
+	
+	public boolean isDataChanged() {
+		return this.dataChanged;
+	}
+
+	public void setDataChanged(boolean dataChanged) {
+		this.dataChanged = dataChanged;
+	}
+	
 
 	@Override
 	public int getCount() {
@@ -98,25 +108,9 @@ public class VehicleAdapterWishlist extends BaseAdapter implements View.OnClickL
 			case LIKE:
 				Toast.makeText(this.activity, "Delete is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
-				
-//				LinkedList<Vehicle> data = new LinkedList<Vehicle>();
-//				String JSON_DB = sharedPreferences.getString(this.activity.getString(R.string.CM_USER_WISHLIST), "");
-//
-//				Gson gson = new GsonBuilder().create();
-//				
-//				if (!StringUtils.isBlank(JSON_DB)) {
-//					
-//					Vehicle[] vehicles = gson.fromJson(JSON_DB, Vehicle[].class);
-//
-//					for (Vehicle each : vehicles) {
-//						data.add(each);
-//					}
-//				}
-//				
-//				data.add(vehicle);
-//				
-//				JSON_DB = gson.toJson(data.toArray(new Vehicle[]{}));
-//				this.sharedPreferences.edit().putString(this.activity.getString(R.string.CM_USER_WISHLIST), JSON_DB).commit();
+				vehicles.remove(vehicle);
+				this.notifyDataSetChanged();
+				this.dataChanged = true;
 				
 				break;
 			default:
