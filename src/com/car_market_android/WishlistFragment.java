@@ -117,6 +117,15 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 		}
 	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		if (vadp.isDataChanged()) {
+			vadp.saveDataChanegs();
+			vadp.setDataChanged(false);
+		}
+	}
 
 	@Subscribe
 	public void onGetRequestTaskResult(GetRequestResultEvent event) {
@@ -187,6 +196,11 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			public void run() {
 
 				// TODO: add swipe to reload feature
+				if (vadp.isDataChanged()) {
+					vadp.saveDataChanegs();
+					vadp.setDataChanged(false);
+				}
+				
 				data.clear();
 
 				String JSON_DB = sharedPreferences.getString(getString(R.string.CM_USER_WISHLIST), "");
