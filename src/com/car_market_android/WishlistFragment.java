@@ -39,7 +39,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 	private ListView Vehicle_Listview;
 	private SwipeRefreshLayout swipeRefreshLayout;
-	private VehicleAdapter vadp;
+	private VehicleAdapterWishlist vadp;
 	private LinkedList<Vehicle> data = new LinkedList<Vehicle>();
 
 	private SharedPreferences sharedPreferences;
@@ -79,7 +79,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 		this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.vehicle_index_wishlist_list);
 
-		this.vadp = new VehicleAdapter(getActivity(), data);
+		this.vadp = new VehicleAdapterWishlist(getActivity(), data);
 		this.Vehicle_Listview.setAdapter(this.vadp);
 
 		this.swipeRefreshLayout.setOnRefreshListener(this);
