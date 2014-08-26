@@ -41,6 +41,12 @@ public class VehicleAdapterWishlist extends BaseAdapter implements View.OnClickL
 		this.dataChanged = dataChanged;
 	}
 	
+	public void saveDataChanegs() {
+		if (vehicles == null || sharedPreferences == null) {
+			return;
+		}
+		writeToJsonDB(vehicles, sharedPreferences);
+	}
 
 	@Override
 	public int getCount() {
