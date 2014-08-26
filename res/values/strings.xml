@@ -15,4 +15,5 @@
     <string name="LOAD_MORE_MARKETPLACE">load_more_marketplace</string>
 
     <string name="REFRESH_WISHLIST">refresh_wishlist</string>
+    <string name="LOAD_MORE_WISHLIST">load_more_wishlist</string>
 </resources>
