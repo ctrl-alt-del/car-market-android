@@ -61,7 +61,12 @@ An helper utilities with extra methods for the java.lang API.  I mainly use its 
 A Java library used to handle conversion between Java object and its JSON string, and vice versa.  I use it to parse the JSON string received from restful API calls into models in Java for convenient access.
 
 
-## TODO List 
+## TODO List
 [**Volley**](http://developer.android.com/training/volley/index.html)
 <br>
 Volley was introduced in Google I/O 2013.  It is a library that makes HTTP network connection easier and faster.  It has many cool features such as auto-scheduling, queueing, prioritization, managing concurrent connections, caching results and etc.
+
+
+[**Jackson**](http://jackson.codehaus.org/) or [**Boon**](https://github.com/RichardHightower/boon) to replace GSON
+<br>
+**Jackson** is a high performance JSON processor and so as **Boon**.  Since I serialize and deserialize JSON a lot, I would like to use something perform faster than GSON.
