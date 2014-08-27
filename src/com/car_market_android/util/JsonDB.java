@@ -1,6 +1,7 @@
 package com.car_market_android.util;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -35,5 +36,14 @@ public class JsonDB {
 		}
 
 		return data;
+	}
+	
+	public static void setVehiclesToJsonDB(Activity activity, String JsonDBKey, List<Vehicle> data) {
+		
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		
+		String JSON_DB = gson.toJson(data.toArray(new Vehicle[]{}));
+		
+		sharedPreferences.edit().putString(JsonDBKey, JSON_DB).commit();
 	}
 }
