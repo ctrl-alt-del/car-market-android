@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.car_market_android.R;
 import com.car_market_android.model.Vehicle;
+import com.car_market_android.util.JsonDB;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -107,28 +108,17 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 			switch (btnActionHolder.getButtonAction()) {
 			case LIKE:
+				
+				LinkedList<Vehicle> data = JsonDB.getVehiclesFromJsonDB(this.activity, 
+						this.activity.getString(R.string.CM_USER_WISHLIST));
+
+				data.add(vehicle);
+
+				JsonDB.setVehiclesToJsonDB(this.activity, 
+						this.activity.getString(R.string.CM_USER_WISHLIST), data);
+
 				Toast.makeText(this.activity, "Like is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
-				
-				LinkedList<Vehicle> data = new LinkedList<Vehicle>();
-				String JSON_DB = sharedPreferences.getString(this.activity.getString(R.string.CM_USER_WISHLIST), "");
-
-				Gson gson = new GsonBuilder().create();
-				
-				if (!StringUtils.isBlank(JSON_DB)) {
-					
-					Vehicle[] vehicles = gson.fromJson(JSON_DB, Vehicle[].class);
-
-					for (Vehicle each : vehicles) {
-						data.add(each);
-					}
-				}
-				
-				data.add(vehicle);
-				
-				JSON_DB = gson.toJson(data.toArray(new Vehicle[]{}));
-				this.sharedPreferences.edit().putString(this.activity.getString(R.string.CM_USER_WISHLIST), JSON_DB).commit();
-				
 				break;
 			case SAVE:
 				Toast.makeText(this.activity, "Save is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
