@@ -111,6 +111,14 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 				
 				LinkedList<Vehicle> data = JsonDB.getVehiclesFromJsonDB(this.activity, 
 						this.activity.getString(R.string.CM_USER_WISHLIST));
+				
+				// TODO: this is O(n), will find a better solution later.
+				for (Vehicle each : data) {
+					if (each.getVin().equals(vehicle.getVin())) {
+						Toast.makeText(this.activity, vehicle.getVin() + "\n is already in your wishlish", Toast.LENGTH_LONG).show();
+						return;
+					}
+				}
 
 				data.add(vehicle);
 
