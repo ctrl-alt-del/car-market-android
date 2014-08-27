@@ -205,10 +205,6 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 				vadp.notifyDataSetChanged();
 				swipeRefreshLayout.setRefreshing(false);
 
-				// TODO: load it from cache or database
-				// new GetRequest(R.string.REFRESH).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
-
-				// swipeRefreshLayout.setRefreshing(false);
 			}
 		}, 3000);
 	}
