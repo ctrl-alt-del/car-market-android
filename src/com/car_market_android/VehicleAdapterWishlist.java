@@ -18,6 +18,7 @@ import com.car_market_android.R;
 import com.car_market_android.model.Vehicle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.car_market_android.util.JsonDB;
 
 
 public class VehicleAdapterWishlist extends BaseAdapter implements View.OnClickListener{
@@ -45,7 +46,9 @@ public class VehicleAdapterWishlist extends BaseAdapter implements View.OnClickL
 		if (vehicles == null || sharedPreferences == null) {
 			return;
 		}
-		writeToJsonDB(vehicles, sharedPreferences);
+		
+		JsonDB.setVehiclesToJsonDB(this.activity, 
+				this.activity.getString(R.string.CM_USER_WISHLIST), vehicles);
 	}
 
 	@Override
