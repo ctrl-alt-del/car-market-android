@@ -1,8 +1,6 @@
 package com.car_market_android;
-import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -16,8 +14,6 @@ import android.widget.Toast;
 
 import com.car_market_android.R;
 import com.car_market_android.model.Vehicle;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.car_market_android.util.JsonDB;
 
 
@@ -168,11 +164,5 @@ public class VehicleAdapterWishlist extends BaseAdapter implements View.OnClickL
 		public Vehicle getVehicle() {
 			return this.vehicle;
 		}
-	}
-	
-	private void writeToJsonDB(List<Vehicle> data, SharedPreferences sharedPreferences) {
-		Gson gson = new GsonBuilder().create();
-		String JSON_DB = gson.toJson(data.toArray(new Vehicle[]{}));
-		sharedPreferences.edit().putString(this.activity.getString(R.string.CM_USER_WISHLIST), JSON_DB).commit();
 	}
 }
