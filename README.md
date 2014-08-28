@@ -39,11 +39,10 @@ If you are using IDE such as Eclipse with Android Plugin, you can also install t
 
 ## Design Decisions
 1. **Why using [Otto](#otto)**?
-I use it as an singleton event bus to better organize my AsyncTasks.  Activities will register themselves onCreate() and unregister themselves onDestroy(), and they will subscribe to the results of AsyncTasks once they are available.
+<br>
+It gives you an easy way to organize your AsyncTasks, or any tasks that would take some time to complete.
 <br><br>
-When I started using AsyncTasks on my first project, I put them right under their corresponding activity class.  I soon found this way to be very inconvenient because the AsyncTasks have an implicit reference to their activity, and this implicit connection led the AsyncTasks to be destroyed if their activity changed, yet they are not garbage collected (GC) until they finish.  Such behavior could cause potential memory issue if there are multiple AsyncTasks on the activity and it could also cause the result of the AsyncTasks to be lost.
-<br><br>
-As more AsyncTasks needed, I started making classes for different AsyncTasks, but this effort soon became very troublesome to keep track of all the AsyncTasks and make sure their results got delivered properly.
+Putting AsyncTask right under its corresponding activity class works well for simple cases, but once I have multiple AsyncTasks running, problems emerge.  First of all, results of the AsyncTasks can be lost unless you put significant efforts to track them; tracking few AsyncTasks takes efforts yet it is still doable, but these efforts and code complexity can increase dramatically if you have double digits of AsyncTasks running.  Second, I occasionally get out of memory error and I found out that is because AsyncTasks have an implicit reference to their activity, which leads the AsyncTasks to be destroyed if their activity changed, but they are not garbage collected (GC) until they finish, so it causes potential memory issue if there are multiple AsyncTasks on the activity.
 
 
 ## Dependencies
