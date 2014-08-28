@@ -2,6 +2,12 @@
 
 This is an demo mobile app that consumes this [API](https://github.com/ctrl-alt-del/car-market) that I made.
 
+## Table of Contents
+  * [**Setup**](#setup)
+  * [**Desgin Decisions**](#design-decisions)
+  * [**Dependencies**](#dependencies)
+
+
 ## Setup
 **Android SDK**
 <br>
@@ -37,6 +43,8 @@ If you want to install the apk to your **running emulator**, you can do so by re
 <br><br>
 If you are using IDE such as Eclipse with Android Plugin, you can also install the apk to your emulator or device directly
 
+[**>>> BACK TO TOP**](#table-of-contents)
+
 ## Design Decisions
 1. **Why using [Otto](#otto)**?
 <br>
@@ -44,6 +52,7 @@ It gives you an easy way to organize your AsyncTasks, or any tasks that would ta
 <br><br>
 Putting AsyncTask right under its corresponding activity class works well for simple cases, but once I have multiple AsyncTasks running, problems emerge.  First of all, results of the AsyncTasks can be lost unless you put significant efforts to track them; tracking few AsyncTasks takes efforts yet it is still doable, but these efforts and code complexity can increase dramatically if you have double digits of AsyncTasks running.  Second, I occasionally get out of memory error and I found out that is because AsyncTasks have an implicit reference to their activity, which leads the AsyncTasks to be destroyed if their activity changed, but they are not garbage collected (GC) until they finish, so it causes potential memory issue if there are multiple AsyncTasks on the activity.
 
+[**>>> BACK TO TOP**](#table-of-contents)
 
 ## Dependencies
 #### [Otto](http://square.github.io/otto/)
@@ -62,6 +71,7 @@ An helper utilities with extra methods for the java.lang API.  I mainly use its 
 <br>
 A Java library used to handle conversion between Java object and its JSON string, and vice versa.  I use it to parse the JSON string received from restful API calls into models in Java for convenient access.
 
+[**>>> BACK TO TOP**](#table-of-contents)
 
 ## TODO List
 [**Volley**](http://developer.android.com/training/volley/index.html)
@@ -72,3 +82,5 @@ Volley was introduced in Google I/O 2013.  It is a library that makes HTTP netwo
 [**Jackson**](http://jackson.codehaus.org/) or [**Boon**](https://github.com/RichardHightower/boon) to replace GSON
 <br>
 **Jackson** is a high performance JSON processor and so as **Boon**.  Since I serialize and deserialize JSON a lot, I would like to use something perform faster than GSON.
+
+[**>>> BACK TO TOP**](#table-of-contents)
