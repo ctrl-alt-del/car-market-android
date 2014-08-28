@@ -87,14 +87,6 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-		case R.string.REFRESH_MARKETPLACE:
-
-			new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
-			this.dialog = new ProgressDialog(getActivity());
-			this.dialog.setMessage("Loading Vehicles...");
-			this.dialog.show();
-
-			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
 			break;
