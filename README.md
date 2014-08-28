@@ -37,16 +37,19 @@ If you want to install the apk to your **running emulator**, you can do so by re
 <br><br>
 If you are using IDE such as Eclipse with Android Plugin, you can also install the apk to your emulator or device directly
 
-## Dependencies
-[**Otto**](http://square.github.io/otto/)
-<br>
+## Design Decisions
+1. **Why using [Otto](#otto)**?
 I use it as an singleton event bus to better organize my AsyncTasks.  Activities will register themselves onCreate() and unregister themselves onDestroy(), and they will subscribe to the results of AsyncTasks once they are available.
 <br><br>
 When I started using AsyncTasks on my first project, I put them right under their corresponding activity class.  I soon found this way to be very inconvenient because the AsyncTasks have an implicit reference to their activity, and this implicit connection led the AsyncTasks to be destroyed if their activity changed, yet they are not garbage collected (GC) until they finish.  Such behavior could cause potential memory issue if there are multiple AsyncTasks on the activity and it could also cause the result of the AsyncTasks to be lost.
 <br><br>
 As more AsyncTasks needed, I started making classes for different AsyncTasks, but this effort soon became very troublesome to keep track of all the AsyncTasks and make sure their results got delivered properly.
-<br><br>
-Then, I found Otto, which saved me from headaches.
+
+
+## Dependencies
+#### [Otto](http://square.github.io/otto/)
+<br>
+I use it as an singleton event bus to better organize my AsyncTasks.  Activities will register themselves onCreate() and unregister themselves onDestroy(), and they will subscribe to the results of AsyncTasks once they are available.
 
 [**Apache Commons Validator**](http://commons.apache.org/proper/commons-validator/)
 <br>
