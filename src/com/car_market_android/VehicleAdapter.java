@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.car_market_android.R;
+import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.JsonDB;
 
@@ -20,38 +21,39 @@ import com.car_market_android.util.JsonDB;
 public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 	Activity activity;
-	List<Vehicle> vehicles;
+	List<Listing> listings;
 	private SharedPreferences sharedPreferences;
 
-	public VehicleAdapter(Activity activity, List<Vehicle> rows) {
+	public VehicleAdapter(Activity activity, List<Listing> rows) {
 		this.activity = activity;
-		this.vehicles = rows;
+		this.listings = rows;
 		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return vehicles.size();
+		return this.listings.size();
 	}
 
 	@Override
-	public Object getItem(int arg0) {
+	public Listing getItem(int position) {
 		// TODO Auto-generated method stub
-		return vehicles.get(arg0);
+		return this.listings.get(position);
 	}
 
 	@Override
-	public long getItemId(int arg0) {
+	public long getItemId(int position) {
 		// TODO Auto-generated method stub
-		return arg0;
+		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 
-		Vehicle vehicle = vehicles.get(position);
+		Listing listing = this.getItem(position);
+		Vehicle vehicle = listing.getVehicle();
 
 		VehicleIndexRowViewHolder holder;
 		if (convertView == null) {

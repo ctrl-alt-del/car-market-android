@@ -2,7 +2,7 @@ package com.car_market_android;
 
 import java.util.LinkedList;
 
-import com.car_market_android.model.Vehicle;
+import com.car_market_android.model.Listing;
 import com.car_market_android.util.EventsBus;
 import com.car_market_android.util.GetRequest;
 import com.car_market_android.util.GetRequestResultEvent;
@@ -36,7 +36,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	private ListView Vehicle_Listview;
 	private SwipeRefreshLayout swipeRefreshLayout;
 	private VehicleAdapter vadp;
-	private LinkedList<Vehicle> data = new LinkedList<Vehicle>();
+	private LinkedList<Listing> data = new LinkedList<Listing>();
 	
 	/** 
 	 * isLoadingMore is used to prevent the LOAD_MORE action being perform again
@@ -120,7 +120,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	public void onGetRequestTaskResult(GetRequestResultEvent event) {
 
 		Gson gson = new GsonBuilder().create();
-		Vehicle[] vehicles;
+		Listing[] listings;
 
 		switch (event.getCaller()) {
 		case R.string.REFRESH_MARKETPLACE:
@@ -128,9 +128,9 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			((MainActivity) getActivity()).setProfileResult(event.getResult());
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
 
-			vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
+			listings = gson.fromJson(event.getResult(), Listing[].class);
 
-			for (Vehicle each : vehicles) {
+			for (Listing each : listings) {
 				this.data.add(each);
 			}
 
@@ -143,9 +143,9 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			((MainActivity) getActivity()).setProfileResult(event.getResult());
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
 			
-			vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
+			listings = gson.fromJson(event.getResult(), Listing[].class);
 
-			for (Vehicle each : vehicles) {
+			for (Listing each : listings) {
 				this.data.add(each);
 			}
 
@@ -186,7 +186,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 				// TODO: add swipe to reload feature
 				data.clear();
-				new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+				new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
 
 				// swipeRefreshLayout.setRefreshing(false);
 			}
@@ -213,10 +213,10 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			this.isLoadingMore = true;
 
 			// 2. download additional data
-			new GetRequest(R.string.LOAD_MORE_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/vehicles");
+			new GetRequest(R.string.LOAD_MORE_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
 
 			this.dialog = new ProgressDialog(getActivity());
-			this.dialog.setMessage("Loading More Vehicles...");
+			this.dialog.setMessage("Loading More Listings...");
 			this.dialog.show();
 		}
 	}
