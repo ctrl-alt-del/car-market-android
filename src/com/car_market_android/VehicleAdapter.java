@@ -62,7 +62,7 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 			holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_row_mmy);
 			holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_row_vin);
 			holder.Like = (Button) convertView.findViewById(R.id.vehicle_index_row_like);
-			holder.Save = (Button) convertView.findViewById(R.id.vehicle_index_row_save);
+			holder.Buy = (Button) convertView.findViewById(R.id.vehicle_index_row_buy);
 			holder.Review = (Button) convertView.findViewById(R.id.vehicle_index_row_review);
 
 			convertView.setTag(holder);
@@ -79,10 +79,10 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		holder.Like.setTag(likeAH);
 		holder.Like.setOnClickListener(this);
 
-		VehicleIndexRowButtonActionHolder saveAH = new VehicleIndexRowButtonActionHolder(ButtonAction.SAVE, vehicle);
+		VehicleIndexRowButtonActionHolder buyAH = new VehicleIndexRowButtonActionHolder(ButtonAction.BUY, vehicle);
 
-		holder.Save.setTag(saveAH);
-		holder.Save.setOnClickListener(this);
+		holder.Buy.setTag(buyAH);
+		holder.Buy.setOnClickListener(this);
 
 		VehicleIndexRowButtonActionHolder reviewAH = new VehicleIndexRowButtonActionHolder(ButtonAction.REVIEW, vehicle);
 
@@ -124,8 +124,8 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 				Toast.makeText(this.activity, "Like is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
 				break;
-			case SAVE:
-				Toast.makeText(this.activity, "Save is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+			case BUY:
+				Toast.makeText(this.activity, "Buy is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 				break;
 			case REVIEW:
 				Toast.makeText(this.activity, "Review is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
@@ -148,7 +148,7 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		protected TextView Vin;
 		protected Button Like;
 		protected Button Review;
-		protected Button Save;
+		protected Button Buy;
 	}
 
 	/**

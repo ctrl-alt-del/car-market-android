@@ -80,12 +80,12 @@
                 android:text="review" />
             
             <Button
-                android:id="@+id/vehicle_index_row_save"
+                android:id="@+id/vehicle_index_row_buy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="save" />
+                android:text="Buy" />
 
             
         </LinearLayout>
