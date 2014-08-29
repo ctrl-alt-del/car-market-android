@@ -2,6 +2,7 @@ package com.car_market_android.model;
 
 public class Listing {
 	
+	private int id;
 	private String price;
 	private String currency;
 	private String status;
@@ -14,6 +15,19 @@ public class Listing {
 	private String updated_at;
 	private Vehicle vehicle;
 	
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return this.id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public Listing setId(int id) {
+		this.id = id;
+		return this;
+	}
 	/**
 	 * @return this.the price
 	 */
