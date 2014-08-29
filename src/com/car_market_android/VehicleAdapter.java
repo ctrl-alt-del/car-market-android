@@ -63,6 +63,7 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 			convertView = View.inflate(this.activity, R.layout.vehicle_index_row, null);
 			holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_row_mmy);
 			holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_row_vin);
+			holder.Price = (TextView) convertView.findViewById(R.id.vehicle_index_row_price);
 			holder.Like = (Button) convertView.findViewById(R.id.vehicle_index_row_like);
 			holder.Buy = (Button) convertView.findViewById(R.id.vehicle_index_row_buy);
 			holder.Review = (Button) convertView.findViewById(R.id.vehicle_index_row_review);
@@ -74,7 +75,7 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 		holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
 		holder.Vin.setText(vehicle.getVin());
-
+		holder.Price.setText(listing.getCurrency() + " " + listing.getPrice());
 
 		VehicleIndexRowButtonActionHolder likeAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);
 
