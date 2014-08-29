@@ -148,6 +148,7 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 		protected TextView Title;
 		protected TextView Vin;
+		protected TextView Price;
 		protected Button Like;
 		protected Button Review;
 		protected Button Buy;
