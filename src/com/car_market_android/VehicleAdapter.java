@@ -2,6 +2,8 @@ package com.car_market_android;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -60,13 +62,14 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 			holder = new VehicleIndexRowViewHolder();
 
-			convertView = View.inflate(this.activity, R.layout.vehicle_index_row, null);
+			convertView = View.inflate(this.activity, R.layout.vehicle_index_marketplace_row, null);
 			holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_row_mmy);
 			holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_row_vin);
 			holder.Price = (TextView) convertView.findViewById(R.id.vehicle_index_row_price);
+			holder.Location = (TextView) convertView.findViewById(R.id.vehicle_index_row_location);
 			holder.Like = (Button) convertView.findViewById(R.id.vehicle_index_row_like);
-			holder.Buy = (Button) convertView.findViewById(R.id.vehicle_index_row_buy);
-			holder.Review = (Button) convertView.findViewById(R.id.vehicle_index_row_review);
+//			holder.Buy = (Button) convertView.findViewById(R.id.vehicle_index_row_buy);
+//			holder.Review = (Button) convertView.findViewById(R.id.vehicle_index_row_review);
 
 			convertView.setTag(holder);
 		} else {
@@ -76,21 +79,23 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
 		holder.Vin.setText(vehicle.getVin());
 		holder.Price.setText(listing.getCurrency() + " " + listing.getPrice());
+		String state = !StringUtils.isBlank(listing.getState()) ? ", " + listing.getState() : "";
+		holder.Location.setText(listing.getCity() + state);
 
 		VehicleIndexRowButtonActionHolder likeAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);
 
 		holder.Like.setTag(likeAH);
 		holder.Like.setOnClickListener(this);
 
-		VehicleIndexRowButtonActionHolder buyAH = new VehicleIndexRowButtonActionHolder(ButtonAction.BUY, vehicle);
-
-		holder.Buy.setTag(buyAH);
-		holder.Buy.setOnClickListener(this);
-
-		VehicleIndexRowButtonActionHolder reviewAH = new VehicleIndexRowButtonActionHolder(ButtonAction.REVIEW, vehicle);
-
-		holder.Review.setTag(reviewAH);
-		holder.Review.setOnClickListener(this);
+//		VehicleIndexRowButtonActionHolder buyAH = new VehicleIndexRowButtonActionHolder(ButtonAction.BUY, vehicle);
+//
+//		holder.Buy.setTag(buyAH);
+//		holder.Buy.setOnClickListener(this);
+//
+//		VehicleIndexRowButtonActionHolder reviewAH = new VehicleIndexRowButtonActionHolder(ButtonAction.REVIEW, vehicle);
+//
+//		holder.Review.setTag(reviewAH);
+//		holder.Review.setOnClickListener(this);
 
 		return convertView;
 	}
@@ -150,6 +155,7 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		protected TextView Title;
 		protected TextView Vin;
 		protected TextView Price;
+		protected TextView Location;
 		protected Button Like;
 		protected Button Review;
 		protected Button Buy;
