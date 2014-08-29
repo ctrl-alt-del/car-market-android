@@ -42,6 +42,7 @@
                 android:background="@color/transparent_dark"
                 android:gravity="right"
                 android:text="price"
+                android:alpha="0.7"
                 android:textColor="#FFFFFFFF"
                 android:textSize="20sp" />
         </RelativeLayout>
@@ -57,7 +58,7 @@
             android:layout_toRightOf="@+id/vehicle_index_row_thumbnail_frame"
             android:gravity="right"
             android:text="MMY"
-            android:textSize="26sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/vehicle_index_row_vin"
@@ -73,15 +74,15 @@
         
         <TextView
                 android:id="@+id/vehicle_index_row_location"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignLeft="@+id/vehicle_index_row_mmy"
                 android:background="@color/transparent_dark"
+                android:layout_alignRight="@+id/vehicle_index_row_mmy"
                 android:gravity="right"
-                android:text="price"
                 android:textColor="#FFFFFFFF"
-                android:textSize="20sp" />
+                android:text="Location"
+                android:textSize="16sp" />
 
     </RelativeLayout>
 
