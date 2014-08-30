@@ -37,6 +37,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 
 
 	private Button Authentication;
+	private Button User_update;
 	private Button Registration;
 	private TextView Email_profile;
 	private TextView Nickname_profile;
@@ -68,6 +69,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		View rootView = inflater.inflate(R.layout.fragment_auth, container, false);
 
 		this.Authentication = (Button) rootView.findViewById(R.id.authentication);
+		this.User_update = (Button) rootView.findViewById(R.id.user_update);
 		this.Registration = (Button) rootView.findViewById(R.id.registration);
 
 		this.User_layout = (RelativeLayout) rootView.findViewById(R.id.user_layout);
@@ -75,6 +77,7 @@ public class AuthFragment extends Fragment implements OnClickListener {
 		this.Nickname_profile = (TextView) rootView.findViewById(R.id.nickname_profile);
 
 		this.Authentication.setOnClickListener(this);
+		this.User_update.setOnClickListener(this);
 		this.Registration.setOnClickListener(this);
 
 		if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
@@ -102,6 +105,9 @@ public class AuthFragment extends Fragment implements OnClickListener {
 				Intent authentication_intent = new Intent(getActivity(), UserAuth.class);
 				startActivity(authentication_intent);
 			}
+			break;
+		case R.id.user_update:
+			Toast.makeText(getActivity(), "User_update button pressed...", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.registration:
 			Intent registration_intent = new Intent(getActivity(), UserCreate.class);
