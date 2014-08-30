@@ -79,6 +79,19 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
 		holder.Vin.setText(vehicle.getVin());
 		holder.Price.setText(listing.getCurrency() + " " + listing.getPrice());
+		
+		int p = Integer.valueOf(listing.getPrice());
+		
+		if (p <= 3000) {
+			holder.Price.setBackgroundColor(this.activity.getResources().getColor(R.color.dark_red));
+		} else if (p > 3000 && p <= 6000) {
+			holder.Price.setBackgroundColor(this.activity.getResources().getColor(R.color.dark_yellow));
+		} else if (p > 6000 && p <= 9000) {
+			holder.Price.setBackgroundColor(this.activity.getResources().getColor(R.color.dark_blue));
+		} else {
+			holder.Price.setBackgroundColor(this.activity.getResources().getColor(R.color.dark_green));
+		}
+		
 		String state = !StringUtils.isBlank(listing.getState()) ? ", " + listing.getState() : "";
 		holder.Location.setText(listing.getCity() + state);
 
