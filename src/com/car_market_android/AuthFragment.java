@@ -107,7 +107,8 @@ public class AuthFragment extends Fragment implements OnClickListener {
 			}
 			break;
 		case R.id.user_update:
-			Toast.makeText(getActivity(), "User_update button pressed...", Toast.LENGTH_SHORT).show();
+			Intent user_update_intent = new Intent(getActivity(), UserUpdate.class);
+			startActivity(user_update_intent);
 			break;
 		case R.id.registration:
 			Intent registration_intent = new Intent(getActivity(), UserCreate.class);
