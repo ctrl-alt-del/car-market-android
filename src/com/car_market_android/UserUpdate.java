@@ -55,7 +55,7 @@ public class UserUpdate extends Activity implements OnClickListener {
 			Toast.makeText(this, "Update button pressed...", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.cancel_user_update:
-			Toast.makeText(this, "Cancel button pressed...", Toast.LENGTH_SHORT).show();
+			this.onBackPressed();
 			break;
 		default:
 			Toast.makeText(this, "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
