@@ -137,6 +137,7 @@ public class UserCreate extends Activity implements OnClickListener {
 			break;
 		case R.id.cancel_user_create:
 			this.onBackPressed();
+			break;
 		default:
 			break;
 		}
