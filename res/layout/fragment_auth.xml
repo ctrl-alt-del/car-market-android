@@ -22,29 +22,43 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/ic_launcher" />
+        
+        <Button
+            android:id="@+id/user_update"
+            android:layout_width="35sp"
+            android:layout_height="30sp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5sp"
+            android:gravity="center"
+            android:text="Edit"
+            android:textSize="6sp" />
 
         <TextView
             android:id="@+id/nickname_profile"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/user_icon"
             android:layout_alignTop="@+id/user_icon"
+            android:layout_marginBottom="5sp"
             android:layout_marginRight="5sp"
             android:layout_marginTop="5sp"
-            android:layout_marginBottom="5sp"
+            android:layout_toRightOf="@+id/user_icon"
+            android:layout_toLeftOf="@+id/user_update"
             android:gravity="left"
             android:text=""
             android:textSize="16sp" />
+
+        
 
         <TextView
             android:id="@+id/email_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/nickname_profile"
+            android:layout_below="@+id/nickname_profile"
+            android:layout_marginBottom="5sp"
             android:layout_marginRight="5sp"
             android:layout_marginTop="5sp"
-            android:layout_marginBottom="5sp"
-            android:layout_below="@+id/nickname_profile"
-            android:layout_alignLeft="@+id/nickname_profile"
             android:gravity="left"
             android:text=""
             android:textSize="14sp" />
@@ -59,7 +73,7 @@
         android:layout_marginRight="5sp"
         android:gravity="center"
         android:text="Sign In" />
-    
+
     <Button
         android:id="@+id/registration"
         android:layout_width="match_parent"
@@ -67,9 +81,8 @@
         android:layout_alignLeft="@+id/user_layout"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="5sp"
+        android:background="@color/transparent"
         android:gravity="center"
-        android:text="Register"
-        android:background="@color/transparent" />
-
+        android:text="Register" />
 
 </RelativeLayout>
