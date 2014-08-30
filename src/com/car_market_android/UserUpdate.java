@@ -14,9 +14,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class UserUpdate extends Activity implements OnClickListener {
 
+	private Button Update;
+	private Button Cacnel;
+	
 	private SharedPreferences sharedPreferences;
 
 	@Override
@@ -28,7 +33,9 @@ public class UserUpdate extends Activity implements OnClickListener {
 		EventsBus.getInstance().register(this);
 
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-
+		
+		this.Update = (Button) this.findViewById(R.id.update_user_update);
+		this.Cacnel = (Button) this.findViewById(R.id.cancel_user_update);
 	}
 
 	@Override
@@ -43,9 +50,10 @@ public class UserUpdate extends Activity implements OnClickListener {
 		switch (view.getId()) {
 
 		default:
-			this.dialog = new ProgressDialog(this);
-			this.dialog.setMessage("Loading...");
-			this.dialog.show();
+			Toast.makeText(this, "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
+//			this.dialog = new ProgressDialog(this);
+//			this.dialog.setMessage("Loading...");
+//			this.dialog.show();
 			break;
 		}
 	}
