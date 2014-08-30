@@ -49,6 +49,17 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name=".UserUpdate"
+            android:label="UserUpdate"
+            android:screenOrientation="portrait"
+            android:theme="@style/PopupTheme" >     
+             <intent-filter>
+                <action android:name="com.car_market_android.UserUpdate" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         
     </application>
 
