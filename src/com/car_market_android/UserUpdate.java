@@ -36,6 +36,9 @@ public class UserUpdate extends Activity implements OnClickListener {
 		
 		this.Update = (Button) this.findViewById(R.id.update_user_update);
 		this.Cacnel = (Button) this.findViewById(R.id.cancel_user_update);
+		
+		this.Update.setOnClickListener(this);
+		this.Cacnel.setOnClickListener(this);
 	}
 
 	@Override
@@ -48,7 +51,12 @@ public class UserUpdate extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-
+		case R.id.update_user_update:
+			Toast.makeText(this, "Update button pressed...", Toast.LENGTH_SHORT).show();
+			break;
+		case R.id.cancel_user_update:
+			Toast.makeText(this, "Cancel button pressed...", Toast.LENGTH_SHORT).show();
+			break;
 		default:
 			Toast.makeText(this, "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
 //			this.dialog = new ProgressDialog(this);
