@@ -9,9 +9,9 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.car_market_android.model.ApiKey;
+import com.car_market_android.network.PostRequest;
+import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
-import com.car_market_android.util.PostRequest;
-import com.car_market_android.util.PostRequestResultEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;

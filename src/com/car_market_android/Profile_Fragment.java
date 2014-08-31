@@ -3,10 +3,10 @@ package com.car_market_android;
 import org.apache.commons.lang3.StringUtils;
 
 import com.car_market_android.model.User;
+import com.car_market_android.network.GetRequest;
+import com.car_market_android.network.GetRequestResultEvent;
+import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
-import com.car_market_android.util.GetRequest;
-import com.car_market_android.util.GetRequestResultEvent;
-import com.car_market_android.util.PostRequestResultEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
@@ -66,7 +66,7 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		EventsBus.getInstance().register(this);
 
-		View rootView = inflater.inflate(R.layout.fragment_auth, container, false);
+		View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
 
 		this.Authentication = (Button) rootView.findViewById(R.id.authentication);
 		this.User_update = (Button) rootView.findViewById(R.id.user_update);

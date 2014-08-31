@@ -1,4 +1,4 @@
-package com.car_market_android.util;
+package com.car_market_android.network;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +10,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.car_market_android.util.EventsBus;
 
 import android.os.AsyncTask;
 

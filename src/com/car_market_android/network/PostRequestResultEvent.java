@@ -1,4 +1,4 @@
-package com.car_market_android.util;
+package com.car_market_android.network;
 
 public class PostRequestResultEvent {
 

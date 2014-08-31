@@ -3,10 +3,10 @@ package com.car_market_android;
 import java.util.LinkedList;
 
 import com.car_market_android.model.Vehicle;
+import com.car_market_android.network.GetRequestResultEvent;
+import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
-import com.car_market_android.util.GetRequestResultEvent;
 import com.car_market_android.util.JsonDB;
-import com.car_market_android.util.PostRequestResultEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
