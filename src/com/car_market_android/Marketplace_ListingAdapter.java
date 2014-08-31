@@ -5,8 +5,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,35 +22,29 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 
 	Activity activity;
 	List<Listing> listings;
-	private SharedPreferences sharedPreferences;
 
 	public Marketplace_ListingAdapter(Activity activity, List<Listing> rows) {
 		this.activity = activity;
 		this.listings = rows;
-		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return this.listings.size();
 	}
 
 	@Override
 	public Listing getItem(int position) {
-		// TODO Auto-generated method stub
 		return this.listings.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
 
 		Listing listing = this.getItem(position);
 		Vehicle vehicle = listing.getVehicle();
