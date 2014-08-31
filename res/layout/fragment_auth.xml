@@ -22,7 +22,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/ic_launcher" />
-        
+
         <Button
             android:id="@+id/user_update"
             android:layout_width="35sp"
@@ -42,13 +42,11 @@
             android:layout_marginBottom="5sp"
             android:layout_marginRight="5sp"
             android:layout_marginTop="5sp"
-            android:layout_toRightOf="@+id/user_icon"
             android:layout_toLeftOf="@+id/user_update"
+            android:layout_toRightOf="@+id/user_icon"
             android:gravity="left"
             android:text=""
             android:textSize="16sp" />
-
-        
 
         <TextView
             android:id="@+id/email_profile"
@@ -62,6 +60,27 @@
             android:gravity="left"
             android:text=""
             android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/my_vehicles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/email_profile"
+            android:layout_marginTop="15sp"
+            android:layout_marginRight="5sp"
+            android:gravity="center"
+            android:text="My Vehicles" />
+
+        <Button
+            android:id="@+id/my_deals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/my_vehicles"
+            android:layout_marginRight="5sp"
+            android:gravity="center"
+            android:text="My Deals" />
     </RelativeLayout>
 
     <Button
@@ -70,6 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/user_layout"
         android:layout_below="@+id/user_layout"
+        android:layout_marginTop="15sp"
         android:layout_marginRight="5sp"
         android:gravity="center"
         android:text="Sign In" />
