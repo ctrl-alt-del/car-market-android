@@ -79,19 +79,10 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
 		holder.Vin.setText(vehicle.getVin());
 		holder.Price.setText(listing.getCurrency() + " " + listing.getPrice());
-		
+
 		int p = Integer.valueOf(listing.getPrice());
-		
-		if (p <= 3000) {
-			holder.Price.setBackgroundColor(this.activity.getResources().getColor(R.color.dark_red));
-		} else if (p > 3000 && p <= 6000) {
-			holder.Price.setBackgroundColor(this.activity.getResources().getColor(R.color.dark_yellow));
-		} else if (p > 6000 && p <= 9000) {
-			holder.Price.setBackgroundColor(this.activity.getResources().getColor(R.color.dark_blue));
-		} else {
-			holder.Price.setBackgroundColor(this.activity.getResources().getColor(R.color.dark_green));
-		}
-		
+		holder.Price.setBackgroundColor(this.activity.getResources().getColor(this.getColorByPrice(p)));
+
 		String state = !StringUtils.isBlank(listing.getState()) ? ", " + listing.getState() : "";
 		holder.Location.setText(listing.getCity() + state);
 
@@ -125,10 +116,10 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 			switch (btnActionHolder.getButtonAction()) {
 			case LIKE:
-				
+
 				LinkedList<Vehicle> data = JsonDB.getVehiclesFromJsonDB(this.activity, 
 						this.activity.getString(R.string.CM_USER_WISHLIST));
-				
+
 				// TODO: this is O(n), will find a better solution later.
 				for (Vehicle each : data) {
 					if (each.getVin().equals(vehicle.getVin())) {
@@ -201,5 +192,29 @@ public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 		public Vehicle getVehicle() {
 			return this.vehicle;
 		}
+	}
+
+	/**
+	 * Method to get the color theme base on price
+	 * 
+	 * @param price
+	 * 
+	 * @since 2014-08-30
+	 * @version 1.0
+	 * */
+	private int getColorByPrice(int price) {
+		if (price <= 3000) {
+			return R.color.dark_red;
+		}
+
+		if (price <= 6000) {
+			return R.color.dark_yellow;
+		}
+
+		if (price <= 9000) {
+			return R.color.dark_blue;
+		}
+
+		return R.color.dark_green;
 	}
 }
