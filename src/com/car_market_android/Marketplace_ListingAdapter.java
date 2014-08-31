@@ -20,13 +20,13 @@ import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.JsonDB;
 
 
-public class VehicleAdapter extends BaseAdapter implements View.OnClickListener{
+public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnClickListener{
 
 	Activity activity;
 	List<Listing> listings;
 	private SharedPreferences sharedPreferences;
 
-	public VehicleAdapter(Activity activity, List<Listing> rows) {
+	public Marketplace_ListingAdapter(Activity activity, List<Listing> rows) {
 		this.activity = activity;
 		this.listings = rows;
 		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);

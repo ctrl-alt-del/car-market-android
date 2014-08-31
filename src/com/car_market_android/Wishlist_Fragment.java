@@ -27,7 +27,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-public class WishlistFragment extends Fragment 
+public class Wishlist_Fragment extends Fragment 
 implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
 	/**
 	 * The fragment argument representing the section number for this
@@ -37,7 +37,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 	private ListView Vehicle_Listview;
 	private SwipeRefreshLayout swipeRefreshLayout;
-	private VehicleAdapterWishlist vadp;
+	private Wishlist_VehicleAdapter vadp;
 	private LinkedList<Vehicle> data = new LinkedList<Vehicle>();
 
 	private SharedPreferences sharedPreferences;
@@ -52,15 +52,15 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	 * Returns a new instance of this fragment for the given section
 	 * number.
 	 */
-	public static WishlistFragment newInstance(int sectionNumber) {
-		WishlistFragment fragment = new WishlistFragment();
+	public static Wishlist_Fragment newInstance(int sectionNumber) {
+		Wishlist_Fragment fragment = new Wishlist_Fragment();
 		Bundle args = new Bundle();
 		args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public WishlistFragment() {}
+	public Wishlist_Fragment() {}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +77,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 		this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.vehicle_index_wishlist_list);
 
-		this.vadp = new VehicleAdapterWishlist(getActivity(), data);
+		this.vadp = new Wishlist_VehicleAdapter(getActivity(), data);
 		this.Vehicle_Listview.setAdapter(this.vadp);
 
 		this.swipeRefreshLayout.setOnRefreshListener(this);

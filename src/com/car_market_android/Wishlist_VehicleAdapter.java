@@ -17,14 +17,14 @@ import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.JsonDB;
 
 
-public class VehicleAdapterWishlist extends BaseAdapter implements View.OnClickListener{
+public class Wishlist_VehicleAdapter extends BaseAdapter implements View.OnClickListener{
 
 	Activity activity;
 	List<Vehicle> vehicles;
 	private SharedPreferences sharedPreferences;
 	private boolean dataChanged = false;
 
-	public VehicleAdapterWishlist(Activity activity, List<Vehicle> rows) {
+	public Wishlist_VehicleAdapter(Activity activity, List<Vehicle> rows) {
 		this.activity = activity;
 		this.vehicles = rows;
 		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);

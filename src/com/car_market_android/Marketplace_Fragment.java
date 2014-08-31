@@ -25,7 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-public class MarketplaceFragment extends Fragment 
+public class Marketplace_Fragment extends Fragment 
 implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
 	/**
 	 * The fragment argument representing the section number for this
@@ -35,7 +35,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 	private ListView Vehicle_Listview;
 	private SwipeRefreshLayout swipeRefreshLayout;
-	private VehicleAdapter vadp;
+	private Marketplace_ListingAdapter vadp;
 	private LinkedList<Listing> data = new LinkedList<Listing>();
 	
 	/** 
@@ -48,15 +48,15 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	 * Returns a new instance of this fragment for the given section
 	 * number.
 	 */
-	public static MarketplaceFragment newInstance(int sectionNumber) {
-		MarketplaceFragment fragment = new MarketplaceFragment();
+	public static Marketplace_Fragment newInstance(int sectionNumber) {
+		Marketplace_Fragment fragment = new Marketplace_Fragment();
 		Bundle args = new Bundle();
 		args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public MarketplaceFragment() {}
+	public Marketplace_Fragment() {}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +72,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 		this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.vehicle_index_list);
 
-		this.vadp = new VehicleAdapter(getActivity(), data);
+		this.vadp = new Marketplace_ListingAdapter(getActivity(), data);
 		this.Vehicle_Listview.setAdapter(this.vadp);
 
 		this.swipeRefreshLayout.setOnRefreshListener(this);

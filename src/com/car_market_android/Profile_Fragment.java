@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class AuthFragment extends Fragment implements OnClickListener {
+public class Profile_Fragment extends Fragment implements OnClickListener {
 	/**
 	 * The fragment argument representing the section number for this
 	 * fragment.
@@ -49,15 +49,15 @@ public class AuthFragment extends Fragment implements OnClickListener {
 	 * Returns a new instance of this fragment for the given section
 	 * number.
 	 */
-	public static AuthFragment newInstance(int sectionNumber) {
-		AuthFragment fragment = new AuthFragment();
+	public static Profile_Fragment newInstance(int sectionNumber) {
+		Profile_Fragment fragment = new Profile_Fragment();
 		Bundle args = new Bundle();
 		args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public AuthFragment() {}
+	public Profile_Fragment() {}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
