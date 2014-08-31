@@ -69,7 +69,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		EventsBus.getInstance().register(this);
 
-		View rootView = inflater.inflate(R.layout.vehicle_index_wishlist, container, false);
+		View rootView = inflater.inflate(R.layout.wishlist_fragment, container, false);
 
 		this.swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.vehicle_index_wishlist_swipe);
 		this.swipeRefreshLayout.setColorScheme(R.color.dark_blue, R.color.dark_green, R.color.dark_red, R.color.dark_yellow);

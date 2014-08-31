@@ -76,7 +76,7 @@ public class Wishlist_VehicleAdapter extends BaseAdapter implements View.OnClick
 
 			holder = new VehicleIndexRowViewHolder();
 
-			convertView = View.inflate(this.activity, R.layout.vehicle_index_wishlist_row, null);
+			convertView = View.inflate(this.activity, R.layout.wishlist_fragment_row, null);
 			holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_mmy);
 			holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_vin);
 			holder.Delete = (Button) convertView.findViewById(R.id.vehicle_index_wishlist_row_delete);

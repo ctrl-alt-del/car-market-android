@@ -64,7 +64,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 		EventsBus.getInstance().register(this);
 
-		View rootView = inflater.inflate(R.layout.vehicle_index, container, false);
+		View rootView = inflater.inflate(R.layout.marketplace_fragment, container, false);
 
 		this.swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_vehicle_index);
 		this.swipeRefreshLayout.setColorScheme(R.color.dark_blue, R.color.dark_green, R.color.dark_red, R.color.dark_yellow);

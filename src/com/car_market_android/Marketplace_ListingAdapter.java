@@ -54,7 +54,7 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 
 			holder = new VehicleIndexRowViewHolder();
 
-			convertView = View.inflate(this.activity, R.layout.vehicle_index_marketplace_row, null);
+			convertView = View.inflate(this.activity, R.layout.marketplace_fragment_row, null);
 			holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_row_mmy);
 			holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_row_vin);
 			holder.Price = (TextView) convertView.findViewById(R.id.vehicle_index_row_price);
