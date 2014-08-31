@@ -68,8 +68,8 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 			holder.Price = (TextView) convertView.findViewById(R.id.vehicle_index_row_price);
 			holder.Location = (TextView) convertView.findViewById(R.id.vehicle_index_row_location);
 			holder.Like = (Button) convertView.findViewById(R.id.vehicle_index_row_like);
-//			holder.Buy = (Button) convertView.findViewById(R.id.vehicle_index_row_buy);
-//			holder.Review = (Button) convertView.findViewById(R.id.vehicle_index_row_review);
+			//			holder.Buy = (Button) convertView.findViewById(R.id.vehicle_index_row_buy);
+			//			holder.Review = (Button) convertView.findViewById(R.id.vehicle_index_row_review);
 
 			convertView.setTag(holder);
 		} else {
@@ -91,15 +91,15 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 		holder.Like.setTag(likeAH);
 		holder.Like.setOnClickListener(this);
 
-//		VehicleIndexRowButtonActionHolder buyAH = new VehicleIndexRowButtonActionHolder(ButtonAction.BUY, vehicle);
-//
-//		holder.Buy.setTag(buyAH);
-//		holder.Buy.setOnClickListener(this);
-//
-//		VehicleIndexRowButtonActionHolder reviewAH = new VehicleIndexRowButtonActionHolder(ButtonAction.REVIEW, vehicle);
-//
-//		holder.Review.setTag(reviewAH);
-//		holder.Review.setOnClickListener(this);
+		//		VehicleIndexRowButtonActionHolder buyAH = new VehicleIndexRowButtonActionHolder(ButtonAction.BUY, vehicle);
+		//
+		//		holder.Buy.setTag(buyAH);
+		//		holder.Buy.setOnClickListener(this);
+		//
+		//		VehicleIndexRowButtonActionHolder reviewAH = new VehicleIndexRowButtonActionHolder(ButtonAction.REVIEW, vehicle);
+		//
+		//		holder.Review.setTag(reviewAH);
+		//		holder.Review.setOnClickListener(this);
 
 		return convertView;
 	}
@@ -161,8 +161,8 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 		protected TextView Price;
 		protected TextView Location;
 		protected Button Like;
-		protected Button Review;
-		protected Button Buy;
+		//		protected Button Review;
+		//		protected Button Buy;
 	}
 
 	/**
