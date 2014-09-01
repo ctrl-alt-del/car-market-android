@@ -39,6 +39,7 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 	private Button Authentication;
 	private Button User_update;
 	private Button Registration;
+	private Button My_vehicles;
 	private TextView Email_profile;
 	private TextView Nickname_profile;
 	private RelativeLayout User_layout;
@@ -71,6 +72,7 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 		this.Authentication = (Button) rootView.findViewById(R.id.authentication);
 		this.User_update = (Button) rootView.findViewById(R.id.user_update);
 		this.Registration = (Button) rootView.findViewById(R.id.registration);
+		this.My_vehicles = (Button) rootView.findViewById(R.id.my_vehicles);
 
 		this.User_layout = (RelativeLayout) rootView.findViewById(R.id.user_layout);
 		this.Email_profile = (TextView) rootView.findViewById(R.id.email_profile);
@@ -79,6 +81,7 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 		this.Authentication.setOnClickListener(this);
 		this.User_update.setOnClickListener(this);
 		this.Registration.setOnClickListener(this);
+		this.My_vehicles.setOnClickListener(this);
 
 		if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
 			this.setUserView();
@@ -113,6 +116,10 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 		case R.id.registration:
 			Intent registration_intent = new Intent(getActivity(), UserCreate.class);
 			startActivity(registration_intent);
+			break;
+		case R.id.my_vehicles:
+			Intent myvehicle_intent = new Intent(getActivity(), MyVehicle.class);
+			startActivity(myvehicle_intent);
 			break;
 		default:
 			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
