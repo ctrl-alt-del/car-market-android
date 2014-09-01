@@ -24,43 +24,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".UserAuth"
             android:label="UserAuth"
             android:screenOrientation="portrait"
-            android:theme="@style/PopupTheme" >     
-             <intent-filter>
+            android:theme="@style/PopupTheme" >
+            <intent-filter>
                 <action android:name="com.car_market_android.UserAuth" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".UserCreate"
             android:label="UserCreate"
             android:screenOrientation="portrait"
-            android:theme="@style/PopupTheme" >     
-             <intent-filter>
+            android:theme="@style/PopupTheme" >
+            <intent-filter>
                 <action android:name="com.car_market_android.UserCreate" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".UserUpdate"
             android:label="UserUpdate"
             android:screenOrientation="portrait"
-            android:theme="@style/PopupTheme" >     
-             <intent-filter>
+            android:theme="@style/PopupTheme" >
+            <intent-filter>
                 <action android:name="com.car_market_android.UserUpdate" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".MyVehicle"
             android:label="MyVehicle"
