@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
@@ -24,7 +25,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	 * {@link android.support.v13.app.FragmentStatePagerAdapter}.
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
-	
+
 	private String profileResult = "No profile info";
 
 
@@ -36,7 +37,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	public void setProfileResult(String profileResult) {
 		this.profileResult = profileResult;
 	}
-	
+
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -87,7 +88,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -95,11 +96,13 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		switch (item.getItemId()) {
+		case R.id.action_settings:
+			Toast.makeText(this, "settings button on action bar is clicked...", Toast.LENGTH_LONG).show();
 			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
