@@ -64,8 +64,15 @@
         <activity
             android:name=".MyVehicle"
             android:label="MyVehicle"
+            android:parentActivityName="com.car_market_android.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.car_market_android.MainActivity" />
+
             <intent-filter>
                 <action android:name="com.car_market_android.MyVehicle" />
 

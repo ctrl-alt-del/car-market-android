@@ -14,6 +14,7 @@ public class MyVehicle extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.my_vehicles);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	@Override
