@@ -61,6 +61,17 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name=".MyVehicle"
+            android:label="MyVehicle"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="com.car_market_android.MyVehicle" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
