@@ -76,9 +76,9 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 
 			holder = new VehicleIndexRowViewHolder();
 
-			convertView = View.inflate(this.activity, R.layout.wishlist_fragment_row, null);
-			holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_mmy);
-			holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_vin);
+			convertView = View.inflate(this.activity, R.layout.my_vehicles_row, null);
+			holder.Title = (TextView) convertView.findViewById(R.id.my_vehicle_row_mmy);
+			holder.Vin = (TextView) convertView.findViewById(R.id.my_vehicle_row_vin);
 
 			convertView.setTag(holder);
 		} else {
