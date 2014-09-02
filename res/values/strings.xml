@@ -13,6 +13,8 @@
     <string name="SIGN_IN">sign_in</string>
     <string name="REFRESH_MARKETPLACE">refresh_marketplace</string>
     <string name="LOAD_MORE_MARKETPLACE">load_more_marketplace</string>
+    
+    <string name="MY_VEHICLE_REFRESH">my_vehicle_refresh</string>
 
     <string name="REFRESH_WISHLIST">refresh_wishlist</string>
     <string name="LOAD_MORE_WISHLIST">load_more_wishlist</string>
