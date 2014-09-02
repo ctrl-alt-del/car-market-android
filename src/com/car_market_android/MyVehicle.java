@@ -2,12 +2,22 @@ package com.car_market_android;
 
 import java.util.LinkedList;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
+import com.car_market_android.network.GetRequest;
+import com.car_market_android.network.GetRequestResultEvent;
 import com.car_market_android.util.EventsBus;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.squareup.otto.Subscribe;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +39,8 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 	 * while it is performing.
 	 * */
 	private boolean isLoadingMore = false;
+	
+	private SharedPreferences sharedPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +48,7 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 		setContentView(R.layout.my_vehicles);
 
 		EventsBus.getInstance().register(this);
+		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -132,7 +145,25 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 
 				data.clear();
 				// TODO: add swipe to reload feature
+				
+				String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), "");
+				long user_id = sharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
 
+				if (StringUtils.isBlank(token) || user_id == -1) {
+					
+					/** if the user is not sign in, s/he technically will not able
+					 * to find the way to this page and activity, but in case s/he
+					 * somehow does.  This condition will send s/he back to the
+					 * profile_fragment.
+					 */
+					onBackPressed();
+					return;
+				} else {
+					new GetRequest(R.string.MY_VEHICLE_REFRESH)
+					.setAuthToken(token)
+					.execute(getString(R.string.CM_API_ADDRESS) + "/users/" + user_id + "/vehicles");
+				}
+				
 				// swipeRefreshLayout.setRefreshing(false);
 			}
 		}, 3000);
@@ -146,5 +177,29 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 			Toast.makeText(this, "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
 			break;
 		}		
+	}
+	
+	@Subscribe
+	public void onGetRequestTaskResult(GetRequestResultEvent event) {
+
+		Gson gson = new GsonBuilder().create();
+		Vehicle[] vehicles;
+
+		switch (event.getCaller()) {
+		case R.string.MY_VEHICLE_REFRESH:
+
+			vehicles = gson.fromJson(event.getResult(), Vehicle[].class);
+
+			for (Vehicle each : vehicles) {
+				this.data.add(each);
+			}
+
+			this.adapter.notifyDataSetChanged();
+			this.swipeRefreshLayout.setRefreshing(false);
+
+			break;
+		default:
+			break;
+		}
 	}
 }
