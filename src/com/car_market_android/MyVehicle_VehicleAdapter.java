@@ -79,7 +79,6 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 			convertView = View.inflate(this.activity, R.layout.wishlist_fragment_row, null);
 			holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_mmy);
 			holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_vin);
-			holder.Delete = (Button) convertView.findViewById(R.id.vehicle_index_wishlist_row_delete);
 
 			convertView.setTag(holder);
 		} else {
@@ -90,10 +89,10 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 		holder.Vin.setText(vehicle.getVin());
 
 
-		VehicleIndexRowButtonActionHolder deleteAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);
-
-		holder.Delete.setTag(deleteAH);
-		holder.Delete.setOnClickListener(this);
+//		VehicleIndexRowButtonActionHolder deleteAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);
+//
+//		holder.Delete.setTag(deleteAH);
+//		holder.Delete.setOnClickListener(this);
 
 
 		return convertView;
@@ -134,7 +133,6 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 
 		protected TextView Title;
 		protected TextView Vin;
-		protected Button Delete;
 	}
 
 	/**
