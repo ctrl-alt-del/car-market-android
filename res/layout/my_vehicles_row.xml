@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.car_market_android.MainActivity$AuthFragment" >
+
+    <RelativeLayout
+        android:id="@+id/my_vehicle_row_layout"
+        android:layout_width="match_parent"
+        android:layout_height="180sp"
+        android:layout_margin="5sp" >
+
+        <Switch
+            android:id="@+id/my_vehicle_row_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" />
+
+        <RelativeLayout
+            android:id="@+id/my_vehicle_row_thumbnail_frame"
+            android:layout_width="250sp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" >
+
+            <ImageView
+                android:id="@+id/my_vehicle_row_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/ic_launcher" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="120sp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/transparent_dark_gradient_180" >
+
+            <TextView
+                android:id="@+id/my_vehicle_row_mmy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp"
+                android:layout_marginTop="5sp"
+                android:gravity="right"
+                android:text="MMY"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/my_vehicle_row_vin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/my_vehicle_row_mmy"
+                android:layout_marginBottom="5sp"
+                android:layout_marginTop="5sp"
+                android:gravity="right"
+                android:text="vin"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
