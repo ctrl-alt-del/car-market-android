@@ -1,20 +1,47 @@
 package com.car_market_android;
 
+import java.util.LinkedList;
+
+import com.car_market_android.model.Listing;
+import com.car_market_android.model.Vehicle;
+import com.car_market_android.util.EventsBus;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class MyVehicle extends Activity {
-
+	
+	private ListView MyVehicle_Listview;
+	private SwipeRefreshLayout swipeRefreshLayout;
+	private MyVehicle_VehicleAdapter adapter;
+	private LinkedList<Vehicle> data = new LinkedList<Vehicle>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.my_vehicles);
 		
+		EventsBus.getInstance().register(this);
+		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		
+		this.swipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.my_vehicle_swipe);
+		this.swipeRefreshLayout.setColorScheme(R.color.dark_blue, R.color.dark_green, R.color.dark_red, R.color.dark_yellow);
+		this.swipeRefreshLayout.setEnabled(false);
+
+		this.MyVehicle_Listview = (ListView) this.findViewById(R.id.my_vehicle_list);
+
+		this.adapter = new MyVehicle_VehicleAdapter(this, data);
+		this.MyVehicle_Listview.setAdapter(this.adapter);
+		this.MyVehicle_Listview.requestFocus();
+		
 	}
 	
 	@Override
