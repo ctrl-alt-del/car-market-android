@@ -39,7 +39,7 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 	 * while it is performing.
 	 * */
 	private boolean isLoadingMore = false;
-	
+
 	private SharedPreferences sharedPreferences;
 
 	@Override
@@ -62,8 +62,8 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 		this.adapter = new MyVehicle_VehicleAdapter(this, data);
 		this.MyVehicle_Listview.setAdapter(this.adapter);
 
-		//		this.swipeRefreshLayout.setOnRefreshListener(this);
-		//		this.MyVehicle_Listview.setOnScrollListener(this);
+		this.swipeRefreshLayout.setOnRefreshListener(this);
+		this.MyVehicle_Listview.setOnScrollListener(this);
 
 		this.MyVehicle_Listview.requestFocus();
 
@@ -89,7 +89,7 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		EventsBus.getInstance().unregister(this);
@@ -145,12 +145,12 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 
 				data.clear();
 				// TODO: add swipe to reload feature
-				
+
 				String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), "");
 				long user_id = sharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
 
 				if (StringUtils.isBlank(token) || user_id == -1) {
-					
+
 					/** if the user is not sign in, s/he technically will not able
 					 * to find the way to this page and activity, but in case s/he
 					 * somehow does.  This condition will send s/he back to the
@@ -163,7 +163,7 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 					.setAuthToken(token)
 					.execute(getString(R.string.CM_API_ADDRESS) + "/users/" + user_id + "/vehicles");
 				}
-				
+
 				// swipeRefreshLayout.setRefreshing(false);
 			}
 		}, 3000);
@@ -178,7 +178,7 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 			break;
 		}		
 	}
-	
+
 	@Subscribe
 	public void onGetRequestTaskResult(GetRequestResultEvent event) {
 
