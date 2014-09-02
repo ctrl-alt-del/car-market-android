@@ -76,6 +76,21 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	@Override
+	public void onDestroy() {
+		EventsBus.getInstance().unregister(this);
+		super.onDestroy();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		if (this.data.size() == 0) {
+			this.onRefresh();
+		}
+	}
 
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {}
