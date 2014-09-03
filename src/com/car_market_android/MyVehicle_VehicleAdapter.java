@@ -8,13 +8,15 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.car_market_android.R;
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.util.JsonDB;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClickListener{
@@ -79,6 +81,7 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 			convertView = View.inflate(this.activity, R.layout.my_vehicles_row, null);
 			holder.Title = (TextView) convertView.findViewById(R.id.my_vehicle_row_mmy);
 			holder.Vin = (TextView) convertView.findViewById(R.id.my_vehicle_row_vin);
+			holder.Listing_switch = (Switch) convertView.findViewById(R.id.my_vehicle_row_switch);
 
 			convertView.setTag(holder);
 		} else {
@@ -88,13 +91,14 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 		holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
 		holder.Vin.setText(vehicle.getVin());
 
+		
 
-//		VehicleIndexRowButtonActionHolder deleteAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);
-//
-//		holder.Delete.setTag(deleteAH);
-//		holder.Delete.setOnClickListener(this);
+		VehicleIndexRowButtonActionHolder switchAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LISTING_SWITCH, vehicle);
+		holder.Listing_switch.setTag(switchAH);
+		holder.Listing_switch.setOnClickListener(this);
 
 
+		vehicleId2ListPosition.put(vehicle.getId(), position);
 		return convertView;
 	}
 
@@ -109,12 +113,9 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 			Vehicle vehicle = btnActionHolder.getVehicle();
 
 			switch (btnActionHolder.getButtonAction()) {
-			case LIKE:
-				Toast.makeText(this.activity, "Delete is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
-
-				vehicles.remove(vehicle);
-				this.notifyDataSetChanged();
-				this.dataChanged = true;
+			case LISTING_SWITCH:
+				Toast.makeText(this.activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+				
 				
 				break;
 			default:
