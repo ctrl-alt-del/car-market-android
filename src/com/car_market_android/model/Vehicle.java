@@ -1,6 +1,8 @@
 package com.car_market_android.model;
 
 public class Vehicle {
+	
+	private int id;
 	private String vin;
 	private String manufacturer;
 	private String model;
@@ -11,6 +13,20 @@ public class Vehicle {
 	private String created_at;
 	private String updated_at;
 	
+	
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return this.id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public Vehicle setId(int id) {
+		this.id = id;
+		return this;
+	}
 	public String getVin() {
 		return this. vin;
 	}
