@@ -10,5 +10,6 @@ public enum ButtonAction {
 	LIKE,
 	BUY,
 	REVIEW,
-	DELETE
+	DELETE,
+	LISTING_SWITCH
 }
