@@ -54,6 +54,9 @@ Putting AsyncTask right under its corresponding activity class works well for si
 
 [**>>> BACK TO TOP**](#table-of-contents)
 
+2. **Serialization Database**
+Inspired by modules in other language, such as the pickle module in Python.
+
 ## Dependencies
 #### [Otto](http://square.github.io/otto/)
 <br>
