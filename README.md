@@ -6,6 +6,7 @@ This is an demo mobile app that consumes this [API](https://github.com/ctrl-alt-
   * [**Setup**](#setup)
   * [**Desgin Decisions**](#design-decisions)
   * [**Dependencies**](#dependencies)
+  * [**Todo List**](#todo-list)
 
 
 ## Setup
@@ -74,10 +75,11 @@ A Java library used to handle conversion between Java object and its JSON string
 [**>>> BACK TO TOP**](#table-of-contents)
 
 ## TODO List
-[**Volley**](http://developer.android.com/training/volley/index.html)
+[**Volley**](http://developer.android.com/training/volley/index.html) vs.[**OkHttp**](http://square.github.io/okhttp/)
 <br>
 Volley was introduced in Google I/O 2013.  It is a library that makes HTTP network connection easier and faster.  It has many cool features such as auto-scheduling, queueing, prioritization, managing concurrent connections, caching results and etc.
 
+Whereas OkHttp is a very easy to use http client built by Square, and it supports both synchronous blocking calls and asynchronous calls with callbacks.
 
 [**Jackson**](http://jackson.codehaus.org/) or [**Boon**](https://github.com/RichardHightower/boon) to replace GSON
 <br>
