@@ -52,26 +52,23 @@ It gives you an easy way to organize your AsyncTasks, or any tasks that would ta
 <br><br>
 Putting AsyncTask right under its corresponding activity class works well for simple cases, but once I have multiple AsyncTasks running, problems emerge.  First of all, results of the AsyncTasks can be lost unless you put significant efforts to track them; tracking few AsyncTasks takes efforts yet it is still doable, but these efforts and code complexity can increase dramatically if you have double digits of AsyncTasks running.  Second, I occasionally get out of memory error and I found out that is because AsyncTasks have an implicit reference to their activity, which leads the AsyncTasks to be destroyed if their activity changed, but they are not garbage collected (GC) until they finish, so it causes potential memory issue if there are multiple AsyncTasks on the activity.
 
-[**>>> BACK TO TOP**](#table-of-contents)
-
-2. **Serialization Database**
-Inspired by modules in other language, such as the pickle module in Python.
+2. **Serialization "Database"**
+<br>
+Inspired by modules in other language, such as the pickle module in Python as well as concepts of document type database.
+<br><br>
+Since most of the information used in this app is time sensitive, meaning it needs to get the latest information from the server frequently, there isn't much motivation for me to spend too much effort on setting up a SQLite  database for the app.  Therefore, I decided to only store the essential information on the SharedPreferences.
 
 ## Dependencies
-#### [Otto](http://square.github.io/otto/)
-<br>
+#### [**Otto**](http://square.github.io/otto/)
 I use it as an singleton event bus to better organize my AsyncTasks.  Activities will register themselves onCreate() and unregister themselves onDestroy(), and they will subscribe to the results of AsyncTasks once they are available.
 
-[**Apache Commons Validator**](http://commons.apache.org/proper/commons-validator/)
-<br>
+#### [**Apache Commons Validator**](http://commons.apache.org/proper/commons-validator/)
 An commons validator for data or user inputs.  I use its EmailValidator class to validate the emails inputed by users.
 
-[**Apache Commons Lang**](http://commons.apache.org/proper/commons-lang/)
-<br>
+#### [**Apache Commons Lang**](http://commons.apache.org/proper/commons-lang/)
 An helper utilities with extra methods for the java.lang API.  I mainly use its extra methods to do verification and manipulation on strings.
 
-[**GSON**](https://code.google.com/p/google-gson/)
-<br>
+#### [**GSON**](https://code.google.com/p/google-gson/)
 A Java library used to handle conversion between Java object and its JSON string, and vice versa.  I use it to parse the JSON string received from restful API calls into models in Java for convenient access.
 
 [**>>> BACK TO TOP**](#table-of-contents)
