@@ -1,4 +1,5 @@
 package com.car_market_android;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -13,10 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.car_market_android.R;
+import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
+import com.car_market_android.network.GetRequestResultEvent;
 import com.car_market_android.util.JsonDB;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.otto.Subscribe;
 
 
 public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClickListener{
@@ -25,6 +29,7 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 	List<Vehicle> vehicles;
 	private SharedPreferences sharedPreferences;
 	private boolean dataChanged = false;
+	private HashMap<Integer, Integer> vehicleId2ListPosition = new HashMap<Integer, Integer>();
 
 	public MyVehicle_VehicleAdapter(Activity activity, List<Vehicle> rows) {
 		this.activity = activity;
@@ -116,6 +121,8 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 			case LISTING_SWITCH:
 				Toast.makeText(this.activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 				
+//				new GetRequest(R.string.MY_VEHICLE_SHOW_LISTING)
+//				.execute(this.activity.getString(R.string.CM_API_ADDRESS) + "/vehicles/"+ vehicle.getId() +"/listing");
 				
 				break;
 			default:
@@ -134,6 +141,7 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 
 		protected TextView Title;
 		protected TextView Vin;
+		protected Switch Listing_switch;
 	}
 
 	/**
@@ -162,6 +170,22 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 
 		public Vehicle getVehicle() {
 			return this.vehicle;
+		}
+	}
+	
+	@Subscribe
+	public void onGetRequestTaskResult(GetRequestResultEvent event) {
+
+		Gson gson = new GsonBuilder().create();
+
+		switch (event.getCaller()) {
+		case R.string.MY_VEHICLE_SHOW_LISTING:
+			Listing listing = gson.fromJson(event.getResult(), Listing.class);
+			
+			int position = vehicleId2ListPosition.get(listing.getVehicle().getId());
+			break;
+		default:
+			break;
 		}
 	}
 }
