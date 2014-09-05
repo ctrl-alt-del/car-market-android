@@ -22,7 +22,7 @@
         android:id="@+id/submit_vehicle_create"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/vin_vehicle_create"
+        android:layout_alignBottom="@id/vin_vehicle_create"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:gravity="center"
