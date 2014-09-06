@@ -73,7 +73,7 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 		holder.Price.setText(listing.getCurrency() + " " + listing.getPrice());
 
 		int p = Integer.valueOf(listing.getPrice());
-		holder.Price.setBackgroundColor(this.activity.getResources().getColor(this.getColorByPrice(p)));
+		holder.Price.setTextColor(this.activity.getResources().getColor(this.getColorByPrice(p)));
 
 		String state = !StringUtils.isBlank(listing.getState()) ? ", " + listing.getState() : "";
 		holder.Location.setText(listing.getCity() + state);
@@ -82,16 +82,6 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 
 		holder.Like.setTag(likeAH);
 		holder.Like.setOnClickListener(this);
-
-		//		VehicleIndexRowButtonActionHolder buyAH = new VehicleIndexRowButtonActionHolder(ButtonAction.BUY, vehicle);
-		//
-		//		holder.Buy.setTag(buyAH);
-		//		holder.Buy.setOnClickListener(this);
-		//
-		//		VehicleIndexRowButtonActionHolder reviewAH = new VehicleIndexRowButtonActionHolder(ButtonAction.REVIEW, vehicle);
-		//
-		//		holder.Review.setTag(reviewAH);
-		//		holder.Review.setOnClickListener(this);
 
 		return convertView;
 	}
