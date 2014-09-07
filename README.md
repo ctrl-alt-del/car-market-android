@@ -90,6 +90,10 @@ Volley was introduced in Google I/O 2013.  It is a library that makes HTTP netwo
 
 Whereas OkHttp is a very easy to use http client built by Square, and it supports both synchronous blocking calls and asynchronous calls with callbacks.
 
+[**Retrofit**](http://square.github.io/retrofit/)
+<br>
+Retrofit is a type-safe REST client.  Since most of the request of this app are API calls, using Retrofit can standardize the code.  Moreover, since it supports GSON, it makes parsing returned object very convenient.
+
 [**Jackson**](http://jackson.codehaus.org/) or [**Boon**](https://github.com/RichardHightower/boon) to replace GSON
 <br>
 **Jackson** is a high performance JSON processor and so as **Boon**.  Since I serialize and deserialize JSON a lot, I would like to use something perform faster than GSON.
