@@ -186,6 +186,9 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 				data.clear();
 				// new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
 
+				/**
+				 * Modify the limit and offset parameters to enable the "load more" feature
+				 * */
 				ApiClient.getApiClient().getListings(1, 0, new Callback<List<Listing>>() {
 
 					@Override
