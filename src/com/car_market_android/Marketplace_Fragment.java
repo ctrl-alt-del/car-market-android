@@ -184,34 +184,36 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 				// TODO: add swipe to reload feature
 				data.clear();
-				//				new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
+				// new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
 
-				
+				ApiClient.getApiClient().getListings(1, 0, new Callback<List<Listing>>() {
+
+					@Override
+					public void success(List<Listing> listings, Response response) {
+						for (Listing each : listings) {
+							data.add(each);
+						}
+
+						vadp.notifyDataSetChanged();
+						swipeRefreshLayout.setRefreshing(false);
+					}
+
+					@Override
+					public void failure(RetrofitError retrofitError) {
+						/**
+						 * This message is for debug mode.
+						 * */
+						Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+						/**
+						 * This message is for production mode.
+						 * */
+						Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+					}
+
+				});
 
 
-								CarMarketApiInterface retrofitInterface = new RestAdapter.Builder()
-								.setEndpoint(getString(R.string.CM_API_ADDRESS)).build().create(CarMarketApiInterface.class);
-
-								retrofitInterface.getListings(1, 0, new Callback<List<Listing>>() {
-									@Override
-									public void success(List<Listing> listings, Response response) {
-										for (Listing each : listings) {
-											data.add(each);
-										}
-
-										vadp.notifyDataSetChanged();
-										swipeRefreshLayout.setRefreshing(false);
-									}
-
-									@Override
-									public void failure(RetrofitError retrofitError) {
-										Toast.makeText(getActivity(), "Connection issue, try again..", Toast.LENGTH_SHORT).show();
-									}
-
-								});
-
-
-								// swipeRefreshLayout.setRefreshing(false);
+				// swipeRefreshLayout.setRefreshing(false);
 			}
 		}, 3000);
 	}

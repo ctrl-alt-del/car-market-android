@@ -1,6 +1,5 @@
 package com.car_market_android;
 
-import android.content.Context;
 import retrofit.RestAdapter;
 
 public class ApiClient {

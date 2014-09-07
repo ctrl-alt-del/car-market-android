@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.GetRequest;
 import com.car_market_android.network.GetRequestResultEvent;
