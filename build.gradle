@@ -55,6 +55,7 @@ dependencies {
     compile('org.apache.httpcomponents:httpclient-android:4.3.3')
     compile('com.google.code.gson:gson:2.2.4')
     compile('joda-time:joda-time:2.3')
+    compile('com.squareup.retrofit:retrofit:1.7.0')
 }
 
 task wrapper(type: Wrapper) {
