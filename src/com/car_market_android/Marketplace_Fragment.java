@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import retrofit.Callback;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -42,7 +43,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 	private SwipeRefreshLayout swipeRefreshLayout;
 	private Marketplace_ListingAdapter vadp;
 	private LinkedList<Listing> data = new LinkedList<Listing>();
-	
+
 	/** 
 	 * isLoadingMore is used to prevent the LOAD_MORE action being perform again
 	 * while it is performing.
@@ -139,7 +140,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 			((MainActivity) getActivity()).setProfileResult(event.getResult());
 			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
-			
+
 			listings = gson.fromJson(event.getResult(), Listing[].class);
 
 			for (Listing each : listings) {
@@ -183,27 +184,34 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 				// TODO: add swipe to reload feature
 				data.clear();
-//				new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
+				//				new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
+
 				
-				ApiClient.getApiClient().getListings(1, 0, new Callback<List<Listing>>() {
-	                @Override
-	                public void success(List<Listing> listings, Response response) {
-	                	for (Listing each : listings) {
-	        				data.add(each);
-	        			}
 
-	        			vadp.notifyDataSetChanged();
-	        			swipeRefreshLayout.setRefreshing(false);
-	                }
 
-	                @Override
-	                public void failure(RetrofitError retrofitError) {
-	                    
-	                }
+								CarMarketApiInterface retrofitInterface = new RestAdapter.Builder()
+								.setEndpoint(getString(R.string.CM_API_ADDRESS)).build().create(CarMarketApiInterface.class);
 
-	            });
+								retrofitInterface.getListings(1, 0, new Callback<List<Listing>>() {
+									@Override
+									public void success(List<Listing> listings, Response response) {
+										for (Listing each : listings) {
+											data.add(each);
+										}
 
-				// swipeRefreshLayout.setRefreshing(false);
+										vadp.notifyDataSetChanged();
+										swipeRefreshLayout.setRefreshing(false);
+									}
+
+									@Override
+									public void failure(RetrofitError retrofitError) {
+										Toast.makeText(getActivity(), "Connection issue, try again..", Toast.LENGTH_SHORT).show();
+									}
+
+								});
+
+
+								// swipeRefreshLayout.setRefreshing(false);
 			}
 		}, 3000);
 	}
@@ -224,7 +232,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			if (this.data.size() >= 6) {
 				return;
 			}
-			
+
 			this.isLoadingMore = true;
 
 			// 2. download additional data
