@@ -1,6 +1,11 @@
 package com.car_market_android;
 
 import java.util.LinkedList;
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import com.car_market_android.model.Listing;
 import com.car_market_android.network.GetRequest;
@@ -178,7 +183,25 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 				// TODO: add swipe to reload feature
 				data.clear();
-				new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
+//				new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
+				
+				ApiClient.getApiClient().getListings(1, 0, new Callback<List<Listing>>() {
+	                @Override
+	                public void success(List<Listing> listings, Response response) {
+	                	for (Listing each : listings) {
+	        				data.add(each);
+	        			}
+
+	        			vadp.notifyDataSetChanged();
+	        			swipeRefreshLayout.setRefreshing(false);
+	                }
+
+	                @Override
+	                public void failure(RetrofitError retrofitError) {
+	                    
+	                }
+
+	            });
 
 				// swipeRefreshLayout.setRefreshing(false);
 			}
