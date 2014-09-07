@@ -59,6 +59,15 @@ Inspired by modules in other language, such as the pickle module in Python as we
 <br><br>
 Since most of the information used in this app is time sensitive, meaning it needs to get the latest information from the server frequently, there isn't much motivation for me to spend too much effort on setting up a SQLite  database for the app.  Therefore, I decided to only store the essential information on the SharedPreferences.
 
+3. **Swipe down to refresh**
+<br>
+This feature makes it easy and natural for users to refresh list view.
+
+4. **Swipe up to load more**
+<br>
+This feature makes it easy and natural for users to load more contents on the current list view.
+
+
 ## Dependencies
 #### [**Otto**](http://square.github.io/otto/)
 I use it as an singleton event bus to better organize my AsyncTasks.  Activities will register themselves onCreate() and unregister themselves onDestroy(), and they will subscribe to the results of AsyncTasks once they are available.
