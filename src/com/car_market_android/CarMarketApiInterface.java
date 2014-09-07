@@ -10,7 +10,7 @@ import com.car_market_android.model.Listing;
 
 public interface CarMarketApiInterface {
 	
-	@GET("/listing.json")
+	@GET("/listings.json")
     void getListings(@Query("limit") int limit, @Query("offset") int offset, Callback<List<Listing>> callback);
 
 }
