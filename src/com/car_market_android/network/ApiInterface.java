@@ -9,6 +9,7 @@ import retrofit.Callback;
 import java.util.List;
 
 import com.car_market_android.model.Listing;
+import com.car_market_android.model.User;
 import com.car_market_android.model.Vehicle;
 
 public interface ApiInterface {
@@ -39,4 +40,7 @@ public interface ApiInterface {
     void getVehicles(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<List<Vehicle>> callback);
 
 	
+	@GET("/users/{user_id}.json")
+    void getUser(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<List<User>> callback);
+
 }
