@@ -5,16 +5,16 @@ import retrofit.RestAdapter;
 public class ApiClient {
 
 	private static final String API_ENDPOINT = "http://car-market.herokuapp.com/api/v1";
-	private static CarMarketApiInterface sTwitchTvService;
+	private static ApiInterface sTwitchTvService;
 
-    public static CarMarketApiInterface getApiClient() {
+    public static ApiInterface getApiClient() {
     	
         if (sTwitchTvService == null) {
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint(API_ENDPOINT)
                     .build();
 
-            sTwitchTvService = restAdapter.create(CarMarketApiInterface.class);
+            sTwitchTvService = restAdapter.create(ApiInterface.class);
         }
 
         return sTwitchTvService;

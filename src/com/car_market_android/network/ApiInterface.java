@@ -11,7 +11,7 @@ import java.util.List;
 import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
 
-public interface CarMarketApiInterface {
+public interface ApiInterface {
 	
 	/**
 	 * Method to get listings through API
