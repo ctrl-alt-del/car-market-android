@@ -10,6 +10,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.car_market_android.model.Vehicle;
+import com.car_market_android.network.ApiClient;
 import com.car_market_android.network.GetRequest;
 import com.car_market_android.network.GetRequestResultEvent;
 import com.car_market_android.util.EventsBus;

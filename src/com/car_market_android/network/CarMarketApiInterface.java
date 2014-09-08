@@ -1,4 +1,4 @@
-package com.car_market_android;
+package com.car_market_android.network;
 
 import retrofit.http.GET;
 import retrofit.http.Header;
