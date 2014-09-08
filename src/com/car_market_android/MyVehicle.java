@@ -1,8 +1,13 @@
 package com.car_market_android;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.GetRequest;
@@ -32,6 +37,7 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 	private SwipeRefreshLayout swipeRefreshLayout;
 	private MyVehicle_VehicleAdapter adapter;
 	private LinkedList<Vehicle> data = new LinkedList<Vehicle>();
+	private Activity activity;
 
 	/** 
 	 * isLoadingMore is used to prevent the LOAD_MORE action being perform again
@@ -43,6 +49,7 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		this.activity = this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.my_vehicles);
 
@@ -158,9 +165,38 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 					onBackPressed();
 					return;
 				} else {
-					new GetRequest(R.string.MY_VEHICLE_REFRESH)
-					.setAuthToken(token)
-					.execute(getString(R.string.CM_API_ADDRESS) + "/users/" + user_id + "/vehicles");
+//					new GetRequest(R.string.MY_VEHICLE_REFRESH)
+//					.setAuthToken(token)
+//					.execute(getString(R.string.CM_API_ADDRESS) + "/users/" + user_id + "/vehicles");
+//				
+					/**
+					 * Modify the limit and offset parameters to enable the "load more" feature
+					 * */
+					ApiClient.getApiClient().getVehicles(user_id, "Token " + token, new Callback<List<Vehicle>>() {
+
+						@Override
+						public void success(List<Vehicle> vehicles, Response response) {
+							for (Vehicle each : vehicles) {
+								data.add(each);
+							}
+
+							adapter.notifyDataSetChanged();
+							swipeRefreshLayout.setRefreshing(false);
+						}
+
+						@Override
+						public void failure(RetrofitError retrofitError) {
+							/**
+							 * This message is for debug mode.
+							 * */
+							Toast.makeText(activity, retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+							/**
+							 * This message is for production mode.
+							 * */
+							Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+						}
+
+					});
 				}
 
 				// swipeRefreshLayout.setRefreshing(false);
