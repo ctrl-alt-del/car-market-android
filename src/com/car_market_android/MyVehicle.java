@@ -11,7 +11,6 @@ import retrofit.client.Response;
 
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.ApiClient;
-import com.car_market_android.network.GetRequest;
 import com.car_market_android.network.GetRequestResultEvent;
 import com.car_market_android.util.EventsBus;
 import com.google.gson.Gson;
@@ -173,7 +172,7 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 					/**
 					 * Modify the limit and offset parameters to enable the "load more" feature
 					 * */
-					ApiClient.getApiClient().getVehicles(user_id, "Token " + token, new Callback<List<Vehicle>>() {
+					ApiClient.getApiClient(activity).getVehicles(user_id, "Token " + token, new Callback<List<Vehicle>>() {
 
 						@Override
 						public void success(List<Vehicle> vehicles, Response response) {

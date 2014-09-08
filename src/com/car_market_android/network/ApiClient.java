@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 import retrofit.RestAdapter;
 
 public class ApiClient {
@@ -11,8 +12,12 @@ public class ApiClient {
 	private static final String API_ENDPOINT = "http://car-market.herokuapp.com/api/v1";
 	private static ApiInterface sTwitchTvService;
 
-    public static ApiInterface getApiClient() {
+    public static ApiInterface getApiClient(Activity activity) {
     	
+		if (!isNetworkConnected(activity)) {
+			Toast.makeText(activity, "Please connect to internet...", Toast.LENGTH_SHORT).show();
+			return null;
+		}
         if (sTwitchTvService == null) {
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint(API_ENDPOINT)

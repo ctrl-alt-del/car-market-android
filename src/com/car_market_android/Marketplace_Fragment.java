@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -190,7 +189,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 				/**
 				 * Modify the limit and offset parameters to enable the "load more" feature
 				 * */
-				ApiClient.getApiClient().getListings(1, 0, new Callback<List<Listing>>() {
+				ApiClient.getApiClient(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
 
 					@Override
 					public void success(List<Listing> listings, Response response) {
