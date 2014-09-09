@@ -2,7 +2,12 @@ package com.car_market_android;
 
 import org.apache.commons.lang3.StringUtils;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 import com.car_market_android.model.User;
+import com.car_market_android.network.ApiClient;
 import com.car_market_android.network.GetRequest;
 import com.car_market_android.network.GetRequestResultEvent;
 import com.car_market_android.network.PostRequestResultEvent;
@@ -158,6 +163,42 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 				this.dialog = new ProgressDialog(getActivity());
 				this.dialog.setMessage("Loading Profile...");
 				this.dialog.show();
+				
+				ApiClient.getApiClient(getActivity()).getUser(user_id, "Token " + token, new Callback<User>() {
+
+					@Override
+					public void success(User user, Response response) {
+						
+						Nickname_profile.setText(user.getNickname());
+						Email_profile.setText(user.getEmail());
+						
+						sharedPreferences.edit().putString(getString(R.string.CM_USER_NICKNAME), user.getNickname()).commit();
+						sharedPreferences.edit().putString(getString(R.string.CM_USER_EMAIL), user.getEmail()).commit();
+
+						setUserView();
+
+						if (dialog.isShowing()) {
+							dialog.dismiss();
+						}
+					}
+
+					@Override
+					public void failure(RetrofitError retrofitError) {
+						/**
+						 * This message is for debug mode.
+						 * */
+						Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+						/**
+						 * This message is for production mode.
+						 * */
+						Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+						
+						if (dialog.isShowing()) {
+							dialog.dismiss();
+						}
+					}
+
+				});
 				
 				return;
 			} else {
