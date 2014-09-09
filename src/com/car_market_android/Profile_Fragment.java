@@ -8,13 +8,7 @@ import retrofit.client.Response;
 
 import com.car_market_android.model.User;
 import com.car_market_android.network.ApiClient;
-import com.car_market_android.network.GetRequest;
-import com.car_market_android.network.GetRequestResultEvent;
-import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.squareup.otto.Subscribe;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -107,7 +101,7 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 				this.sharedPreferences.edit().remove(getString(R.string.CM_API_TOKEN)).commit();
 				this.sharedPreferences.edit().remove(getString(R.string.CM_USER_NICKNAME)).commit();
 				this.sharedPreferences.edit().remove(getString(R.string.CM_USER_EMAIL)).commit();
-				
+
 				this.setGusetView();
 			} else {
 				Intent authentication_intent = new Intent(getActivity(), UserAuth.class);
@@ -150,62 +144,62 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 				this.setGusetView();
 				return;
 			}
-			
+
 			String nickname = sharedPreferences.getString(getString(R.string.CM_USER_NICKNAME), "");
 			String email = sharedPreferences.getString(getString(R.string.CM_USER_EMAIL), "");
-			
+
 			if (!StringUtils.isBlank(nickname) && !StringUtils.isBlank(email)) {
-				
+
 				this.Nickname_profile.setText(nickname);
 				this.Email_profile.setText(email);
-				
+
 				this.setUserView();
 
 				return;
 			}
-				
-				
-				this.dialog = new ProgressDialog(getActivity());
-				this.dialog.setMessage("Loading Profile...");
-				this.dialog.show();
-				
-				ApiClient.getApiClient(getActivity()).getUser(user_id, "Token " + token, new Callback<User>() {
 
-					@Override
-					public void success(User user, Response response) {
-						
-						Nickname_profile.setText(user.getNickname());
-						Email_profile.setText(user.getEmail());
-						
-						sharedPreferences.edit().putString(getString(R.string.CM_USER_NICKNAME), user.getNickname()).commit();
-						sharedPreferences.edit().putString(getString(R.string.CM_USER_EMAIL), user.getEmail()).commit();
 
-						setUserView();
+			this.dialog = new ProgressDialog(getActivity());
+			this.dialog.setMessage("Loading Profile...");
+			this.dialog.show();
 
-						if (dialog.isShowing()) {
-							dialog.dismiss();
-						}
+			ApiClient.getApiClient(getActivity()).getUser(user_id, "Token " + token, new Callback<User>() {
+
+				@Override
+				public void success(User user, Response response) {
+
+					Nickname_profile.setText(user.getNickname());
+					Email_profile.setText(user.getEmail());
+
+					sharedPreferences.edit().putString(getString(R.string.CM_USER_NICKNAME), user.getNickname()).commit();
+					sharedPreferences.edit().putString(getString(R.string.CM_USER_EMAIL), user.getEmail()).commit();
+
+					setUserView();
+
+					if (dialog.isShowing()) {
+						dialog.dismiss();
 					}
+				}
 
-					@Override
-					public void failure(RetrofitError retrofitError) {
-						/**
-						 * This message is for debug mode.
-						 * */
-						Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
-						/**
-						 * This message is for production mode.
-						 * */
-						Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
-						
-						if (dialog.isShowing()) {
-							dialog.dismiss();
-						}
+				@Override
+				public void failure(RetrofitError retrofitError) {
+					/**
+					 * This message is for debug mode.
+					 * */
+					Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+					/**
+					 * This message is for production mode.
+					 * */
+					Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+
+					if (dialog.isShowing()) {
+						dialog.dismiss();
 					}
+				}
 
-				});
-				
-				return;
+			});
+
+			return;
 		}
 	}
 
@@ -214,7 +208,7 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 		LayoutParams params = this.User_layout.getLayoutParams();
 		params.height = LayoutParams.WRAP_CONTENT;
 		this.User_layout.setLayoutParams(params);
-		
+
 		this.Registration.setVisibility(View.INVISIBLE);
 		this.Registration.setEnabled(false);
 	}
@@ -224,7 +218,7 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 		LayoutParams params = this.User_layout.getLayoutParams();
 		params.height = 0;
 		this.User_layout.setLayoutParams(params);
-		
+
 		this.Registration.setVisibility(View.VISIBLE);
 		this.Registration.setEnabled(true);
 	}
