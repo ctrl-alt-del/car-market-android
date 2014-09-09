@@ -164,9 +164,6 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 				return;
 			}
 				
-				new GetRequest(R.string.SIGN_IN)
-				.setAuthToken(token) //"7c14a5e93644b85923df1d90d8c2dcf7"
-				.execute(getString(R.string.CM_API_ADDRESS) + "/users/" + user_id);
 				
 				this.dialog = new ProgressDialog(getActivity());
 				this.dialog.setMessage("Loading Profile...");
@@ -209,45 +206,6 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 				});
 				
 				return;
-		}
-	}
-
-	@Subscribe
-	public void onGetRequestTaskResult(GetRequestResultEvent event) {
-
-		Gson gson = new GsonBuilder().create();
-
-		switch (event.getCaller()) {
-		case R.string.SIGN_IN:
-
-			User user = gson.fromJson(event.getResult(), User.class);
-
-			this.Nickname_profile.setText(user.getNickname());
-			this.Email_profile.setText(user.getEmail());
-			
-			this.sharedPreferences.edit().putString(getString(R.string.CM_USER_NICKNAME), user.getNickname()).commit();
-			this.sharedPreferences.edit().putString(getString(R.string.CM_USER_EMAIL), user.getEmail()).commit();
-
-			this.setUserView();
-
-			if (dialog.isShowing()) {
-				dialog.dismiss();
-			}
-
-			break;
-		default:
-			break;
-		}
-	}
-
-	@Subscribe
-	public void onPostRequestTaskResult(PostRequestResultEvent event) {
-
-		Gson gson = new GsonBuilder().create();
-
-		switch (event.getCaller()) {
-		default:
-			break;
 		}
 	}
 
