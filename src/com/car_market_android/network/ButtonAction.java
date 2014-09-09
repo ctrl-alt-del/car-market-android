@@ -1,4 +1,4 @@
-package com.car_market_android;
+package com.car_market_android.network;
 
 /**
  * Enum to indicate a button.
