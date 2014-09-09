@@ -12,6 +12,12 @@ import com.car_market_android.model.Listing;
 import com.car_market_android.model.User;
 import com.car_market_android.model.Vehicle;
 
+/**
+ * Interface to define REST API calls
+ * 
+ * @since 2014-09-07
+ * @version 1.0
+ * */
 public interface ApiInterface {
 	
 	/**
@@ -19,8 +25,9 @@ public interface ApiInterface {
 	 * 
 	 * @param limit the number of items to retrieve
 	 * @param offset the offset
-	 * @param callback the async call back
+	 * @param callback the asynchronous call back
 	 * 
+	 * @since 2014-09-07
 	 * @version 1.0
 	 * */
 	@GET("/listings.json")
@@ -32,14 +39,25 @@ public interface ApiInterface {
 	 * 
 	 * @param user_id the user_id
 	 * @param authorization the token with "Token " append in front of it
-	 * @param callback the async call back
+	 * @param callback the asynchronous call back
 	 * 
+	 * @since 2014-09-07
 	 * @version 1.0
 	 * */
 	@GET("/users/{user_id}/vehicles.json")
     void getVehicles(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<List<Vehicle>> callback);
 
 	
+	/**
+	 * Method to get user through API
+	 * 
+	 * @param user_id the user_id
+	 * @param authorization the token with "Token " append in front of it
+	 * @param callback the asynchronous call back
+	 * 
+	 * @since 2014-09-08
+	 * @version 1.0
+	 * */
 	@GET("/users/{user_id}.json")
     void getUser(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<List<User>> callback);
 
