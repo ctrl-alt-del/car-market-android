@@ -59,6 +59,6 @@ public interface ApiInterface {
 	 * @version 1.0
 	 * */
 	@GET("/users/{user_id}.json")
-    void getUser(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<List<User>> callback);
+    void getUser(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<User> callback);
 
 }
