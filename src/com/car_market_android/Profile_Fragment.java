@@ -154,7 +154,15 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 			String nickname = sharedPreferences.getString(getString(R.string.CM_USER_NICKNAME), "");
 			String email = sharedPreferences.getString(getString(R.string.CM_USER_EMAIL), "");
 			
-			if (StringUtils.isBlank(nickname) || StringUtils.isBlank(email)) {
+			if (!StringUtils.isBlank(nickname) && !StringUtils.isBlank(email)) {
+				
+				this.Nickname_profile.setText(nickname);
+				this.Email_profile.setText(email);
+				
+				this.setUserView();
+
+				return;
+			}
 				
 				new GetRequest(R.string.SIGN_IN)
 				.setAuthToken(token) //"7c14a5e93644b85923df1d90d8c2dcf7"
@@ -201,15 +209,6 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 				});
 				
 				return;
-			} else {
-				
-				this.Nickname_profile.setText(nickname);
-				this.Email_profile.setText(email);
-				
-				this.setUserView();
-
-				return;
-			}
 		}
 	}
 
