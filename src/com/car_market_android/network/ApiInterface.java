@@ -61,4 +61,17 @@ public interface ApiInterface {
 	@GET("/users/{user_id}.json")
     void getUser(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<User> callback);
 
+	
+	/**
+	 * Method to get user through API
+	 * 
+	 * @param vehicle_id the vehicle_id
+	 * @param callback the asynchronous call back
+	 * 
+	 * @since 2014-09-08
+	 * @version 1.0
+	 * */
+	@GET("/vehicles/{vehicle_id}/listing.json")
+    void getVehicleListing(@Path("vehicle_id") long vehicle_id, Callback<Listing> callback);
+
 }
