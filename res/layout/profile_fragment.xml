@@ -30,9 +30,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="5sp"
-            android:gravity="center"
-            android:text="Edit"
-            android:textSize="6sp" />
+            android:background="@drawable/user_update"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/nickname_profile"
