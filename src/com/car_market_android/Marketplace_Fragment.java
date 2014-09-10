@@ -246,7 +246,44 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			this.dialog = new ProgressDialog(getActivity());
 			this.dialog.setMessage("Loading More Listings...");
 			this.dialog.show();
+			
+			
+			/**
+			 * Modify the limit and offset parameters to enable the "load more" feature
+			 * */
+			ApiClient.getApiClient(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
+
+				/*
+				 * the implementation is different from "Swipe to Reload"
+				 * */
+				@Override
+				public void success(List<Listing> listings, Response response) {
+					for (Listing each : listings) {
+						data.add(each);
+					}
+
+					vadp.notifyDataSetChanged();
+
+
+					if (dialog.isShowing()) {
+						dialog.dismiss();
+					}
+					isLoadingMore = false;
+				}
+
+				@Override
+				public void failure(RetrofitError retrofitError) {
+					/**
+					 * This message is for debug mode.
+					 * */
+					Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+					/**
+					 * This message is for production mode.
+					 * */
+					Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+				}
+
+			});
 		}
 	}
-
 }
