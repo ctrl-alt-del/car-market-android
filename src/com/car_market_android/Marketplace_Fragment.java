@@ -9,13 +9,7 @@ import retrofit.client.Response;
 
 import com.car_market_android.model.Listing;
 import com.car_market_android.network.ApiClient;
-import com.car_market_android.network.GetRequest;
-import com.car_market_android.network.GetRequestResultEvent;
-import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.squareup.otto.Subscribe;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -114,66 +108,6 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 		}
 	}
 
-	@Subscribe
-	public void onGetRequestTaskResult(GetRequestResultEvent event) {
-
-		Gson gson = new GsonBuilder().create();
-		Listing[] listings;
-
-		switch (event.getCaller()) {
-		case R.string.REFRESH_MARKETPLACE:
-
-			((MainActivity) getActivity()).setProfileResult(event.getResult());
-			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
-
-			listings = gson.fromJson(event.getResult(), Listing[].class);
-
-			for (Listing each : listings) {
-				this.data.add(each);
-			}
-
-			this.vadp.notifyDataSetChanged();
-			this.swipeRefreshLayout.setRefreshing(false);
-
-			break;
-		case R.string.LOAD_MORE_MARKETPLACE:
-
-			((MainActivity) getActivity()).setProfileResult(event.getResult());
-			//			((MainActivity) getActivity()).getActionBar().setSelectedNavigationItem(1);
-
-			listings = gson.fromJson(event.getResult(), Listing[].class);
-
-			for (Listing each : listings) {
-				this.data.add(each);
-			}
-
-			this.vadp.notifyDataSetChanged();
-
-
-			if (dialog.isShowing()) {
-				dialog.dismiss();
-			}
-			this.isLoadingMore = false;
-
-			break;
-		default:
-			break;
-		}
-	}
-
-	@Subscribe
-	public void onPostRequestTaskResult(PostRequestResultEvent event) {
-
-		//Gson gson = new GsonBuilder().create();
-
-		switch (event.getCaller()) {
-		case R.string.REFRESH_MARKETPLACE:
-			break;
-		default:
-			break;
-		}
-	}
-
 	@Override
 	public void onRefresh() {
 
@@ -240,14 +174,12 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 
 			this.isLoadingMore = true;
 
-			// 2. download additional data
-			new GetRequest(R.string.LOAD_MORE_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
-
 			this.dialog = new ProgressDialog(getActivity());
 			this.dialog.setMessage("Loading More Listings...");
 			this.dialog.show();
 			
 			
+			// 2. download additional data
 			/**
 			 * Modify the limit and offset parameters to enable the "load more" feature
 			 * */
