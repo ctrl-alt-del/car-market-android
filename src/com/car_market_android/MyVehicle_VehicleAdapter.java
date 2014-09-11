@@ -2,6 +2,9 @@ package com.car_market_android;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import com.car_market_android.R;
 import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
+import com.car_market_android.network.ApiClient;
 import com.car_market_android.network.ButtonAction;
 import com.car_market_android.network.GetRequestResultEvent;
 import com.car_market_android.util.JsonDB;
@@ -123,6 +127,28 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 				
 //				new GetRequest(R.string.MY_VEHICLE_SHOW_LISTING)
 //				.execute(this.activity.getString(R.string.CM_API_ADDRESS) + "/vehicles/"+ vehicle.getId() +"/listing");
+				ApiClient.getApiClient(activity).getVehicleListing((long) vehicle.getId(), new Callback<Listing>() {
+
+					@Override
+					public void success(Listing listing, Response response) {
+						
+						int position = vehicleId2ListPosition.get(listing.getVehicle().getId());
+						
+					}
+
+					@Override
+					public void failure(RetrofitError retrofitError) {
+						/**
+						 * This message is for debug mode.
+						 * */
+						Toast.makeText(activity, retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+						/**
+						 * This message is for production mode.
+						 * */
+						Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+					}
+
+				});
 				
 				break;
 			default:
