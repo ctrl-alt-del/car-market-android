@@ -23,7 +23,7 @@ import com.car_market_android.model.Vehicle;
  * @version 1.0
  * */
 public interface ApiInterface {
-	
+
 	/**
 	 * Method to get listings through API
 	 * 
@@ -35,7 +35,7 @@ public interface ApiInterface {
 	 * @version 1.0
 	 * */
 	@GET("/listings.json")
-    void getListings(@Query("limit") int limit, @Query("offset") int offset, Callback<List<Listing>> callback);
+	void getListings(@Query("limit") int limit, @Query("offset") int offset, Callback<List<Listing>> callback);
 
 
 	/**
@@ -49,9 +49,9 @@ public interface ApiInterface {
 	 * @version 1.0
 	 * */
 	@GET("/users/{user_id}/vehicles.json")
-    void getVehicles(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<List<Vehicle>> callback);
+	void getVehicles(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<List<Vehicle>> callback);
 
-	
+
 	/**
 	 * Method to get user through API
 	 * 
@@ -63,9 +63,9 @@ public interface ApiInterface {
 	 * @version 1.0
 	 * */
 	@GET("/users/{user_id}.json")
-    void getUser(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<User> callback);
+	void getUser(@Path("user_id") long user_id, @Header("authorization") String authorization, Callback<User> callback);
 
-	
+
 	/**
 	 * Method to get user through API
 	 * 
@@ -76,7 +76,9 @@ public interface ApiInterface {
 	 * @version 1.0
 	 * */
 	@GET("/vehicles/{vehicle_id}/listing.json")
-    void getVehicleListing(@Path("vehicle_id") long vehicle_id, Callback<Listing> callback);
+	void getVehicleListing(@Path("vehicle_id") long vehicle_id, Callback<Listing> callback);
+
+
 	/**
 	 * Method to sign in user through API
 	 * 
@@ -93,6 +95,4 @@ public interface ApiInterface {
 			@Field("user[email]") String email, 
 			@Field("user[password]") String password, 
 			Callback<ApiKey> callback);
-
-
 }
