@@ -73,5 +73,21 @@ public interface ApiInterface {
 	 * */
 	@GET("/vehicles/{vehicle_id}/listing.json")
     void getVehicleListing(@Path("vehicle_id") long vehicle_id, Callback<Listing> callback);
+	/**
+	 * Method to sign in user through API
+	 * 
+	 * @param email the email
+	 * @param password the password
+	 * @param callback the asynchronous call back
+	 * 
+	 * @since 2014-09-11
+	 * @version 1.0
+	 * */
+	@POST("/users/signin")
+	void signin(
+			@Field("user[email]") String email, 
+			@Field("user[password]") String password, 
+			Callback<ApiKey> callback);
+
 
 }
