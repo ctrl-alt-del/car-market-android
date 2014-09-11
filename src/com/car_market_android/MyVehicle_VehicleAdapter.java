@@ -20,11 +20,7 @@ import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.ApiClient;
 import com.car_market_android.network.ButtonAction;
-import com.car_market_android.network.GetRequestResultEvent;
 import com.car_market_android.util.JsonDB;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.squareup.otto.Subscribe;
 
 
 public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClickListener{
@@ -125,8 +121,6 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 			case LISTING_SWITCH:
 				Toast.makeText(this.activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 				
-//				new GetRequest(R.string.MY_VEHICLE_SHOW_LISTING)
-//				.execute(this.activity.getString(R.string.CM_API_ADDRESS) + "/vehicles/"+ vehicle.getId() +"/listing");
 				ApiClient.getApiClient(activity).getVehicleListing((long) vehicle.getId(), new Callback<Listing>() {
 
 					@Override
@@ -196,22 +190,6 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 
 		public Vehicle getVehicle() {
 			return this.vehicle;
-		}
-	}
-	
-	@Subscribe
-	public void onGetRequestTaskResult(GetRequestResultEvent event) {
-
-		Gson gson = new GsonBuilder().create();
-
-		switch (event.getCaller()) {
-		case R.string.MY_VEHICLE_SHOW_LISTING:
-			Listing listing = gson.fromJson(event.getResult(), Listing.class);
-			
-			int position = vehicleId2ListPosition.get(listing.getVehicle().getId());
-			break;
-		default:
-			break;
 		}
 	}
 }
