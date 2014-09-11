@@ -95,4 +95,27 @@ public interface ApiInterface {
 			@Field("user[email]") String email, 
 			@Field("user[password]") String password, 
 			Callback<ApiKey> callback);
+	
+
+	/**
+	 * Method to create user through API
+	 * 
+	 * @param email the email
+	 * @param password the password
+	 * @param callback the asynchronous call back
+	 * 
+	 * @since 2014-09-11
+	 * @version 1.0
+	 * */
+	@FormUrlEncoded
+	@POST("/users.json")
+	void createUser(
+			@Field("user[nickname]") String nickname, 
+			@Field("user[first_name]") String first_name,
+			@Field("user[last_name]") String last_name, 
+			@Field("user[email]") String email, 
+			@Field("user[password]") String password, 
+			@Field("user[password_confirmation]") String password_confirmation, 
+			@Field("user[status]") String status, 
+			Callback<User> callback);
 }
