@@ -90,7 +90,7 @@ public interface ApiInterface {
 	 * @version 1.0
 	 * */
 	@FormUrlEncoded
-	@POST("/users/signin")
+	@POST("/users/signin.json")
 	void signin(
 			@Field("user[email]") String email, 
 			@Field("user[password]") String password, 
