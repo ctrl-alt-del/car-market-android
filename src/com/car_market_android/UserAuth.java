@@ -7,7 +7,13 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 import com.car_market_android.model.ApiKey;
+import com.car_market_android.model.User;
+import com.car_market_android.network.ApiClient;
 import com.car_market_android.network.PostRequest;
 import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
@@ -35,13 +41,16 @@ public class UserAuth extends Activity implements OnClickListener {
 	private Button Sign_in;
 	private Button Cacnel;
 	private SharedPreferences sharedPreferences;
+	private Activity activity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_auth);
 
-		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		this.activity = this;
+		
+		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		EventsBus.getInstance().register(this);
 
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -89,6 +98,44 @@ public class UserAuth extends Activity implements OnClickListener {
 			this.dialog = new ProgressDialog(this);
 			this.dialog.setMessage("Signing in...");
 			this.dialog.show();
+			
+			
+			ApiClient.getApiClient(this).signin(
+					email, password, new Callback<ApiKey>() {
+
+				@Override
+				public void success(ApiKey apiKey, Response response) {
+
+					if (dialog.isShowing()) {
+						dialog.dismiss();
+					}
+					
+					if (apiKey.getToken() == null) {
+						Toast.makeText(activity, "unable to sign in, make sure your email and password are correct.", Toast.LENGTH_SHORT).show();
+					} else {
+						sharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken()).commit();
+						sharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUser_id()).commit();
+						onBackPressed();
+					}
+				}
+
+				@Override
+				public void failure(RetrofitError retrofitError) {
+					/**
+					 * This message is for debug mode.
+					 * */
+					Toast.makeText(activity, retrofitError.getMessage(), Toast.LENGTH_LONG).show();
+					/**
+					 * This message is for production mode.
+					 * */
+					//Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+
+					if (dialog.isShowing()) {
+						dialog.dismiss();
+					}
+				}
+
+			});
 			
 			break;
 		case R.id.cancel_auth:
