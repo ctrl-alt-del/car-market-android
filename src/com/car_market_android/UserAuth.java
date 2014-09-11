@@ -1,25 +1,15 @@
 package com.car_market_android;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.car_market_android.model.ApiKey;
-import com.car_market_android.model.User;
 import com.car_market_android.network.ApiClient;
-import com.car_market_android.network.PostRequest;
-import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.squareup.otto.Subscribe;
 
 import android.view.ViewGroup.LayoutParams;
 import android.app.Activity;
@@ -88,13 +78,6 @@ public class UserAuth extends Activity implements OnClickListener {
 				return;
 			}
 
-			List<NameValuePair> contents = new ArrayList<NameValuePair>();
-
-			contents.add(new BasicNameValuePair("user[email]", email));
-			contents.add(new BasicNameValuePair("user[password]", password));
-
-			new PostRequest(R.id.sign_in_auth, contents).execute(getString(R.string.CM_API_ADDRESS) + "/users/signin");
-			
 			this.dialog = new ProgressDialog(this);
 			this.dialog.setMessage("Signing in...");
 			this.dialog.show();
@@ -140,33 +123,6 @@ public class UserAuth extends Activity implements OnClickListener {
 			break;
 		case R.id.cancel_auth:
 			this.onBackPressed();
-		default:
-			break;
-		}
-	}
-
-	@Subscribe
-	public void onPostRequestTaskResult(PostRequestResultEvent event) {
-
-		Gson gson = new GsonBuilder().create();
-		switch (event.getCaller()) {
-		case R.id.sign_in_auth:
-
-			ApiKey apiKey = gson.fromJson(event.getResult(), ApiKey.class);
-
-			if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-			
-			if (apiKey.getToken() == null) {
-				Toast.makeText(this, "unable to sign in, make sure your email and password are correct.", Toast.LENGTH_SHORT).show();
-			} else {
-				this.sharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken()).commit();
-				this.sharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUser_id()).commit();
-				this.onBackPressed();
-			}
-
-			break;
 		default:
 			break;
 		}
