@@ -111,7 +111,7 @@ public class UserAuth extends Activity implements OnClickListener {
 					/**
 					 * This message is for production mode.
 					 * */
-					//Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+					Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
 
 					if (dialog.isShowing()) {
 						dialog.dismiss();
