@@ -53,6 +53,16 @@ public class UserUpdate extends Activity implements OnClickListener {
 		switch (view.getId()) {
 		case R.id.update_user_update:
 			Toast.makeText(this, "Update button pressed...", Toast.LENGTH_SHORT).show();
+			
+			this.dialog = new ProgressDialog(this);
+			this.dialog.setMessage("Updating...");
+			this.dialog.show();
+			
+			//TODO: call apiClient
+			
+			if (dialog.isShowing()) {
+				dialog.dismiss();
+			}
 			break;
 		case R.id.cancel_user_update:
 			this.onBackPressed();
