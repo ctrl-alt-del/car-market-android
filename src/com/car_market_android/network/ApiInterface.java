@@ -128,5 +128,5 @@ public interface ApiInterface {
 			@Field("user[password]") String password, 
 			@Field("user[password_confirmation]") String password_confirmation, 
 			@Field("user[status]") String status, 
-			Callback<User> callback);
+			Callback<ApiKey> callback);
 }
