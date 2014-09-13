@@ -8,7 +8,12 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 import com.car_market_android.model.ApiKey;
+import com.car_market_android.network.ApiClient;
 import com.car_market_android.network.PostRequest;
 import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
@@ -39,11 +44,14 @@ public class UserCreate extends Activity implements OnClickListener {
 	private Button Sign_up;
 	private Button Cacnel;
 	private SharedPreferences sharedPreferences;
+	private Activity activity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_create);
+		
+		this.activity = this;
 
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		EventsBus.getInstance().register(this);
@@ -131,6 +139,35 @@ public class UserCreate extends Activity implements OnClickListener {
 			this.dialog = new ProgressDialog(this);
 			this.dialog.setMessage("Signing up...");
 			this.dialog.show();
+			
+			ApiClient.getApiClient(this).createUser(nickname, "n/a", "n/a", 
+					email, password, password_confirmation, "active", 
+					new Callback<ApiKey>() {
+
+						@Override
+						public void failure(RetrofitError arg0) {
+
+							if (dialog.isShowing()) {
+								dialog.dismiss();
+							}
+						}
+
+						@Override
+						public void success(ApiKey apiKey, Response arg1) {
+							if (dialog.isShowing()) {
+								dialog.dismiss();
+							}		
+							
+							if (!StringUtils.isBlank(apiKey.getMessage())) {
+								Toast.makeText(activity, apiKey.getMessage(), Toast.LENGTH_LONG).show();
+							} else {
+								sharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken()).commit();
+								sharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUser_id()).commit();
+								onBackPressed();
+							}
+						}
+						
+					});
 
 			break;
 		case R.id.terms_and_policy_user_create:
