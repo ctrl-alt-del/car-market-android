@@ -52,18 +52,24 @@ If you are using IDE such as Eclipse with Android Plugin, you can also install t
 It gives you an easy way to organize your AsyncTasks, or any tasks that would take some time to complete.
 <br><br>
 Putting AsyncTask right under its corresponding activity class works well for simple cases, but once I have multiple AsyncTasks running, problems emerge.  First of all, results of the AsyncTasks can be lost unless you put significant efforts to track them; tracking few AsyncTasks takes efforts yet it is still doable, but these efforts and code complexity can increase dramatically if you have double digits of AsyncTasks running.  Second, I occasionally get out of memory error and I found out that is because AsyncTasks have an implicit reference to their activity, which leads the AsyncTasks to be destroyed if their activity changed, but they are not garbage collected (GC) until they finish, so it causes potential memory issue if there are multiple AsyncTasks on the activity.
+<br><br>
+If it is a REST API call, using Retrofit may be a better option since it is simpler and faster than using Otto.
 
-2. **Serialization "Database"**
+2. **Why using [Retrofit](http://square.github.io/retrofit/)**?
+<br>
+Retrofit is a type-safe REST client.  Since most of the request of this app are API calls, using Retrofit can standardize the code and minimize the use of Otto.  Moreover, since it supports GSON, it makes parsing returned object very convenient.
+
+3. **Serialization "Database"**
 <br>
 Inspired by modules in other language, such as the pickle module in Python as well as concepts of document type database.
 <br><br>
 Since most of the information used in this app is time sensitive, meaning it needs to get the latest information from the server frequently, there isn't much motivation for me to spend too much effort on setting up a SQLite  database for the app.  Therefore, I decided to only store the essential information on the SharedPreferences.
 
-3. **Swipe down to refresh**
+4. **Swipe down to refresh**
 <br>
 This feature makes it easy and natural for users to refresh list view.
 
-4. **Swipe up to load more**
+5. **Swipe up to load more**
 <br>
 This feature makes it easy and natural for users to load more contents on the current list view.
 
@@ -71,6 +77,9 @@ This feature makes it easy and natural for users to load more contents on the cu
 ## Dependencies
 #### [**Otto**](http://square.github.io/otto/)
 I use it as an singleton event bus to better organize my AsyncTasks.  Activities will register themselves onCreate() and unregister themselves onDestroy(), and they will subscribe to the results of AsyncTasks once they are available.
+
+#### [**Retrofit**](http://square.github.io/retrofit/)
+I use it to manage/call all my REST APIs.
 
 #### [**Apache Commons Validator**](http://commons.apache.org/proper/commons-validator/)
 An commons validator for data or user inputs.  I use its EmailValidator class to validate the emails inputed by users.
@@ -89,10 +98,6 @@ A Java library used to handle conversion between Java object and its JSON string
 Volley was introduced in Google I/O 2013.  It is a library that makes HTTP network connection easier and faster.  It has many cool features such as auto-scheduling, queueing, prioritization, managing concurrent connections, caching results and etc.
 
 Whereas OkHttp is a very easy to use http client built by Square, and it supports both synchronous blocking calls and asynchronous calls with callbacks.
-
-[**Retrofit**](http://square.github.io/retrofit/)
-<br>
-Retrofit is a type-safe REST client.  Since most of the request of this app are API calls, using Retrofit can standardize the code.  Moreover, since it supports GSON, it makes parsing returned object very convenient.
 
 [**Jackson**](http://jackson.codehaus.org/) or [**Boon**](https://github.com/RichardHightower/boon) to replace GSON
 <br>
