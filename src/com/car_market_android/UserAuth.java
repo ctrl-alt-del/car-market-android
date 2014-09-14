@@ -83,7 +83,7 @@ public class UserAuth extends Activity implements OnClickListener {
 			this.dialog.show();
 			
 			
-			ApiClient.getApiClient(this).signin(
+			ApiClient.getInstance(this).signin(
 					email, password, new Callback<ApiKey>() {
 
 				@Override

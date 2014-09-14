@@ -20,7 +20,7 @@ public class ApiClient {
 	 * */
 	private static final String API_ENDPOINT = "http://car-market.herokuapp.com/api/v1";
 
-	private static ApiInterface ApiClient;
+	private static ApiInterface _instance;
 
 	/**
 	 * Method to create or get an running instance to {@link RestAdapter}
@@ -31,7 +31,7 @@ public class ApiClient {
 	 * @since 2014-09-07
 	 * @version 1.0
 	 * */
-	public static ApiInterface getApiClient(Activity activity) {
+	public static ApiInterface getInstance(Activity activity) {
 
 		/*
 		 * check if device is connected to network
@@ -44,7 +44,7 @@ public class ApiClient {
 		/*
 		 * if {@link ApiInterface} has not been created yet, create one
 		 * */
-		if (ApiClient == null) {
+		if (_instance == null) {
 			RestAdapter restAdapter = new RestAdapter.Builder()
 			.setEndpoint(API_ENDPOINT)
 			.build();
@@ -57,10 +57,10 @@ public class ApiClient {
 //				}
 //			})
 
-			ApiClient = restAdapter.create(ApiInterface.class);
+			_instance = restAdapter.create(ApiInterface.class);
 		}
 
-		return ApiClient;
+		return _instance;
 	}
 
 

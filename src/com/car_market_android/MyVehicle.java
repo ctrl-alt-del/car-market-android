@@ -165,14 +165,11 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 					onBackPressed();
 					return;
 				} else {
-//					new GetRequest(R.string.MY_VEHICLE_REFRESH)
-//					.setAuthToken(token)
-//					.execute(getString(R.string.CM_API_ADDRESS) + "/users/" + user_id + "/vehicles");
 //				
 					/**
 					 * Modify the limit and offset parameters to enable the "load more" feature
 					 * */
-					ApiClient.getApiClient(activity).getVehicles(user_id, "Token " + token, new Callback<List<Vehicle>>() {
+					ApiClient.getInstance(activity).getVehicles(user_id, "Token " + token, new Callback<List<Vehicle>>() {
 
 						@Override
 						public void success(List<Vehicle> vehicles, Response response) {

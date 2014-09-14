@@ -163,7 +163,7 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 			this.dialog.setMessage("Loading Profile...");
 			this.dialog.show();
 
-			ApiClient.getApiClient(getActivity()).getUser(user_id, "Token " + token, new Callback<User>() {
+			ApiClient.getInstance(getActivity()).getUser(user_id, "Token " + token, new Callback<User>() {
 
 				@Override
 				public void success(User user, Response response) {

@@ -119,7 +119,7 @@ public class UserCreate extends Activity implements OnClickListener {
 			this.dialog.setMessage("Signing up...");
 			this.dialog.show();
 			
-			ApiClient.getApiClient(this).createUser(nickname, "n/a", "n/a", 
+			ApiClient.getInstance(this).createUser(nickname, "n/a", "n/a", 
 					email, password, password_confirmation, "active", 
 					new Callback<ApiKey>() {
 

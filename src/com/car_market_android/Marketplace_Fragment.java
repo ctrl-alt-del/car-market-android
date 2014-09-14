@@ -123,7 +123,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 				/**
 				 * Modify the limit and offset parameters to enable the "load more" feature
 				 * */
-				ApiClient.getApiClient(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
+				ApiClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
 
 					@Override
 					public void success(List<Listing> listings, Response response) {
@@ -183,7 +183,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			/**
 			 * Modify the limit and offset parameters to enable the "load more" feature
 			 * */
-			ApiClient.getApiClient(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
+			ApiClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
 
 				/*
 				 * the implementation is different from "Swipe to Reload"

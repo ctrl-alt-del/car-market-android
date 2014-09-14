@@ -121,7 +121,7 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 			case LISTING_SWITCH:
 				Toast.makeText(this.activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 				
-				ApiClient.getApiClient(activity).getVehicleListing((long) vehicle.getId(), new Callback<Listing>() {
+				ApiClient.getInstance(activity).getVehicleListing((long) vehicle.getId(), new Callback<Listing>() {
 
 					@Override
 					public void success(Listing listing, Response response) {
