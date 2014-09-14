@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.car_market_android.R;
 import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
-import com.car_market_android.network.ApiClient;
+import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.network.ButtonAction;
 import com.car_market_android.util.JsonDB;
 
@@ -121,7 +121,7 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 			case LISTING_SWITCH:
 				Toast.makeText(this.activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 				
-				ApiClient.getInstance(activity).getVehicleListing((long) vehicle.getId(), new Callback<Listing>() {
+				CarMarketClient.getInstance(activity).getVehicleListing((long) vehicle.getId(), new Callback<Listing>() {
 
 					@Override
 					public void success(Listing listing, Response response) {

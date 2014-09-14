@@ -8,7 +8,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.car_market_android.model.ApiKey;
-import com.car_market_android.network.ApiClient;
+import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
 
 import android.view.ViewGroup.LayoutParams;
@@ -83,7 +83,7 @@ public class UserAuth extends Activity implements OnClickListener {
 			this.dialog.show();
 			
 			
-			ApiClient.getInstance(this).signin(
+			CarMarketClient.getInstance(this).signin(
 					email, password, new Callback<ApiKey>() {
 
 				@Override

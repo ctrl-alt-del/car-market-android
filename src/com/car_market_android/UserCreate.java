@@ -9,7 +9,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.car_market_android.model.ApiKey;
-import com.car_market_android.network.ApiClient;
+import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
 
 import android.view.ViewGroup.LayoutParams;
@@ -119,7 +119,7 @@ public class UserCreate extends Activity implements OnClickListener {
 			this.dialog.setMessage("Signing up...");
 			this.dialog.show();
 			
-			ApiClient.getInstance(this).createUser(nickname, "n/a", "n/a", 
+			CarMarketClient.getInstance(this).createUser(nickname, "n/a", "n/a", 
 					email, password, password_confirmation, "active", 
 					new Callback<ApiKey>() {
 

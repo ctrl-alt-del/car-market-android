@@ -8,7 +8,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.car_market_android.model.Listing;
-import com.car_market_android.network.ApiClient;
+import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
 
 import android.app.Fragment;
@@ -123,7 +123,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 				/**
 				 * Modify the limit and offset parameters to enable the "load more" feature
 				 * */
-				ApiClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
+				CarMarketClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
 
 					@Override
 					public void success(List<Listing> listings, Response response) {
@@ -183,7 +183,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 			/**
 			 * Modify the limit and offset parameters to enable the "load more" feature
 			 * */
-			ApiClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
+			CarMarketClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
 
 				/*
 				 * the implementation is different from "Swipe to Reload"

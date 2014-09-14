@@ -13,7 +13,7 @@ import retrofit.RestAdapter;
  * @since 2014-09-07
  * @version 1.0
  * */
-public class ApiClient {
+public class CarMarketClient {
 
 	/**
 	 * the end-point of targeting REST API

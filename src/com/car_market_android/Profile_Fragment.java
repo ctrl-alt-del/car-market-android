@@ -7,7 +7,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.car_market_android.model.User;
-import com.car_market_android.network.ApiClient;
+import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
 
 import android.app.Fragment;
@@ -163,7 +163,7 @@ public class Profile_Fragment extends Fragment implements OnClickListener {
 			this.dialog.setMessage("Loading Profile...");
 			this.dialog.show();
 
-			ApiClient.getInstance(getActivity()).getUser(user_id, "Token " + token, new Callback<User>() {
+			CarMarketClient.getInstance(getActivity()).getUser(user_id, "Token " + token, new Callback<User>() {
 
 				@Override
 				public void success(User user, Response response) {
