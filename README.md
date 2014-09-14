@@ -103,4 +103,12 @@ Whereas OkHttp is a very easy to use http client built by Square, and it support
 <br>
 **Jackson** is a high performance JSON processor and so as **Boon**.  Since I serialize and deserialize JSON a lot, I would like to use something perform faster than GSON.
 
+**Improve the UI**
+<br>
+There are many great open-source UI libraries available online.  
+
+**Unit Testing using [Robolectric](http://robolectric.org/)**
+<br>
+Robolectric is a framework that allow developers to do Test-Driven development.
+
 [**>>> BACK TO TOP**](#table-of-contents)
