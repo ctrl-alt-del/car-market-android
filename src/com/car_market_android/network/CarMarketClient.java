@@ -1,5 +1,7 @@
 package com.car_market_android.network;
 
+import com.car_market_android.Session;
+
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -18,10 +20,15 @@ public class CarMarketClient {
 	/**
 	 * the end-point of targeting REST API
 	 * */
-	private static final String API_ENDPOINT = "http://car-market.herokuapp.com/api/v1";
+	private static final String API_V1_ENDPOINT = "http://car-market.herokuapp.com/api/v1";
 
 	private static ApiInterface _instance;
+	private Session mSession;
 
+	public static ApiInterface getInstance(Session session) {
+		return getInstance(session.getActivity());
+	}
+	
 	/**
 	 * Method to create or get an running instance to {@link RestAdapter}
 	 * 
@@ -46,7 +53,7 @@ public class CarMarketClient {
 		 * */
 		if (_instance == null) {
 			RestAdapter restAdapter = new RestAdapter.Builder()
-			.setEndpoint(API_ENDPOINT)
+			.setEndpoint(API_V1_ENDPOINT)
 			.build();
 			
 //			restAdapter.setRequestInterceptor(new RequestInterceptor() {
