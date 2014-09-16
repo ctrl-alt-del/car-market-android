@@ -1,5 +1,9 @@
 package com.car_market_android.network;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -28,6 +32,19 @@ public class NetworkUtils {
 		String reasonPhrase = response.getStatusLine().getReasonPhrase();
 		int statusCode = response.getStatusLine().getStatusCode();
 		return String.format("Failed : %s HTTP error code : %d", reasonPhrase, statusCode);
+	}
+	
+	public static String parseResponseContent(InputStream inputStream) throws IOException {
+		String result = "";
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
+		String line;
+		while ((line = br.readLine()) != null) {
+			result += line;
+		}
+		
+		return result;
 	}
 
 	public static void pauseMainThreadForJob(long duration) {
