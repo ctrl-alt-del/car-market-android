@@ -10,7 +10,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.methods.HttpRequestBase;
 
 import android.content.Context;
 
@@ -25,7 +25,7 @@ public class NetworkUtils {
 		return headers;
 	}
 
-	public static void setHeaders(HttpEntityEnclosingRequestBase request) {
+	public static void setHeaders(HttpRequestBase request) {
 		Map<String, String> headers = getHeaders();
 		for (String headerName : headers.keySet()) {
 			request.setHeader(headerName, headers.get(headerName));
