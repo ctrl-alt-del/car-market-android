@@ -12,6 +12,10 @@ import java.util.concurrent.TimeUnit;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 
+import android.content.Context;
+
+import com.car_market_android.R;
+
 public class NetworkUtils {
 
 	public static Map<String, String> getHeaders() {
@@ -28,10 +32,10 @@ public class NetworkUtils {
 		}
 	}
 
-	public static String composeHttpErrorMessage(HttpResponse response) {
+	public static String composeHttpErrorMessage(Context context, HttpResponse response) {
 		String reasonPhrase = response.getStatusLine().getReasonPhrase();
 		int statusCode = response.getStatusLine().getStatusCode();
-		return String.format("Failed : %s HTTP error code : %d", reasonPhrase, statusCode);
+		return context.getResources().getString(R.string.http_error_message, reasonPhrase, statusCode);
 	}
 	
 	public static String parseResponseContent(InputStream inputStream) throws IOException {
