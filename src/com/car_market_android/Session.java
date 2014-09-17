@@ -7,6 +7,7 @@ public class Session {
 	
 	private Activity mActivity;
 	private Context mContext;
+	private String mApiToken;
 	
 	public Session(Activity activity) {
 		mActivity = activity;
@@ -20,5 +21,12 @@ public class Session {
 	public CarMarketApplication getCarMarketApplication() {
 		return (CarMarketApplication) mContext;
 	}
-
+	
+	public void saveApiToken(String apiToken) {
+		mApiToken = apiToken;
+	}
+	
+	public String getApiToken() {
+		return mApiToken;
+	}
 }
