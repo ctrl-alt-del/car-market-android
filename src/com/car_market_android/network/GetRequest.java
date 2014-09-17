@@ -11,9 +11,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.car_market_android.util.EventsBus;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 /**
+ * @deprecated
  * Method to send a HTTP GET request to the specified url and grab its response
  *
  * To access the localhost or 127.0.0.1 of your local server,such as
@@ -28,10 +30,12 @@ import android.os.AsyncTask;
  * */
 public class GetRequest extends AsyncTask<String, Void, GetRequestResultEvent> {
 
+	private Context mContext;
 	private final int caller;
 	private String authToken;
 
-	public GetRequest(int caller) {
+	public GetRequest(Context context, int caller) {
+		this.mContext = context;
 		this.caller = caller;
 	}
 	
@@ -47,9 +51,7 @@ public class GetRequest extends AsyncTask<String, Void, GetRequestResultEvent> {
 
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(link);
-		request.addHeader("accept", "application/json");
-		request.addHeader("content-type", "application/x-www-form-urlencoded");
-		
+		NetworkUtils.setHeaders(request);
 		
 		if (!StringUtils.isBlank(this.authToken)) {
 			request.addHeader("authorization", "Token " + this.authToken);
@@ -65,18 +67,11 @@ public class GetRequest extends AsyncTask<String, Void, GetRequestResultEvent> {
 			}
 
 			if (response.getStatusLine().getStatusCode() != 200) {
-				result = "Failed : HTTP error code : " + response.getStatusLine().getStatusCode();
+				result = NetworkUtils.composeHttpErrorMessage(mContext, response);
 				return new GetRequestResultEvent(this.caller, result);
 			}
-
-			BufferedReader br = new BufferedReader(
-					new InputStreamReader(response.getEntity().getContent()));
-
-			String line;
-
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
+			
+			result = NetworkUtils.parseResponseContent(response.getEntity().getContent());
 
 			return new GetRequestResultEvent(this.caller, result);
 
