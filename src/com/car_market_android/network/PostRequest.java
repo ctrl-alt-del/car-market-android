@@ -1,8 +1,6 @@
 package com.car_market_android.network;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -37,9 +35,7 @@ public class PostRequest extends AsyncTask<String, Void, PostRequestResultEvent>
 
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpPost request = new HttpPost(link);
-		request.addHeader("accept", "application/json");
-		request.addHeader("content-type", "application/x-www-form-urlencoded");
-
+		NetworkUtils.setHeaders(request);
 
 		String result = "";
 		try {
@@ -53,18 +49,11 @@ public class PostRequest extends AsyncTask<String, Void, PostRequestResultEvent>
 			}
 
 			if (response.getStatusLine().getStatusCode() != 200) {
-				result = "Failed : HTTP error code : " + response.getStatusLine().getStatusCode();
+				result = NetworkUtils.composeHttpErrorMessage(response);
 				return new PostRequestResultEvent(this.caller, result);
 			}
-
-			BufferedReader br = new BufferedReader(
-					new InputStreamReader(response.getEntity().getContent()));
-
-			String line;
-
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
+			
+			result = NetworkUtils.parseResponseContent(response.getEntity().getContent());
 
 			return new PostRequestResultEvent(this.caller, result);
 
