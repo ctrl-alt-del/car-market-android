@@ -11,6 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.car_market_android.util.EventsBus;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 /**
@@ -21,10 +22,12 @@ import android.os.AsyncTask;
  * */
 public class PostRequest extends AsyncTask<String, Void, PostRequestResultEvent> {
 
+	private Context mContext;
 	private final int caller;
 	private final List<NameValuePair> contents;
 
-	public PostRequest(int caller, List<NameValuePair> contents) {
+	public PostRequest(Context context, int caller, List<NameValuePair> contents) {
+		this.mContext = context;
 		this.caller = caller;
 		this.contents = contents;
 	}
@@ -49,7 +52,7 @@ public class PostRequest extends AsyncTask<String, Void, PostRequestResultEvent>
 			}
 
 			if (response.getStatusLine().getStatusCode() != 200) {
-				result = NetworkUtils.composeHttpErrorMessage(response);
+				result = NetworkUtils.composeHttpErrorMessage(mContext, response);
 				return new PostRequestResultEvent(this.caller, result);
 			}
 			
