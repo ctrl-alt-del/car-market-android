@@ -7,6 +7,7 @@ import android.app.Application;
 public class CarMarketApplication extends Application {
 
 	private Picasso mPicasso;
+	private Session mSession;
 	
 	@Override
 	public void onCreate() {
@@ -19,4 +20,12 @@ public class CarMarketApplication extends Application {
 	public Picasso getPicasso() {
         return mPicasso;
     }
+	
+	public Session getSession() {
+		return mSession;
+	}
+	
+	public void setSession(Session session) {
+		mSession = session;
+	}
 }
