@@ -1,5 +1,8 @@
 package com.car_market_android.network;
 
+import com.car_market_android.CarMarketApplication;
+import com.car_market_android.Session;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +18,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import android.content.Context;
 
 import com.car_market_android.R;
+import android.text.TextUtils;
 
 public class NetworkUtils {
 
@@ -29,6 +33,15 @@ public class NetworkUtils {
 		Map<String, String> headers = getHeaders();
 		for (String headerName : headers.keySet()) {
 			request.setHeader(headerName, headers.get(headerName));
+		}
+	}
+	
+	public static void setHeaders(Context context, HttpRequestBase request) {
+		setHeaders(request);
+		Session session = ((CarMarketApplication) context).getSession();
+		String authToken = session != null ? session.getApiToken() : "";
+		if (!TextUtils.isEmpty(authToken)) {
+			request.addHeader("authorization", "Token " + authToken);
 		}
 	}
 
