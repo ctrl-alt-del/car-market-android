@@ -9,6 +9,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.car_market_android.Session;
 import com.car_market_android.util.EventsBus;
 
 import android.content.Context;
@@ -23,11 +24,19 @@ import android.os.AsyncTask;
 public class PostRequest extends AsyncTask<String, Void, PostRequestResultEvent> {
 
 	private Context mContext;
+	private Session mSession;
 	private final int caller;
 	private final List<NameValuePair> contents;
 
 	public PostRequest(Context context, int caller, List<NameValuePair> contents) {
 		this.mContext = context;
+		this.caller = caller;
+		this.contents = contents;
+	}
+	
+	public PostRequest(Session session, int caller, List<NameValuePair> contents) {
+		this.mSession = session;
+		this.mContext = session.getCarMarketApplication();
 		this.caller = caller;
 		this.contents = contents;
 	}
@@ -38,7 +47,7 @@ public class PostRequest extends AsyncTask<String, Void, PostRequestResultEvent>
 
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpPost request = new HttpPost(link);
-		NetworkUtils.setHeaders(request);
+		NetworkUtils.setHeaders(mContext, request);
 
 		String result = "";
 		try {

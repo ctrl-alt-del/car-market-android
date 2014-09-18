@@ -1,10 +1,7 @@
 package com.car_market_android.network;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -32,30 +29,19 @@ public class GetRequest extends AsyncTask<String, Void, GetRequestResultEvent> {
 
 	private Context mContext;
 	private final int caller;
-	private String authToken;
 
 	public GetRequest(Context context, int caller) {
 		this.mContext = context;
 		this.caller = caller;
 	}
 	
-	public GetRequest setAuthToken(String authToken) {
-		this.authToken = authToken;
-		return this;
-	}
-
-
 	@Override
 	protected GetRequestResultEvent doInBackground(String... params) {
 		String link = params[0];
 
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(link);
-		NetworkUtils.setHeaders(request);
-		
-		if (!StringUtils.isBlank(this.authToken)) {
-			request.addHeader("authorization", "Token " + this.authToken);
-		}
+		NetworkUtils.setHeaders(mContext, request);
 
 		String result = "";
 		try {
