@@ -141,7 +141,7 @@ public class UserCreate extends Activity implements OnClickListener {
 								Toast.makeText(activity, apiKey.getMessage(), Toast.LENGTH_LONG).show();
 							} else {
 								sharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken()).commit();
-								sharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUser_id()).commit();
+								sharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUserId()).commit();
 								onBackPressed();
 							}
 						}

@@ -1,9 +1,14 @@
 package com.car_market_android.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ApiKey {
 	
 	private String token;
-	private long user_id;
+	
+	@SerializedName("id")
+	private long userId;
+	
 	private String message;
 
 	public String getToken() {
@@ -15,12 +20,12 @@ public class ApiKey {
 		return this;
 	}
 	
-	public long getUser_id() {
-		return this.user_id;
+	public long getUserId() {
+		return this.userId;
 	}
 
-	public ApiKey setUser_id(long user_id) {
-		this.user_id = user_id;
+	public ApiKey setUserId(long userId) {
+		this.userId = userId;
 		return this;
 	}
 	
