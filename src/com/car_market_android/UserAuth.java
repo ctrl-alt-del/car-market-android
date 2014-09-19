@@ -7,6 +7,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import com.car_market_android.application.CarMarketActivity;
 import com.car_market_android.model.ApiKey;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
@@ -23,7 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class UserAuth extends Activity implements OnClickListener {
+public class UserAuth extends CarMarketActivity implements OnClickListener {
 
 	private static final EmailValidator EMAIL_VALIDATOR = EmailValidator.getInstance();
 	private EditText Email;
@@ -98,6 +99,8 @@ public class UserAuth extends Activity implements OnClickListener {
 					} else {
 						sharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken()).commit();
 						sharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUser_id()).commit();
+						getSession().saveApiToken(apiKey.getToken());
+						getSession().saveUserId(apiKey.getUser_id());
 						onBackPressed();
 					}
 				}
