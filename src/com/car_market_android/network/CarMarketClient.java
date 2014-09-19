@@ -26,7 +26,7 @@ public class CarMarketClient {
 	private Session mSession;
 
 	public static ApiInterface getInstance(Session session) {
-		return getInstance(session.getActivity());
+		return getInstance(session.getCarMarketApplication());
 	}
 	
 	/**
@@ -38,13 +38,13 @@ public class CarMarketClient {
 	 * @since 2014-09-07
 	 * @version 1.0
 	 * */
-	public static ApiInterface getInstance(Activity activity) {
+	public static ApiInterface getInstance(Context context) {
 
 		/*
 		 * check if device is connected to network
 		 * */
-		if (!isNetworkConnected(activity)) {
-			Toast.makeText(activity, "Please connect to internet...", Toast.LENGTH_SHORT).show();
+		if (!isNetworkConnected(context)) {
+			Toast.makeText(context, "Please connect to internet...", Toast.LENGTH_SHORT).show();
 			return null;
 		}
 
@@ -80,9 +80,9 @@ public class CarMarketClient {
 	 * @since 2014-09-08
 	 * @version 1.0
 	 * */
-	private static boolean isNetworkConnected(Activity activity) {
+	private static boolean isNetworkConnected(Context context) {
 
-		ConnectivityManager connectivityManager = (ConnectivityManager) activity
+		ConnectivityManager connectivityManager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 
 		NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
