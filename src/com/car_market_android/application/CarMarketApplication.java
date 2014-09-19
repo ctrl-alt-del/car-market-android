@@ -15,6 +15,7 @@ public class CarMarketApplication extends Application {
 		
 		// TODO: add cache and download client
 		mPicasso = new Picasso.Builder(this).build();
+		mSession = new Session(this);
 	}
 
 	public Picasso getPicasso() {

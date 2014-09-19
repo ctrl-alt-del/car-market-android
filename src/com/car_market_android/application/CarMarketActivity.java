@@ -9,11 +9,7 @@ public class CarMarketActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		mSession = new Session(this);
-		getCarMarketApplication().setSession(mSession);
-		
 	}
 
 	public CarMarketApplication getCarMarketApplication() {
