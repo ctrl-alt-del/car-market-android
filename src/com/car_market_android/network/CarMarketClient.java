@@ -1,6 +1,6 @@
 package com.car_market_android.network;
 
-import com.car_market_android.Session;
+import com.car_market_android.application.Session;
 
 import android.app.Activity;
 import android.content.Context;

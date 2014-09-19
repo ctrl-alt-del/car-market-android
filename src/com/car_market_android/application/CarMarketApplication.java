@@ -1,4 +1,4 @@
-package com.car_market_android;
+package com.car_market_android.application;
 
 import com.squareup.picasso.Picasso;
 

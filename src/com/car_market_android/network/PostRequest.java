@@ -9,7 +9,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.car_market_android.Session;
+import com.car_market_android.application.Session;
 import com.car_market_android.util.EventsBus;
 
 import android.content.Context;

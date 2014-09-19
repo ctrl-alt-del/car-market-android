@@ -1,8 +1,5 @@
 package com.car_market_android.network;
 
-import com.car_market_android.CarMarketApplication;
-import com.car_market_android.Session;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +15,9 @@ import org.apache.http.client.methods.HttpRequestBase;
 import android.content.Context;
 
 import com.car_market_android.R;
+import com.car_market_android.application.CarMarketApplication;
+import com.car_market_android.application.Session;
+
 import android.text.TextUtils;
 
 public class NetworkUtils {
