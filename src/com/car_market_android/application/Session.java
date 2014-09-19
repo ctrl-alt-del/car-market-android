@@ -1,23 +1,16 @@
 package com.car_market_android.application;
 
-import android.app.Activity;
 import android.content.Context;
 
 public class Session {
 	
-	private Activity mActivity;
 	private Context mContext;
 	private String mApiToken;
 	private long mUserId;
 	
-	public Session(Activity activity) {
-		mActivity = activity;
-		mContext = activity.getBaseContext();
+	public Session(Context context) {
+		mContext = context;
     }
-	
-	public Activity getActivity() {
-		return mActivity;
-	}
 	
 	public CarMarketApplication getCarMarketApplication() {
 		return (CarMarketApplication) mContext;
