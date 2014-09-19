@@ -8,6 +8,7 @@ public class Session {
 	private Activity mActivity;
 	private Context mContext;
 	private String mApiToken;
+	private long mUserId;
 	
 	public Session(Activity activity) {
 		mActivity = activity;
@@ -28,5 +29,13 @@ public class Session {
 	
 	public String getApiToken() {
 		return mApiToken;
+	}
+	
+	public void saveUserId(long userId) {
+		mUserId = userId;
+	}
+	
+	public long getUserId() {
+		return mUserId;
 	}
 }
