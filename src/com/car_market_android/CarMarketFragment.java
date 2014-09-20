@@ -21,14 +21,13 @@ public class CarMarketFragment extends Fragment {
 	public Session getSession() {
 		return getCarMarketApplication().getSession();
 	}
+	
+	public Context getContext() {
+		return getCarMarketApplication().getContext();
+	}
 
 	protected void showProgressDialog(int resourceId) {
-		String message = getString(resourceId);
-		if (mProgressDialog == null) {
-			mProgressDialog = ProgressDialog.show(getActivity(), "", message);
-		} else {
-			mProgressDialog.setMessage(message);
-		}
+		Utilities.showProgressDialog(getContext() , mProgressDialog, resourceId);
 	}
 
 	protected void dismissProgressDialog() {
