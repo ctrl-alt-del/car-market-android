@@ -11,11 +11,10 @@ import android.view.inputmethod.InputMethodManager;
 
 public class CarMarketFragment extends Fragment {
 	
-	protected Session mSession;
 	protected ProgressDialog mProgressDialog;
 	
 	public CarMarketApplication getCarMarketApplication() {
-		return (CarMarketApplication) getActivity().getApplication();
+		return Utilities.getCarMarketApplication(getActivity());
 	}
 
 	public Session getSession() {
