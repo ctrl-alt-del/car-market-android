@@ -1,5 +1,7 @@
 package com.car_market_android.application;
 
+import com.car_market_android.Utilities;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,23 +20,22 @@ public class CarMarketActivity extends Activity {
 	}
 
 	public CarMarketApplication getCarMarketApplication() {
-		return (CarMarketApplication) this.getApplication();
+		return Utilities.getCarMarketApplication(this);
 	}
 
 	public Session getSession() {
 		return getCarMarketApplication().getSession();
 	}
-
-	public void showProgressDialog(int resourceId) {
-		String message = getString(resourceId);
-		if (mProgressDialog == null) {
-			mProgressDialog = ProgressDialog.show(this, "", message);
-		} else {
-			mProgressDialog.setMessage(message);
-		}
+	
+	public Context getContext() {
+		return getCarMarketApplication().getContext();
 	}
 
-	public void dismissProgressDialog() {
+	protected void showProgressDialog(int resourceId) {
+		Utilities.showProgressDialog(getContext() , mProgressDialog, resourceId);
+	}
+
+	protected void dismissProgressDialog() {
 		if (mProgressDialog != null && mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
 		}
