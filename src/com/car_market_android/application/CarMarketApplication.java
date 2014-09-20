@@ -3,6 +3,7 @@ package com.car_market_android.application;
 import com.squareup.picasso.Picasso;
 
 import android.app.Application;
+import android.content.Context;
 
 public class CarMarketApplication extends Application {
 
@@ -28,5 +29,9 @@ public class CarMarketApplication extends Application {
 	
 	public void setSession(Session session) {
 		mSession = session;
+	}
+	
+	public Context getContext() {
+		return this;
 	}
 }
