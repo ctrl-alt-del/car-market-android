@@ -27,7 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class Profile_Fragment extends Fragment implements OnClickListener {
+public class Profile_Fragment extends CarMarketFragment implements OnClickListener {
 	/**
 	 * The fragment argument representing the section number for this
 	 * fragment.
