@@ -20,7 +20,7 @@ public class CarMarketClient {
 	/**
 	 * the end-point of targeting REST API
 	 * */
-	private static final String API_V1_ENDPOINT = "http://car-market.herokuapp.com/api/v1";
+	private static final String API_V1_ENDPOINT = "https://car-market.herokuapp.com/api/v1";
 
 	private static ApiInterface _instance;
 	private Session mSession;
