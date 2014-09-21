@@ -6,7 +6,7 @@ public class ApiKey {
 	
 	private String token;
 	
-	@SerializedName("id")
+	@SerializedName("user_id")
 	private long userId;
 	
 	private String message;
