@@ -18,6 +18,8 @@ import com.car_market_android.R;
 import com.car_market_android.application.CarMarketApplication;
 import com.car_market_android.application.Session;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.TextUtils;
 
 public class NetworkUtils {
@@ -81,4 +83,26 @@ public class NetworkUtils {
 		}
 	}
 
+    /**
+	 * Method to check if network is connected
+	 *
+	 * @param context the {@link android.content.Context}
+	 * @return true if network is connected
+	 *
+	 * @since 2014-09-08
+	 * @version 1.0
+	 * */
+	public static boolean isNetworkConnected(Context context) {
+
+		ConnectivityManager connectivityManager = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+
+		if (activeNetwork == null) {
+            activeNetwork = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		}
+
+		return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+	}
 }

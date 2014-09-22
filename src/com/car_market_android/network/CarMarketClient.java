@@ -32,7 +32,7 @@ public class CarMarketClient {
 	/**
 	 * Method to create or get an running instance to {@link RestAdapter}
 	 * 
-	 * @param activity the {@link Activity}
+	 * @param context the {@link android.content.Context}
 	 * @return an {@link ApiInterface} if network is connected, otherwise null
 	 * 
 	 * @since 2014-09-07
@@ -41,9 +41,9 @@ public class CarMarketClient {
 	public static ApiInterface getInstance(Context context) {
 
 		/*
-		 * check if device is connected to network
+		 * check if device is connected to an active network
 		 * */
-		if (!isNetworkConnected(context)) {
+		if (!NetworkUtils.isNetworkConnected(context)) {
 			Toast.makeText(context, "Please connect to internet...", Toast.LENGTH_SHORT).show();
 			return null;
 		}
@@ -68,29 +68,5 @@ public class CarMarketClient {
 		}
 
 		return _instance;
-	}
-
-
-	/**
-	 * Method to check if network is connected
-	 * 
-	 * @param activity the {@link Activity}
-	 * @return true if network is connected
-	 * 
-	 * @since 2014-09-08
-	 * @version 1.0
-	 * */
-	private static boolean isNetworkConnected(Context context) {
-
-		ConnectivityManager connectivityManager = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-
-		if (activeNetwork == null) {
-			return false;
-		}
-
-		return activeNetwork.isConnectedOrConnecting();
 	}
 }
