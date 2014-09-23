@@ -9,28 +9,26 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 public class Utilities {
-	
-	public static CarMarketApplication getCarMarketApplication(Activity activity) {
-		return (CarMarketApplication) activity.getApplication();
-	}
-	
-	public static void showProgressDialog(Context context, ProgressDialog progressDialog, int resourceId) {
-		String message = context.getString(resourceId);
-		if (progressDialog == null) {
-			progressDialog = ProgressDialog.show(context, "", message);
-		} else {
-			progressDialog.setMessage(message);
-		}
-	}
 
-	public static void dismissProgressDialog(ProgressDialog progressDialog) {
-		if (progressDialog != null && progressDialog.isShowing()) {
-			progressDialog.dismiss();
-		}
-	}
+    public static CarMarketApplication getCarMarketApplication(Activity activity) {
+        return (CarMarketApplication) activity.getApplication();
+    }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        hideSoftKeyboard(activity, activity.getCurrentFocus());
+    public static void showProgressDialog(Context context, ProgressDialog progressDialog, int resourceId) {
+        String message = context.getString(resourceId);
+        if (progressDialog == null) {
+            progressDialog = ProgressDialog.show(context, "", message);
+        } else {
+            progressDialog.setMessage(message);
+        }
+    }
+
+    public static void dismissProgressDialog(ProgressDialog progressDialog) {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
     }
 
     public static void hideSoftKeyboard(Activity activity, View view) {
