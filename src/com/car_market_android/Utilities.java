@@ -43,13 +43,17 @@ public class Utilities {
         return false;
     }
 
-    public static void showSoftKeyboard(Activity activity) {
+    public static boolean showSoftKeyboard(Activity activity) {
+        return showSoftKeyboard(activity, activity.getCurrentFocus());
+    }
+
+    public static boolean showSoftKeyboard(Activity activity, View view) {
         InputMethodManager inputMethodManager = getInputMethodManager(activity);
 
-        View currentFocus = activity.getCurrentFocus();
-        if (inputMethodManager != null && currentFocus != null) {
-            inputMethodManager.showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT);
+        if (inputMethodManager != null && view != null) {
+            return inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
         }
+        return false;
     }
 
     private static InputMethodManager getInputMethodManager(Activity activity) {
