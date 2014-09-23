@@ -30,27 +30,25 @@ public class Utilities {
 	}
 
     public static void hideSoftKeyboard(Activity activity) {
-        if (activity == null) {
-            return;
+        InputMethodManager inputMethodManager = getInputMethodManager(activity);
+
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
-
-        Object systemService = activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        ((InputMethodManager) systemService).hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     public static void showSoftKeyboard(Activity activity) {
-        if (activity == null) {
-            return;
-        }
-
-        Object systemService = activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = getInputMethodManager(activity);
 
         View currentFocus = activity.getCurrentFocus();
-        if (currentFocus != null) {
-            ((InputMethodManager) systemService).showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT);
+        if (inputMethodManager != null && currentFocus != null) {
+            inputMethodManager.showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT);
         }
     }
+
+    private static InputMethodManager getInputMethodManager(Activity activity) {
+        return activity != null ? (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE) : null;
+    }
+
 }
