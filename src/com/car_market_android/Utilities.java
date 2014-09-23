@@ -29,15 +29,18 @@ public class Utilities {
         }
     }
 
+    public static boolean hideSoftKeyboard(Activity activity) {
+        return hideSoftKeyboard(activity, activity.getCurrentFocus());
     }
 
-    public static void hideSoftKeyboard(Activity activity, View view) {
+    public static boolean hideSoftKeyboard(Activity activity, View view) {
         InputMethodManager inputMethodManager = getInputMethodManager(activity);
 
         if (inputMethodManager != null && view != null) {
-            inputMethodManager.hideSoftInputFromWindow(
+            return inputMethodManager.hideSoftInputFromWindow(
                     view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
+        return false;
     }
 
     public static void showSoftKeyboard(Activity activity) {
