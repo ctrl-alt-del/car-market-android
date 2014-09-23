@@ -30,11 +30,15 @@ public class Utilities {
 	}
 
     public static void hideSoftKeyboard(Activity activity) {
+        hideSoftKeyboard(activity, activity.getCurrentFocus());
+    }
+
+    public static void hideSoftKeyboard(Activity activity, View view) {
         InputMethodManager inputMethodManager = getInputMethodManager(activity);
 
-        if (inputMethodManager != null) {
+        if (inputMethodManager != null && view != null) {
             inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 
