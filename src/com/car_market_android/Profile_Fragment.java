@@ -9,6 +9,7 @@ import retrofit.client.Response;
 import com.car_market_android.model.User;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
+import com.car_market_android.util.MessageUtils;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -222,5 +223,12 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
 		this.Registration.setVisibility(View.VISIBLE);
 		this.Registration.setEnabled(true);
 	}
+    private void setRegistrationAction() {
+        MessageUtils.showToastShort(getContext(), "setRegistrationAction() called");
+    }
+
+    private void setAuthenticationAction() {
+        MessageUtils.showToastShort(getContext(), "setAuthenticationAction() call");
+    }
 
 }
