@@ -6,7 +6,15 @@ import android.widget.Toast;
 
 public class MessageUtils {
 
-    public static void showToast(Context context, String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    public static void showToastShort(Context context, String message) {
+        showToast(context, message, Toast.LENGTH_SHORT);
+    }
+
+    public static void showToastLong(Context context, String message) {
+        showToast(context, message, Toast.LENGTH_LONG);
+    }
+
+    private static void showToast(Context context, String message, int duration) {
+        Toast.makeText(context, message, duration).show();
     }
 }
