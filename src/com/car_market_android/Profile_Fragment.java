@@ -23,29 +23,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class Profile_Fragment extends CarMarketFragment implements OnClickListener {
-	/**
-	 * The fragment argument representing the section number for this
-	 * fragment.
-	 */
-	private static final String ARG_SECTION_NUMBER = "section_number";
-
-
-	private Button Authentication;
-	private Button User_update;
-	private Button Registration;
-	private Button My_vehicles;
-	private TextView Email_profile;
-	private TextView Nickname_profile;
-	private RelativeLayout User_layout;
-
-	private SharedPreferences sharedPreferences;
-
 	/**
 	 * Returns a new instance of this fragment for the given section
 	 * number.
@@ -69,25 +53,6 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
 
 		View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
 
-		this.Authentication = (Button) rootView.findViewById(R.id.authentication);
-		this.User_update = (Button) rootView.findViewById(R.id.user_update);
-		this.Registration = (Button) rootView.findViewById(R.id.registration);
-		this.My_vehicles = (Button) rootView.findViewById(R.id.my_vehicles);
-
-		this.User_layout = (RelativeLayout) rootView.findViewById(R.id.user_layout);
-		this.Email_profile = (TextView) rootView.findViewById(R.id.email_profile);
-		this.Nickname_profile = (TextView) rootView.findViewById(R.id.nickname_profile);
-
-		this.Authentication.setOnClickListener(this);
-		this.User_update.setOnClickListener(this);
-		this.Registration.setOnClickListener(this);
-		this.My_vehicles.setOnClickListener(this);
-
-		if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
-			this.setUserView();
-		} else {
-			this.setGusetView();
-		}
 
 		return rootView;
 	}
@@ -223,6 +188,73 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
 		this.Registration.setVisibility(View.VISIBLE);
 		this.Registration.setEnabled(true);
 	}
+    /**
+     * The fragment argument representing the section number for this
+     * fragment.
+     */
+    private static final String ARG_SECTION_NUMBER = "section_number";
+
+
+    //	private Button Authentication;
+    private EditText etNickname;
+    private EditText etEmail;
+    private EditText etPassword;
+    private EditText etPasswordConfirmation;
+    private Button btSwitchToAuthentication;
+    private boolean isAuthenticationView = false;
+
+    private Button User_update;
+    private Button mSignUpOrSignInButton;
+    private Button My_vehicles;
+    private TextView Email_profile;
+    private TextView Nickname_profile;
+    private RelativeLayout User_layout;
+
+    private SharedPreferences sharedPreferences;
+    private ProgressDialog dialog;
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        etNickname = (EditText) view.findViewById(R.id.nickname);
+        etEmail = (EditText) view.findViewById(R.id.email);
+        etPassword = (EditText) view.findViewById(R.id.user_pwd);
+        etPasswordConfirmation = (EditText) view.findViewById(R.id.user_pwd_conf);
+
+        mSignUpOrSignInButton = (Button) view.findViewById(R.id.sign_up_or_sign_in_button);
+
+        btSwitchToAuthentication = (Button) view.findViewById(R.id.switch_to_authentication);
+        btSwitchToAuthentication.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAuthenticationView();
+            }
+        });
+
+        setRegistrationView();
+
+
+//        this.Authentication = (Button) view.findViewById(R.id.authentication);
+        this.User_update = (Button) view.findViewById(R.id.user_update);
+
+        this.My_vehicles = (Button) view.findViewById(R.id.my_vehicles);
+
+        this.User_layout = (RelativeLayout) view.findViewById(R.id.user_profile_layout);
+        this.Email_profile = (TextView) view.findViewById(R.id.email_profile);
+        this.Nickname_profile = (TextView) view.findViewById(R.id.nickname_profile);
+
+//		this.Authentication.setOnClickListener(this);
+        this.User_update.setOnClickListener(this);
+        this.mSignUpOrSignInButton.setOnClickListener(this);
+        this.My_vehicles.setOnClickListener(this);
+
+        if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
+            this.setUserView();
+        } else {
+            this.setGusetView();
+        }
+
+    }
     private void setRegistrationAction() {
         MessageUtils.showToastShort(getContext(), "setRegistrationAction() called");
     }
