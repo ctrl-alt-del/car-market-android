@@ -242,6 +242,25 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         this.mSignUpOrSignInButton.setVisibility(View.VISIBLE);
         this.mSignUpOrSignInButton.setEnabled(true);
     }
+
+    private void setRegistrationView() {
+        etNickname.setVisibility(View.VISIBLE);
+        etEmail.setVisibility(View.VISIBLE);
+        etPassword.setVisibility(View.VISIBLE);
+        etPasswordConfirmation.setVisibility(View.VISIBLE);
+        mSignUpOrSignInButton.setText("Sign Up");
+        isAuthenticationView = false;
+        btSwitchToAuthentication.setVisibility(View.VISIBLE);
+    }
+
+    private void setAuthenticationView() {
+        etNickname.setVisibility(View.GONE);
+        etPasswordConfirmation.setVisibility(View.GONE);
+        mSignUpOrSignInButton.setText("Sign In");
+        isAuthenticationView = true;
+        btSwitchToAuthentication.setVisibility(View.GONE);
+    }
+
     private void setRegistrationAction() {
         MessageUtils.showToastShort(getContext(), "setRegistrationAction() called");
     }
