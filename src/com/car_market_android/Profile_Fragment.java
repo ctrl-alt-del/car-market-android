@@ -257,7 +257,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         this.mSignUpOrSignInButton.setEnabled(true);
     }
 
-    private void setRegistrationView() {
+    public void setRegistrationView() {
         etNickname.setVisibility(View.VISIBLE);
         etEmail.setVisibility(View.VISIBLE);
         etPassword.setVisibility(View.VISIBLE);
@@ -267,7 +267,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         btSwitchToAuthentication.setVisibility(View.VISIBLE);
     }
 
-    private void setAuthenticationView() {
+    public void setAuthenticationView() {
         etNickname.setVisibility(View.GONE);
         etPasswordConfirmation.setVisibility(View.GONE);
         mSignUpOrSignInButton.setText("Sign In");
@@ -283,4 +283,12 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         MessageUtils.showToastShort(getContext(), "setAuthenticationAction() call");
     }
 
+    public boolean onBackPressed() {
+        if (isAuthenticationView) {
+            setRegistrationView();
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
