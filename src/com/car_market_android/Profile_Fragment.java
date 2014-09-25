@@ -283,7 +283,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         MessageUtils.showToastShort(getContext(), "setAuthenticationAction() call");
     }
 
-    public boolean onBackPressed() {
+    public boolean goBackToRegistrationView() {
         if (isAuthenticationView) {
             setRegistrationView();
             return false;

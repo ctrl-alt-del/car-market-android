@@ -1,7 +1,6 @@
 package com.car_market_android;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -128,7 +127,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             case TAB_PROFILE:
                 MessageUtils.showToastShort(this, ":" + mViewPager.getCurrentItem() + " -> Press back one more time to exit");
                 Profile_Fragment fragment = (Profile_Fragment) ((SectionsPagerAdapter) mViewPager.getAdapter()).getFragment(mViewPager.getCurrentItem());
-                fragment.setRegistrationView();
+
+                if (fragment != null && fragment.goBackToRegistrationView()) {
+                    fragment.setRegistrationView();
+                }
                 break;
             default:
                 super.onBackPressed();
