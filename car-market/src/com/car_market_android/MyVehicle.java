@@ -3,7 +3,6 @@ package com.car_market_android;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -23,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -155,7 +155,7 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 				String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), "");
 				long user_id = sharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
 
-				if (StringUtils.isBlank(token) || user_id == -1) {
+				if (TextUtils.isEmpty(token) || user_id == -1) {
 
 					/** if the user is not sign in, s/he technically will not able
 					 * to find the way to this page and activity, but in case s/he

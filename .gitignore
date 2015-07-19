@@ -1,5 +1,9 @@
 # Android Studio/IntelliJ
 .idea/
+*.iml
+local.properties
+gradlew
+gradlew.bat
 
 # Built application files
 *.apk
@@ -27,6 +31,7 @@ gen/
 
 # Ignore gradle files
 .gradle/
+gradle/
 build/
 
 # Libraries on libs folder

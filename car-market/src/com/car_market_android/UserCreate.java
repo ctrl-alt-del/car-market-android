@@ -1,7 +1,5 @@
 package com.car_market_android;
 
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import retrofit.Callback;
@@ -13,6 +11,7 @@ import com.car_market_android.model.ApiKey;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
 
+import android.text.TextUtils;
 import android.view.ViewGroup.LayoutParams;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -80,22 +79,22 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
 			String password = this.Password.getText().toString();
 			String password_confirmation = this.Password_Confirmation.getText().toString();
 
-			if (StringUtils.isBlank(nickname)) {
+			if (TextUtils.isEmpty(nickname)) {
 				Toast.makeText(this, "nickname cannot be empty...", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			
-			if (StringUtils.isBlank(email)) {
+			if (TextUtils.isEmpty(email)) {
 				Toast.makeText(this, "email cannot be empty...", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			
-			if (StringUtils.isBlank(password)) {
+			if (TextUtils.isEmpty(password)) {
 				Toast.makeText(this, "password cannot be empty...", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			
-			if (StringUtils.isBlank(password_confirmation)) {
+			if (TextUtils.isEmpty(password_confirmation)) {
 				Toast.makeText(this, "password confirmation cannot be empty...", Toast.LENGTH_SHORT).show();
 				return;
 			}
@@ -138,7 +137,7 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
 								dialog.dismiss();
 							}		
 							
-							if (!StringUtils.isBlank(apiKey.getMessage())) {
+							if (!TextUtils.isEmpty(apiKey.getMessage())) {
 								Toast.makeText(activity, apiKey.getMessage(), Toast.LENGTH_LONG).show();
 							} else {
 								sharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken()).commit();

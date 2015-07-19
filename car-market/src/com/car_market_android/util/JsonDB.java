@@ -3,11 +3,10 @@ package com.car_market_android.util;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 import com.car_market_android.model.Vehicle;
 import com.google.gson.Gson;
@@ -25,7 +24,7 @@ public class JsonDB {
 
 		String JSON_DB = sharedPreferences.getString(JsonDBKey, "");
 
-		if (StringUtils.isBlank(JSON_DB)) {
+		if (TextUtils.isEmpty(JSON_DB)) {
 			return data;
 		}
 

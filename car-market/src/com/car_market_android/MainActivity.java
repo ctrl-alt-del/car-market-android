@@ -128,9 +128,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                 MessageUtils.showToastShort(this, ":" + mViewPager.getCurrentItem() + " -> Press back one more time to exit");
                 Profile_Fragment fragment = (Profile_Fragment) ((SectionsPagerAdapter) mViewPager.getAdapter()).getFragment(mViewPager.getCurrentItem());
 
-                if (fragment != null && fragment.goBackToRegistrationView()) {
-                    fragment.setRegistrationView();
-                }
+//                if (fragment != null && fragment.goBackToRegistrationView()) {
+//                    fragment.setRegistrationView();
+//                }
                 break;
             default:
                 super.onBackPressed();

@@ -2,9 +2,8 @@ package com.car_market_android;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -76,7 +75,7 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 		int p = Integer.valueOf(listing.getPrice());
 		holder.Price.setTextColor(this.activity.getResources().getColor(this.getColorByPrice(p)));
 
-		String state = !StringUtils.isBlank(listing.getState()) ? ", " + listing.getState() : "";
+		String state = !TextUtils.isEmpty(listing.getState()) ? ", " + listing.getState() : "";
 		holder.Location.setText(listing.getCity() + state);
 
 		VehicleIndexRowButtonActionHolder likeAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);
@@ -151,10 +150,7 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 	/**
 	 * Class to hold vehicle information along with button action, so button
 	 * action can be identified by OnClickListener.
-
-	 * @param buttonAction identifies which button perform the action
-	 * @param vehicle stores the {@link Vehicle} information 
-	 * 
+	 *
 	 * @since 2014-08-23
 	 * @version 1.0
 	 * */
@@ -163,6 +159,10 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 		private final ButtonAction buttonAction;
 		private final Vehicle vehicle;
 
+		/**
+		 * @param buttonAction identifies which button perform the action
+		 * @param vehicle stores the {@link Vehicle} information
+		 * */
 		public VehicleIndexRowButtonActionHolder(ButtonAction buttonAction, Vehicle vehicle) {
 			this.buttonAction = buttonAction;
 			this.vehicle = vehicle;

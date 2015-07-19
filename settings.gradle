@@ -1,2 +1,1 @@
-include ':libs:actionbarsherlock' 
-include ':car-market-android'
+include ':car-market'
