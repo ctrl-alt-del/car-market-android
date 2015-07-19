@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/user_icon"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_launcher" />
+
+    <Button
+        android:id="@+id/user_update"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/user_update"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/nickname_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/user_icon"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:layout_toLeftOf="@+id/user_update"
+        android:layout_toRightOf="@+id/user_icon"
+        android:gravity="center_vertical|start"
+        tools:text="User Name"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/email_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nickname_profile"
+        android:layout_below="@+id/nickname_profile"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:gravity="center_vertical|start"
+        tools:text="user_email@carmarket.com"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/my_vehicles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/user_icon"
+        android:gravity="center"
+        android:text="@string/my_vehicles_title" />
+
+    <Button
+        android:id="@+id/my_deals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/my_vehicles"
+        android:gravity="center"
+        android:text="@string/my_deals_title" />
+</RelativeLayout>

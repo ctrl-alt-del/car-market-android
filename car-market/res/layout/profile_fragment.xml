@@ -5,91 +5,21 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.car_market_android.MainActivity$AuthFragment" >
+    android:paddingTop="@dimen/activity_vertical_margin">
 
-    <RelativeLayout
-        android:id="@+id/user_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5sp"
-        android:layout_marginLeft="36dp" >
-
-        <ImageView
-            android:id="@+id/user_icon"
-            android:layout_width="60sp"
-            android:layout_height="60sp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/ic_launcher" />
-
-        <Button
-            android:id="@+id/user_update"
-            android:layout_width="35sp"
-            android:layout_height="30sp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="5sp"
-            android:background="@drawable/user_update"
-            android:gravity="center" />
-
-        <TextView
-            android:id="@+id/nickname_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/user_icon"
-            android:layout_marginBottom="5sp"
-            android:layout_marginRight="5sp"
-            android:layout_marginTop="5sp"
-            android:layout_toLeftOf="@+id/user_update"
-            android:layout_toRightOf="@+id/user_icon"
-            android:gravity="left"
-            android:text=""
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/email_profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/nickname_profile"
-            android:layout_below="@+id/nickname_profile"
-            android:layout_marginBottom="5sp"
-            android:layout_marginRight="5sp"
-            android:layout_marginTop="5sp"
-            android:gravity="left"
-            android:text=""
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/my_vehicles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/email_profile"
-            android:layout_marginTop="15sp"
-            android:layout_marginRight="5sp"
-            android:gravity="center"
-            android:text="My Vehicles" />
-
-        <Button
-            android:id="@+id/my_deals"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/my_vehicles"
-            android:layout_marginRight="5sp"
-            android:gravity="center"
-            android:text="My Deals" />
-    </RelativeLayout>
+    <include
+        layout="@layout/user_profile_view"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
     <Button
-        android:id="@+id/authentication"
+        android:id="@+id/sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/user_layout"
         android:layout_below="@+id/user_layout"
-        android:layout_marginTop="15sp"
         android:layout_marginRight="5sp"
+        android:layout_marginTop="15sp"
         android:gravity="center"
         android:text="Sign In" />
 

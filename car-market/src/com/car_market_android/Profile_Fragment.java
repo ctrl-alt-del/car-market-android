@@ -5,6 +5,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.car_market_android.model.User;
+import com.car_market_android.network.ApiInterface;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
 
@@ -44,13 +45,14 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
 
     private Button User_update;
     private Button mSwitchToSignUp;
-    private Button My_vehicles;
+    private Button mMyVehicles;
     private TextView Email_profile;
     private TextView Nickname_profile;
     private RelativeLayout User_layout;
 
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences mSharedPreferences;
     private ProgressDialog dialog;
+    private ApiInterface mCarMarketClient;
 
     public Profile_Fragment() {
     }
@@ -70,7 +72,8 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mCarMarketClient = CarMarketClient.getInstance(getActivity());
         EventsBus.getInstance().register(this);
     }
 
@@ -91,21 +94,14 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
 //
         mSwitchToSignUp = (Button) view.findViewById(R.id.registration);
 //
-//        btSwitchToAuthentication = (Button) view.findViewById(R.id.switch_to_authentication);
-//        btSwitchToAuthentication.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setAuthenticationView();
-//            }
-//        });
-//
+
 //        setRegistrationView();
 //
 //
 ////        this.Authentication = (Button) view.findViewById(R.id.authentication);
 //        this.User_update = (Button) view.findViewById(R.id.user_update);
 //
-//        this.My_vehicles = (Button) view.findViewById(R.id.my_vehicles);
+        mMyVehicles = (Button) view.findViewById(R.id.my_vehicles);
 //
 //        this.User_layout = (RelativeLayout) view.findViewById(R.id.user_profile_layout);
 //        this.Email_profile = (TextView) view.findViewById(R.id.email_profile);
@@ -114,40 +110,40 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
 ////		this.Authentication.setOnClickListener(this);
 //        this.User_update.setOnClickListener(this);
 //        this.mSwitchToSignUp.setOnClickListener(this);
-//        this.My_vehicles.setOnClickListener(this);
+//        this.mMyVehicles.setOnClickListener(this);
 //
-//        if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
-//            this.setUserView();
-//        } else {
-//            this.setGusetView();
-//        }
+        if (mSharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
+            setUserView();
+        } else {
+            setGusetView();
+        }
 
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-//		case R.id.authentication:
-//
-//			if (sharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
-//				this.sharedPreferences.edit().remove(getString(R.string.CM_API_TOKEN)).commit();
-//				this.sharedPreferences.edit().remove(getString(R.string.CM_USER_NICKNAME)).commit();
-//				this.sharedPreferences.edit().remove(getString(R.string.CM_USER_EMAIL)).commit();
-//
-//				this.setGusetView();
-//			} else {
-//				Intent authentication_intent = new Intent(getActivity(), UserAuth.class);
-//				startActivity(authentication_intent);
-//			}
-//			break;
+            case R.id.sign_in:
+
+                if (mSharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
+                    this.mSharedPreferences.edit().remove(getString(R.string.CM_API_TOKEN)).commit();
+                    this.mSharedPreferences.edit().remove(getString(R.string.CM_USER_NICKNAME)).commit();
+                    this.mSharedPreferences.edit().remove(getString(R.string.CM_USER_EMAIL)).commit();
+
+                    this.setGusetView();
+                } else {
+                    Intent authentication_intent = new Intent(getActivity(), UserAuth.class);
+                    startActivity(authentication_intent);
+                }
+                break;
             case R.id.user_update:
                 Intent user_update_intent = new Intent(getActivity(), UserUpdate.class);
                 startActivity(user_update_intent);
                 break;
-//            case R.id.sign_up_or_sign_in_button:
-//                Intent registration_intent = new Intent(getActivity(), UserCreate.class);
-//                startActivity(registration_intent);
-//                break;
+            case R.id.registration:
+                Intent registration_intent = new Intent(getActivity(), UserCreate.class);
+                startActivity(registration_intent);
+                break;
             case R.id.my_vehicles:
                 Intent myvehicle_intent = new Intent(getActivity(), MyVehicle.class);
                 startActivity(myvehicle_intent);
@@ -167,18 +163,18 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-        if (sharedPreferences != null) {
+        if (mSharedPreferences != null) {
 
-            String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), "");
-            long user_id = sharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
+            String token = mSharedPreferences.getString(getString(R.string.CM_API_TOKEN), "");
+            long user_id = mSharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
 
             if (TextUtils.isEmpty(token) || user_id == -1) {
                 this.setGusetView();
                 return;
             }
 
-            String nickname = sharedPreferences.getString(getString(R.string.CM_USER_NICKNAME), "");
-            String email = sharedPreferences.getString(getString(R.string.CM_USER_EMAIL), "");
+            String nickname = mSharedPreferences.getString(getString(R.string.CM_USER_NICKNAME), "");
+            String email = mSharedPreferences.getString(getString(R.string.CM_USER_EMAIL), "");
 
             if (!TextUtils.isEmpty(nickname) && !TextUtils.isEmpty(email)) {
 
@@ -195,7 +191,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
             this.dialog.setMessage("Loading Profile...");
             this.dialog.show();
 
-            CarMarketClient.getInstance(getActivity()).getUser(user_id, "Token " + token, new Callback<User>() {
+            mCarMarketClient.getUser(user_id, "Token " + token, new Callback<User>() {
 
                 @Override
                 public void success(User user, Response response) {
@@ -203,8 +199,10 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
                     Nickname_profile.setText(user.getNickname());
                     Email_profile.setText(user.getEmail());
 
-                    sharedPreferences.edit().putString(getString(R.string.CM_USER_NICKNAME), user.getNickname()).commit();
-                    sharedPreferences.edit().putString(getString(R.string.CM_USER_EMAIL), user.getEmail()).commit();
+                    SharedPreferences.Editor editContent = mSharedPreferences.edit();
+                    editContent.putString(getString(R.string.CM_USER_NICKNAME), user.getNickname());
+                    editContent.putString(getString(R.string.CM_USER_EMAIL), user.getEmail());
+                    editContent.apply();
 
                     setUserView();
 
@@ -230,8 +228,6 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
                 }
 
             });
-
-            return;
         }
     }
 
