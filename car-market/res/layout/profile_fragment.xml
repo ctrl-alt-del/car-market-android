@@ -8,6 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <include
+        android:id="@+id/user_profile_view"
         layout="@layout/user_profile_view"
         android:visibility="gone"
         tools:visibility="visible"/>
@@ -16,18 +17,16 @@
         android:id="@+id/sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/user_layout"
-        android:layout_below="@+id/user_layout"
+        android:layout_below="@+id/user_profile_view"
         android:layout_marginRight="5sp"
         android:layout_marginTop="15sp"
         android:gravity="center"
         android:text="Sign In" />
 
     <Button
-        android:id="@+id/registration"
+        android:id="@+id/sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/user_layout"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="5sp"
         android:background="@color/transparent"

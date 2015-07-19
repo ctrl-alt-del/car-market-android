@@ -19,10 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,26 +30,17 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-
-
-    //	private Button Authentication;
-    private EditText etNickname;
-    private EditText etEmail;
-    private EditText etPassword;
-    private EditText etPasswordConfirmation;
-    private Button btSwitchToAuthentication;
-    private boolean isAuthenticationView = false;
-
-    private Button User_update;
+    private Button mUserUpdate;
     private Button mSwitchToSignUp;
     private Button mMyVehicles;
-    private TextView Email_profile;
-    private TextView Nickname_profile;
-    private RelativeLayout User_layout;
+    private TextView mEmail;
+    private TextView mNickname;
+    private View mUserProfileView;
 
     private SharedPreferences mSharedPreferences;
     private ProgressDialog dialog;
     private ApiInterface mCarMarketClient;
+    private Button mSignIn;
 
     public Profile_Fragment() {
     }
@@ -87,35 +75,22 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        etNickname = (EditText) view.findViewById(R.id.nickname_user_create);
-//        etEmail = (EditText) view.findViewById(R.id.email_user_create);
-//        etPassword = (EditText) view.findViewById(R.id.password_user_create);
-//        etPasswordConfirmation = (EditText) view.findViewById(R.id.password_confirmation_user_create);
-//
-        mSwitchToSignUp = (Button) view.findViewById(R.id.registration);
-//
+        mSignIn = (Button) view.findViewById(R.id.sign_in);
+        mSwitchToSignUp = (Button) view.findViewById(R.id.sign_up);
 
-//        setRegistrationView();
-//
-//
-////        this.Authentication = (Button) view.findViewById(R.id.authentication);
-//        this.User_update = (Button) view.findViewById(R.id.user_update);
-//
+        mUserProfileView = view.findViewById(R.id.user_profile_view);
+        mUserUpdate = (Button) view.findViewById(R.id.user_update);
+        mEmail = (TextView) view.findViewById(R.id.email_profile);
+        mNickname = (TextView) view.findViewById(R.id.nickname_profile);
         mMyVehicles = (Button) view.findViewById(R.id.my_vehicles);
-//
-//        this.User_layout = (RelativeLayout) view.findViewById(R.id.user_profile_layout);
-//        this.Email_profile = (TextView) view.findViewById(R.id.email_profile);
-//        this.Nickname_profile = (TextView) view.findViewById(R.id.nickname_profile);
-//
-////		this.Authentication.setOnClickListener(this);
-//        this.User_update.setOnClickListener(this);
-//        this.mSwitchToSignUp.setOnClickListener(this);
-//        this.mMyVehicles.setOnClickListener(this);
-//
+
+        mSignIn.setOnClickListener(this);
+        mSwitchToSignUp.setOnClickListener(this);
+
         if (mSharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
-            setUserView();
+            showUserView();
         } else {
-            setGusetView();
+            showGusetView();
         }
 
     }
@@ -130,7 +105,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
                     this.mSharedPreferences.edit().remove(getString(R.string.CM_USER_NICKNAME)).commit();
                     this.mSharedPreferences.edit().remove(getString(R.string.CM_USER_EMAIL)).commit();
 
-                    this.setGusetView();
+                    this.showGusetView();
                 } else {
                     Intent authentication_intent = new Intent(getActivity(), UserAuth.class);
                     startActivity(authentication_intent);
@@ -140,7 +115,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
                 Intent user_update_intent = new Intent(getActivity(), UserUpdate.class);
                 startActivity(user_update_intent);
                 break;
-            case R.id.registration:
+            case R.id.sign_up:
                 Intent registration_intent = new Intent(getActivity(), UserCreate.class);
                 startActivity(registration_intent);
                 break;
@@ -169,7 +144,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
             long user_id = mSharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
 
             if (TextUtils.isEmpty(token) || user_id == -1) {
-                this.setGusetView();
+                this.showGusetView();
                 return;
             }
 
@@ -178,10 +153,10 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
 
             if (!TextUtils.isEmpty(nickname) && !TextUtils.isEmpty(email)) {
 
-                this.Nickname_profile.setText(nickname);
-                this.Email_profile.setText(email);
+                this.mNickname.setText(nickname);
+                this.mEmail.setText(email);
 
-                this.setUserView();
+                this.showUserView();
 
                 return;
             }
@@ -196,15 +171,15 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
                 @Override
                 public void success(User user, Response response) {
 
-                    Nickname_profile.setText(user.getNickname());
-                    Email_profile.setText(user.getEmail());
+                    mNickname.setText(user.getNickname());
+                    mEmail.setText(user.getEmail());
 
                     SharedPreferences.Editor editContent = mSharedPreferences.edit();
                     editContent.putString(getString(R.string.CM_USER_NICKNAME), user.getNickname());
                     editContent.putString(getString(R.string.CM_USER_EMAIL), user.getEmail());
                     editContent.apply();
 
-                    setUserView();
+                    showUserView();
 
                     if (dialog.isShowing()) {
                         dialog.dismiss();
@@ -231,58 +206,15 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         }
     }
 
-    private void setUserView() {
-//		this.Authentication.setText("Sign Out");
-        LayoutParams params = this.User_layout.getLayoutParams();
-        params.height = LayoutParams.WRAP_CONTENT;
-        this.User_layout.setLayoutParams(params);
-
-        this.mSwitchToSignUp.setVisibility(View.INVISIBLE);
-        this.mSwitchToSignUp.setEnabled(false);
+    private void showUserView() {
+        mSignIn.setVisibility(View.GONE);
+        mSwitchToSignUp.setVisibility(View.GONE);
+        mUserProfileView.setVisibility(View.VISIBLE);
     }
 
-    private void setGusetView() {
-//		this.Authentication.setText("Sign In");
-        LayoutParams params = this.User_layout.getLayoutParams();
-        params.height = 0;
-        this.User_layout.setLayoutParams(params);
-
-        this.mSwitchToSignUp.setVisibility(View.VISIBLE);
-        this.mSwitchToSignUp.setEnabled(true);
+    private void showGusetView() {
+        mSignIn.setVisibility(View.VISIBLE);
+        mSwitchToSignUp.setVisibility(View.VISIBLE);
+        mUserProfileView.setVisibility(View.GONE);
     }
-
-//    public void setRegistrationView() {
-//        etNickname.setVisibility(View.VISIBLE);
-//        etEmail.setVisibility(View.VISIBLE);
-//        etPassword.setVisibility(View.VISIBLE);
-//        etPasswordConfirmation.setVisibility(View.VISIBLE);
-//        mSwitchToSignUp.setText("Sign Up");
-//        isAuthenticationView = false;
-//        btSwitchToAuthentication.setVisibility(View.VISIBLE);
-//    }
-//
-//    public void setAuthenticationView() {
-//        etNickname.setVisibility(View.GONE);
-//        etPasswordConfirmation.setVisibility(View.GONE);
-//        mSwitchToSignUp.setText("Sign In");
-//        isAuthenticationView = true;
-//        btSwitchToAuthentication.setVisibility(View.GONE);
-//    }
-//
-//    private void setRegistrationAction() {
-//        MessageUtils.showToastShort(getContext(), "setRegistrationAction() called");
-//    }
-//
-//    private void setAuthenticationAction() {
-//        MessageUtils.showToastShort(getContext(), "setAuthenticationAction() call");
-//    }
-//
-//    public boolean goBackToRegistrationView() {
-//        if (isAuthenticationView) {
-//            setRegistrationView();
-//            return false;
-//        } else {
-//            return true;
-//        }
-//    }
 }

@@ -9,6 +9,7 @@ import retrofit.client.Response;
 
 import com.car_market_android.application.CarMarketActivity;
 import com.car_market_android.model.ApiKey;
+import com.car_market_android.network.ApiInterface;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
 
@@ -31,8 +32,9 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
 	private EditText Password;
 	private Button Sign_in;
 	private Button Cacnel;
-	private SharedPreferences sharedPreferences;
+	private SharedPreferences mSharedPreferences;
 	private Activity activity;
+	private ApiInterface mCarMarketClient;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,8 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
 
 		this.activity = this;
 		
-		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		mCarMarketClient = CarMarketClient.getInstance(this);
 		EventsBus.getInstance().register(this);
 
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -82,42 +85,45 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
 			this.dialog = new ProgressDialog(this);
 			this.dialog.setMessage("Signing in...");
 			this.dialog.show();
-			
-			
-			CarMarketClient.getInstance(this).signin(
+
+
+			mCarMarketClient.signin(
 					email, password, new Callback<ApiKey>() {
 
-				@Override
-				public void success(ApiKey apiKey, Response response) {
+						@Override
+						public void success(ApiKey apiKey, Response response) {
 
-					if (dialog.isShowing()) {
-						dialog.dismiss();
-					}
-					
-					if (apiKey.getToken() == null) {
-						Toast.makeText(activity, "unable to sign in, make sure your email and password are correct.", Toast.LENGTH_SHORT).show();
-					} else {
-						sharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken()).commit();
-						sharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUserId()).commit();
-						getSession().saveApiToken(apiKey.getToken());
-						getSession().saveUserId(apiKey.getUserId());
-						onBackPressed();
-					}
-				}
+							if (dialog.isShowing()) {
+								dialog.dismiss();
+							}
 
-				@Override
-				public void failure(RetrofitError retrofitError) {
-					/**
-					 * This message is for debug mode.
-					 * */
-					Toast.makeText(activity, retrofitError.getMessage(), Toast.LENGTH_LONG).show();
-					/**
-					 * This message is for production mode.
-					 * */
-					Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+							if (apiKey.getToken() == null) {
+								Toast.makeText(activity, "unable to sign in, make sure your email and password are correct.", Toast.LENGTH_SHORT).show();
+							} else {
+								SharedPreferences.Editor edit = mSharedPreferences.edit();
+								mSharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken());
+								mSharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUserId());
+								edit.apply();
 
-					if (dialog.isShowing()) {
-						dialog.dismiss();
+								getSession().saveApiToken(apiKey.getToken());
+								getSession().saveUserId(apiKey.getUserId());
+								finish();
+							}
+						}
+
+						@Override
+						public void failure(RetrofitError retrofitError) {
+							/**
+							 * This message is for debug mode.
+							 * */
+							Toast.makeText(activity, retrofitError.getMessage(), Toast.LENGTH_LONG).show();
+							/**
+							 * This message is for production mode.
+							 * */
+							Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+
+							if (dialog.isShowing()) {
+								dialog.dismiss();
 					}
 				}
 
