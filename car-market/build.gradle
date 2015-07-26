@@ -30,14 +30,15 @@ android {
 }
 
 dependencies {
-    def supportLibsVer = '22.2.0'
+    def supportLibsVer = '22.2.1'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:support-v4:${supportLibsVer}"
     compile "com.android.support:appcompat-v7:${supportLibsVer}"
     compile "com.android.support:support-v13:${supportLibsVer}"
     compile 'commons-validator:commons-validator:1.4.0'
     compile 'com.squareup:otto:1.3.5'
-    compile 'com.squareup.picasso:picasso:2.3.3'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'org.apache.httpcomponents:httpclient-android:4.3.3'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'joda-time:joda-time:2.3'
