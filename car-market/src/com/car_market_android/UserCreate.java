@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class UserCreate extends CarMarketActivity implements OnClickListener {
@@ -31,7 +32,7 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
 	private EditText Email;
 	private EditText Password;
 	private EditText Password_Confirmation;
-	private Button Terms_and_policy;
+	private TextView Terms_and_policy;
 	private Button Sign_up;
 	private Button Cacnel;
 	private SharedPreferences sharedPreferences;
@@ -53,7 +54,7 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
 		this.Email = (EditText) this.findViewById(R.id.email_user_create);
 		this.Password = (EditText) this.findViewById(R.id.password_user_create);
 		this.Password_Confirmation = (EditText) this.findViewById(R.id.password_confirmation_user_create);
-		this.Terms_and_policy = (Button) this.findViewById(R.id.terms_and_policy_user_create);
+		this.Terms_and_policy = (TextView) this.findViewById(R.id.terms_and_policy_user_create);
 		this.Sign_up = (Button) this.findViewById(R.id.sign_up_user_create);
 		this.Cacnel = (Button) this.findViewById(R.id.cancel_user_create);
 
