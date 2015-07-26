@@ -6,7 +6,10 @@
     <dimen name="fragment_horizontal_margin">5dp</dimen>
     <dimen name="fragment_vertical_margin">5dp</dimen>
 
-    <dimen name="margin_regular">8dp</dimen>
-    <dimen name="padding_regular">8dp</dimen>
+    <dimen name="spacing_thin">2dp</dimen>
+    <dimen name="spacing_light">4dp</dimen>
+    <dimen name="spacing_regular">8dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_bold">24dp</dimen>
 
 </resources>
