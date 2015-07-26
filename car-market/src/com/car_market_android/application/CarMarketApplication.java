@@ -1,9 +1,12 @@
 package com.car_market_android.application;
 
+import com.car_market_android.R;
 import com.squareup.picasso.Picasso;
 
 import android.app.Application;
 import android.content.Context;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class CarMarketApplication extends Application {
 
@@ -17,6 +20,12 @@ public class CarMarketApplication extends Application {
 		// TODO: add cache and download client
 		mPicasso = new Picasso.Builder(this).build();
 		mSession = new Session(this);
+
+		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/Roboto-RobotoRegular.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
 	}
 
 	public Picasso getPicasso() {

@@ -43,6 +43,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'joda-time:joda-time:2.3'
     compile 'com.squareup.retrofit:retrofit:1.7.0'
+    compile 'uk.co.chrisjenx:calligraphy:2.1.0'
 }
 
 //task wrapper(type: Wrapper) {

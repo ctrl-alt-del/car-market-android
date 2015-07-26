@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class CarMarketActivity extends Activity {
 
 	protected Session mSession;
@@ -17,6 +19,11 @@ public class CarMarketActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 
 	public CarMarketApplication getCarMarketApplication() {
