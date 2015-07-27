@@ -101,8 +101,8 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
 								Toast.makeText(activity, "unable to sign in, make sure your email and password are correct.", Toast.LENGTH_SHORT).show();
 							} else {
 								SharedPreferences.Editor edit = mSharedPreferences.edit();
-								mSharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken());
-								mSharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUserId());
+								edit.putString(getString(R.string.CM_API_TOKEN), apiKey.getToken());
+								edit.putLong(getString(R.string.CM_API_USER_ID), apiKey.getUserId());
 								edit.apply();
 
 								getSession().saveApiToken(apiKey.getToken());
