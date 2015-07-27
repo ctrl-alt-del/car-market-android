@@ -25,4 +25,71 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="AutoCompleteTextViewCarMarket" parent="android:Widget.Holo.AutoCompleteTextView">
+        <item name="android:dropDownSelector">@drawable/carmarket_list_selector_holo_dark</item>
+        <item name="android:background">@drawable/carmarket_edit_text_holo_dark</item>
+    </style>
+
+    <style name="ButtonCarMarket" parent="android:Widget.Holo.Button">
+        <item name="android:background">@drawable/carmarket_btn_default_holo_dark</item>
+    </style>
+
+    <style name="ImageButtonCarMarket" parent="android:Widget.Holo.ImageButton">
+        <item name="android:background">@drawable/carmarket_btn_default_holo_dark</item>
+    </style>
+
+    <style name="SpinnerCarMarket" parent="android:Widget.Holo.Spinner">
+        <item name="android:background">@drawable/carmarket_spinner_background_holo_dark</item>
+        <item name="android:dropDownSelector">@drawable/carmarket_list_selector_holo_dark</item>
+    </style>
+
+    <style name="TabCarMarket">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+        <item name="android:background">@drawable/carmarket_tab_indicator_holo</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:minWidth">80dip</item>
+    </style>
+
+    <style name="TabTextCarMarket">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <!-- v14 <item name="android:textAllCaps">true</item> -->
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:maxWidth">180dip</item>
+    </style>
+
+    <style name="ProgressBarCarMarket" parent="android:Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/carmarket_progress_horizontal_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/carmarket_progress_indeterminate_horizontal_holo_dark</item>
+    </style>
+
+    <style name="SeekBarCarMarket" parent="android:Widget.Holo.SeekBar">
+        <item name="android:progressDrawable">@drawable/carmarket_scrubber_progress_horizontal_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/carmarket_scrubber_progress_horizontal_holo_dark</item>
+        <item name="android:thumb">@drawable/carmarket_scrubber_control_selector_holo_dark</item>
+    </style>
+
+    <style name="RatingBarCarMarket" parent="android:Widget.Holo.RatingBar">
+        <item name="android:progressDrawable">@drawable/carmarket_ratingbar_full_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/carmarket_ratingbar_full_holo_dark</item>
+    </style>
+
+    <style name="RatingBarBigCarMarket" parent="android:Widget.Holo.RatingBar.Indicator">
+        <item name="android:progressDrawable">@drawable/carmarket_ratingbar_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/carmarket_ratingbar_holo_dark</item>
+    </style>
+
+    <style name="RatingBarSmallCarMarket" parent="android:Widget.Holo.RatingBar.Small">
+        <item name="android:progressDrawable">@drawable/carmarket_ratingbar_small_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/carmarket_ratingbar_small_holo_dark</item>
+    </style>
+
+    <style name="ToggleCarMarket" parent="android:Widget.Holo.Button.Toggle">
+        <item name="android:background">@drawable/carmarket_btn_toggle_holo_dark</item>
+    </style>
 </resources>

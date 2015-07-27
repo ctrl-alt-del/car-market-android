@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CarMarket" parent="android:Theme.Holo">
+        <item name="android:editTextBackground">@drawable/carmarket_edit_text_holo_dark</item>
+        <item name="android:textColorHighlight">#99cc0000</item>
+        <item name="android:textSelectHandleLeft">@drawable/carmarket_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/carmarket_text_select_handle_right</item>
+        <item name="android:textSelectHandle">@drawable/carmarket_text_select_handle_middle</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewCarMarket</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/carmarket_btn_check_holo_dark</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/carmarket_btn_radio_holo_dark</item>
+        <item name="android:buttonStyle">@style/ButtonCarMarket</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonCarMarket</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerCarMarket</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarCarMarket</item>
+        <item name="android:seekBarStyle">@style/SeekBarCarMarket</item>
+        <item name="android:ratingBarStyle">@style/RatingBarCarMarket</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigCarMarket</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallCarMarket</item>
+        <item name="android:buttonStyleToggle">@style/ToggleCarMarket</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/carmarket_list_selector_holo_dark</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/carmarket_activated_background_holo_dark</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/carmarket_fastscroll_thumb_holo</item>
+    </style>
+</resources>

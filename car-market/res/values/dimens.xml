@@ -12,4 +12,6 @@
     <dimen name="spacing_medium">16dp</dimen>
     <dimen name="spacing_bold">24dp</dimen>
 
+    <dimen name="tab_host_default_height">48dp</dimen>
+
 </resources>
