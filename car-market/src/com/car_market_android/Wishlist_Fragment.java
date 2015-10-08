@@ -6,7 +6,7 @@ import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.GetRequestResultEvent;
 import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
-import com.car_market_android.util.JsonDB;
+import com.car_market_android.util.SharePreferencesUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
@@ -200,7 +200,7 @@ implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.On
 				}
 				
 				data.clear();
-				data.addAll(JsonDB.getVehiclesFromJsonDB(getActivity(), getString(R.string.CM_USER_WISHLIST)));
+				data.addAll(SharePreferencesUtils.getVehiclesFromJsonDB(getActivity(), getString(R.string.CM_USER_WISHLIST)));
 
 				vadp.notifyDataSetChanged();
 				swipeRefreshLayout.setRefreshing(false);

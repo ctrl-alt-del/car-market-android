@@ -11,11 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.car_market_android.R;
 import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.ButtonAction;
-import com.car_market_android.util.JsonDB;
+import com.car_market_android.util.SharePreferencesUtils;
 
 
 public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnClickListener{
@@ -99,7 +98,7 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 			switch (btnActionHolder.getButtonAction()) {
 			case LIKE:
 
-				LinkedList<Vehicle> data = JsonDB.getVehiclesFromJsonDB(this.activity, 
+				LinkedList<Vehicle> data = SharePreferencesUtils.getVehiclesFromJsonDB(this.activity,
 						this.activity.getString(R.string.CM_USER_WISHLIST));
 
 				// TODO: this is O(n), will find a better solution later.
@@ -112,7 +111,7 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 
 				data.add(vehicle);
 
-				JsonDB.setVehiclesToJsonDB(this.activity, 
+				SharePreferencesUtils.setVehiclesToJsonDB(this.activity,
 						this.activity.getString(R.string.CM_USER_WISHLIST), data);
 
 				Toast.makeText(this.activity, "Like is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();

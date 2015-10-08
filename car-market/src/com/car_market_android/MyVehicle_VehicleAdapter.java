@@ -15,12 +15,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.car_market_android.R;
 import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.network.ButtonAction;
-import com.car_market_android.util.JsonDB;
+import com.car_market_android.util.SharePreferencesUtils;
 
 
 public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClickListener{
@@ -50,7 +49,7 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 			return;
 		}
 		
-		JsonDB.setVehiclesToJsonDB(this.activity, 
+		SharePreferencesUtils.setVehiclesToJsonDB(this.activity,
 				this.activity.getString(R.string.CM_USER_WISHLIST), vehicles);
 	}
 

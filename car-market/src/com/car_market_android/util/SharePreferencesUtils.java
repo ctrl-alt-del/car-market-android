@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -12,17 +13,24 @@ import com.car_market_android.model.Vehicle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class JsonDB {
+public class SharePreferencesUtils {
+
+	private static SharedPreferences sSharedPreferences;
+
+    public static SharedPreferences getSharePreferences(Context context) {
+        if (sSharedPreferences == null) {
+            sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        }
+        return sSharedPreferences;
+    }
 
 	private static final Gson gson = new GsonBuilder().create();
 	
-	public static LinkedList<Vehicle> getVehiclesFromJsonDB(Activity activity, String JsonDBKey) {
+	public static LinkedList<Vehicle> getVehiclesFromJsonDB(Context context, String JsonDBKey) {
 		
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-
 		LinkedList<Vehicle> data = new LinkedList<Vehicle>();
 
-		String JSON_DB = sharedPreferences.getString(JsonDBKey, "");
+		String JSON_DB = getSharePreferences(context).getString(JsonDBKey, "");
 
 		if (TextUtils.isEmpty(JSON_DB)) {
 			return data;
@@ -37,12 +45,10 @@ public class JsonDB {
 		return data;
 	}
 	
-	public static void setVehiclesToJsonDB(Activity activity, String JsonDBKey, List<Vehicle> data) {
-		
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+	public static void setVehiclesToJsonDB(Context context, String JsonDBKey, List<Vehicle> data) {
 		
 		String JSON_DB = gson.toJson(data.toArray(new Vehicle[]{}));
 		
-		sharedPreferences.edit().putString(JsonDBKey, JSON_DB).commit();
+		getSharePreferences(context).edit().putString(JsonDBKey, JSON_DB).commit();
 	}
 }
