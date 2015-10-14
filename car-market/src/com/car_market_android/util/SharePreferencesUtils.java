@@ -30,7 +30,7 @@ public class SharePreferencesUtils {
 		
 		LinkedList<Vehicle> data = new LinkedList<Vehicle>();
 
-		String JSON_DB = getSharePreferences(context).getString(JsonDBKey, "");
+		String JSON_DB = getSharePreferences(context).getString(JsonDBKey, StringUtils.EMPTY);
 
 		if (TextUtils.isEmpty(JSON_DB)) {
 			return data;

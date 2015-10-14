@@ -8,6 +8,7 @@ import com.car_market_android.model.User;
 import com.car_market_android.network.ApiInterface;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
+import com.car_market_android.util.StringUtils;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -140,7 +141,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         super.onResume();
         if (mSharedPreferences != null) {
 
-            String token = mSharedPreferences.getString(getString(R.string.CM_API_TOKEN), "");
+            String token = mSharedPreferences.getString(getString(R.string.CM_API_TOKEN), StringUtils.EMPTY);
             long user_id = mSharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
 
             if (TextUtils.isEmpty(token) || user_id == -1) {
@@ -148,8 +149,8 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
                 return;
             }
 
-            String nickname = mSharedPreferences.getString(getString(R.string.CM_USER_NICKNAME), "");
-            String email = mSharedPreferences.getString(getString(R.string.CM_USER_EMAIL), "");
+            String nickname = mSharedPreferences.getString(getString(R.string.CM_USER_NICKNAME), StringUtils.EMPTY);
+            String email = mSharedPreferences.getString(getString(R.string.CM_USER_EMAIL), StringUtils.EMPTY);
 
             if (!TextUtils.isEmpty(nickname) && !TextUtils.isEmpty(email)) {
 

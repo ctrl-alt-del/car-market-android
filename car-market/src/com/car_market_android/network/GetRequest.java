@@ -7,6 +7,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.car_market_android.util.EventsBus;
+import com.car_market_android.util.StringUtils;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -43,7 +44,7 @@ public class GetRequest extends AsyncTask<String, Void, GetRequestResultEvent> {
 		HttpGet request = new HttpGet(link);
 		NetworkUtils.setHeaders(mContext, request);
 
-		String result = "";
+		String result = StringUtils.EMPTY;
 		try {
 			HttpResponse response = client.execute(request);
 

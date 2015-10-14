@@ -15,6 +15,7 @@ import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.ButtonAction;
 import com.car_market_android.util.SharePreferencesUtils;
+import com.car_market_android.util.StringUtils;
 
 
 public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnClickListener{
@@ -74,7 +75,7 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 		int p = Integer.valueOf(listing.getPrice());
 		holder.Price.setTextColor(this.activity.getResources().getColor(this.getColorByPrice(p)));
 
-		String state = !TextUtils.isEmpty(listing.getState()) ? ", " + listing.getState() : "";
+		String state = !TextUtils.isEmpty(listing.getState()) ? ", " + listing.getState() : StringUtils.EMPTY;
 		holder.Location.setText(listing.getCity() + state);
 
 		VehicleIndexRowButtonActionHolder likeAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);

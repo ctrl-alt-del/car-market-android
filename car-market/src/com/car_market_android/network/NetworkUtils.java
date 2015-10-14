@@ -17,6 +17,7 @@ import android.content.Context;
 import com.car_market_android.R;
 import com.car_market_android.application.CarMarketApplication;
 import com.car_market_android.application.Session;
+import com.car_market_android.util.StringUtils;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -41,7 +42,7 @@ public class NetworkUtils {
 	public static void setHeaders(Context context, HttpRequestBase request) {
 		setHeaders(request);
 		Session session = ((CarMarketApplication) context).getSession();
-		String authToken = session != null ? session.getApiToken() : "";
+		String authToken = session != null ? session.getApiToken() : StringUtils.EMPTY;
 		if (!TextUtils.isEmpty(authToken)) {
 			request.addHeader("authorization", "Token " + authToken);
 		}
@@ -54,7 +55,7 @@ public class NetworkUtils {
 	}
 	
 	public static String parseResponseContent(InputStream inputStream) throws IOException {
-		String result = "";
+		String result = StringUtils.EMPTY;
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 

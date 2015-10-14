@@ -12,6 +12,7 @@ import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.network.GetRequestResultEvent;
 import com.car_market_android.util.EventsBus;
+import com.car_market_android.util.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
@@ -152,7 +153,7 @@ implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListVi
 				data.clear();
 				// TODO: add swipe to reload feature
 
-				String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), "");
+				String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), StringUtils.EMPTY);
 				long user_id = sharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
 
 				if (TextUtils.isEmpty(token) || user_id == -1) {

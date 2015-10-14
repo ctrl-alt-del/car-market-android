@@ -11,6 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.car_market_android.application.Session;
 import com.car_market_android.util.EventsBus;
+import com.car_market_android.util.StringUtils;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -49,7 +50,7 @@ public class PostRequest extends AsyncTask<String, Void, PostRequestResultEvent>
 		HttpPost request = new HttpPost(link);
 		NetworkUtils.setHeaders(mContext, request);
 
-		String result = "";
+		String result = StringUtils.EMPTY;
 		try {
 			request.setEntity(new UrlEncodedFormEntity(this.contents));
 

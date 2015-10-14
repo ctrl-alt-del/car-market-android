@@ -1,6 +1,7 @@
 package com.car_market_android;
 
 import com.car_market_android.application.CarMarketApplication;
+import com.car_market_android.util.StringUtils;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -17,7 +18,7 @@ public class Utilities {
     public static void showProgressDialog(Context context, ProgressDialog progressDialog, int resourceId) {
         String message = context.getString(resourceId);
         if (progressDialog == null) {
-            progressDialog = ProgressDialog.show(context, "", message);
+            progressDialog = ProgressDialog.show(context, StringUtils.EMPTY, message);
         } else {
             progressDialog.setMessage(message);
         }
