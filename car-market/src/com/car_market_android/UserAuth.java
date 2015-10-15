@@ -102,11 +102,10 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
 							} else {
 								SharedPreferences.Editor edit = mSharedPreferences.edit();
 								edit.putString(getString(R.string.CM_API_TOKEN), apiKey.getToken());
-								edit.putLong(getString(R.string.CM_API_USER_ID), apiKey.getUserId());
+								edit.putString(getString(R.string.CM_API_USER_ID), apiKey.getUserId());
 								edit.apply();
 
-								getSession().saveApiToken(apiKey.getToken());
-								getSession().saveUserId(apiKey.getUserId());
+								getSession().saveApiKey(apiKey);
 								finish();
 							}
 						}

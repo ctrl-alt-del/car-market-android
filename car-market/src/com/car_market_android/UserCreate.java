@@ -142,9 +142,9 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
 								Toast.makeText(activity, apiKey.getMessage(), Toast.LENGTH_LONG).show();
 							} else {
 								sharedPreferences.edit().putString(getString(R.string.CM_API_TOKEN), apiKey.getToken()).commit();
-								sharedPreferences.edit().putLong(getString(R.string.CM_API_USER_ID), apiKey.getUserId()).commit();
-								getSession().saveApiToken(apiKey.getToken());
-								getSession().saveUserId(apiKey.getUserId());
+								sharedPreferences.edit().putString(getString(R.string.CM_API_USER_ID), apiKey.getUserId()).commit();
+
+								getSession().saveApiKey(apiKey);
 								onBackPressed();
 							}
 						}

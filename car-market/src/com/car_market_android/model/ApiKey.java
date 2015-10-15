@@ -7,7 +7,7 @@ public class ApiKey {
 	private String token;
 	
 	@SerializedName("user_id")
-	private long userId;
+	private String userId;
 	
 	private String message;
 
@@ -15,20 +15,10 @@ public class ApiKey {
 		return this.token;
 	}
 
-	public ApiKey setToken(String token) {
-		this.token = token;
-		return this;
-	}
-	
-	public long getUserId() {
+	public String getUserId() {
 		return this.userId;
 	}
 
-	public ApiKey setUserId(long userId) {
-		this.userId = userId;
-		return this;
-	}
-	
 	public String getMessage() {
 		return this.message;
 	}

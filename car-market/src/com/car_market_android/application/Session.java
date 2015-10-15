@@ -5,14 +5,15 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.car_market_android.R;
+import com.car_market_android.model.ApiKey;
+import com.car_market_android.util.StringUtils;
 
 public class Session {
 	
 	private Context mContext;
-	private String mApiToken;
-	private long mUserId;
     private SharedPreferences sharedPreferences;
-	
+	private ApiKey mApiKey;
+
 	public Session(Context context) {
 		mContext = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -21,21 +22,17 @@ public class Session {
 	public CarMarketApplication getCarMarketApplication() {
 		return (CarMarketApplication) mContext;
 	}
-	
-	public void saveApiToken(String apiToken) {
-		mApiToken = apiToken;
+
+	public void saveApiKey(ApiKey apiKey) {
+		mApiKey = apiKey;
 	}
-	
+
 	public String getApiToken() {
-		return mApiToken;
+		return mApiKey != null ? mApiKey.getToken() : StringUtils.EMPTY;
 	}
-	
-	public void saveUserId(long userId) {
-		mUserId = userId;
-	}
-	
-	public long getUserId() {
-		return mUserId;
+
+	public String getUserId() {
+		return mApiKey != null ? mApiKey.getUserId() : StringUtils.EMPTY;
 	}
 
     public boolean isUserSignIn() {
