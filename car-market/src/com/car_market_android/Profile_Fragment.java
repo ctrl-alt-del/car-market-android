@@ -102,9 +102,11 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
             case R.id.sign_in:
 
                 if (mSharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
-                    this.mSharedPreferences.edit().remove(getString(R.string.CM_API_TOKEN)).commit();
-                    this.mSharedPreferences.edit().remove(getString(R.string.CM_USER_NICKNAME)).commit();
-                    this.mSharedPreferences.edit().remove(getString(R.string.CM_USER_EMAIL)).commit();
+                    SharedPreferences.Editor edit = mSharedPreferences.edit();
+                    edit.remove(getString(R.string.CM_API_TOKEN));
+                    edit.remove(getString(R.string.CM_USER_NICKNAME));
+                    edit.remove(getString(R.string.CM_USER_EMAIL));
+                    edit.apply();
 
                     this.showGusetView();
                 } else {
