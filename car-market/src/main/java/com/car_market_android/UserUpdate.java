@@ -19,74 +19,75 @@ import android.widget.Toast;
 
 public class UserUpdate extends Activity implements OnClickListener {
 
-	private Button Update;
-	private Button Cacnel;
-	
-	private SharedPreferences sharedPreferences;
+    private Button Update;
+    private Button Cacnel;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.user_update);
+    private SharedPreferences sharedPreferences;
 
-		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		EventsBus.getInstance().register(this);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.user_update);
 
-		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		
-		this.Update = (Button) this.findViewById(R.id.update_user_update);
-		this.Cacnel = (Button) this.findViewById(R.id.cancel_user_update);
-		
-		this.Update.setOnClickListener(this);
-		this.Cacnel.setOnClickListener(this);
-	}
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        EventsBus.getInstance().register(this);
 
-	@Override
-	public void onDestroy() {
-		EventsBus.getInstance().unregister(this);
-		super.onDestroy();
-	}
+        getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-	private ProgressDialog dialog;
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-		case R.id.update_user_update:
-			Toast.makeText(this, "Update button pressed...", Toast.LENGTH_SHORT).show();
-			
-			this.dialog = new ProgressDialog(this);
-			this.dialog.setMessage("Updating...");
-			this.dialog.show();
-			
-			//TODO: call apiClient
-			
-			if (dialog.isShowing()) {
-				dialog.dismiss();
-			}
-			break;
-		case R.id.cancel_user_update:
-			this.onBackPressed();
-			break;
-		default:
-			Toast.makeText(this, "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
+        this.Update = (Button) this.findViewById(R.id.update_user_update);
+        this.Cacnel = (Button) this.findViewById(R.id.cancel_user_update);
+
+        this.Update.setOnClickListener(this);
+        this.Cacnel.setOnClickListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        EventsBus.getInstance().unregister(this);
+        super.onDestroy();
+    }
+
+    private ProgressDialog dialog;
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.update_user_update:
+                Toast.makeText(this, "Update button pressed...", Toast.LENGTH_SHORT).show();
+
+                this.dialog = new ProgressDialog(this);
+                this.dialog.setMessage("Updating...");
+                this.dialog.show();
+
+                //TODO: call apiClient
+
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                break;
+            case R.id.cancel_user_update:
+                this.onBackPressed();
+                break;
+            default:
+                Toast.makeText(this, "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
 //			this.dialog = new ProgressDialog(this);
 //			this.dialog.setMessage("Loading...");
 //			this.dialog.show();
-			break;
-		}
-	}
+                break;
+        }
+    }
 
-	@Subscribe
-	public void onPostRequestTaskResult(PostRequestResultEvent event) {
+    @Subscribe
+    public void onPostRequestTaskResult(PostRequestResultEvent event) {
 
-		Gson gson = new GsonBuilder().create();
-		
-		switch (event.getCaller()) {
-		default:
-			if (dialog.isShowing()) {
-				dialog.dismiss();
-			}
-			break;
-		}
-	}
+        Gson gson = new GsonBuilder().create();
+
+        switch (event.getCaller()) {
+            default:
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                break;
+        }
+    }
 }

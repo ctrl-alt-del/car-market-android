@@ -1,4 +1,5 @@
 package com.car_market_android;
+
 import java.util.List;
 
 import android.app.Activity;
@@ -16,152 +17,151 @@ import com.car_market_android.network.ButtonAction;
 import com.car_market_android.util.SharePreferencesUtils;
 
 
-public class Wishlist_VehicleAdapter extends BaseAdapter implements View.OnClickListener{
+public class Wishlist_VehicleAdapter extends BaseAdapter implements View.OnClickListener {
 
-	Activity activity;
-	List<Vehicle> vehicles;
-	private SharedPreferences sharedPreferences;
-	private boolean dataChanged = false;
+    Activity activity;
+    List<Vehicle> vehicles;
+    private SharedPreferences sharedPreferences;
+    private boolean dataChanged = false;
 
-	public Wishlist_VehicleAdapter(Activity activity, List<Vehicle> rows) {
-		this.activity = activity;
-		this.vehicles = rows;
-		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
-	}
-	
-	public boolean isDataChanged() {
-		return this.dataChanged;
-	}
+    public Wishlist_VehicleAdapter(Activity activity, List<Vehicle> rows) {
+        this.activity = activity;
+        this.vehicles = rows;
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
+    }
 
-	public void setDataChanged(boolean dataChanged) {
-		this.dataChanged = dataChanged;
-	}
-	
-	public void saveDataChanegs() {
-		if (vehicles == null || sharedPreferences == null) {
-			return;
-		}
-		
-		SharePreferencesUtils.setVehiclesToJsonDB(this.activity,
-				this.activity.getString(R.string.CM_USER_WISHLIST), vehicles);
-	}
+    public boolean isDataChanged() {
+        return this.dataChanged;
+    }
 
-	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return vehicles.size();
-	}
+    public void setDataChanged(boolean dataChanged) {
+        this.dataChanged = dataChanged;
+    }
 
-	@Override
-	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
-		return vehicles.get(arg0);
-	}
+    public void saveDataChanegs() {
+        if (vehicles == null || sharedPreferences == null) {
+            return;
+        }
 
-	@Override
-	public long getItemId(int arg0) {
-		// TODO Auto-generated method stub
-		return arg0;
-	}
+        SharePreferencesUtils.setVehiclesToJsonDB(this.activity,
+                this.activity.getString(R.string.CM_USER_WISHLIST), vehicles);
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return vehicles.size();
+    }
 
-		Vehicle vehicle = vehicles.get(position);
+    @Override
+    public Object getItem(int arg0) {
+        // TODO Auto-generated method stub
+        return vehicles.get(arg0);
+    }
 
-		VehicleIndexRowViewHolder holder;
-		if (convertView == null) {
+    @Override
+    public long getItemId(int arg0) {
+        // TODO Auto-generated method stub
+        return arg0;
+    }
 
-			holder = new VehicleIndexRowViewHolder();
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // TODO Auto-generated method stub
 
-			convertView = View.inflate(this.activity, R.layout.wishlist_fragment_row, null);
-			holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_mmy);
-			holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_vin);
-			holder.Delete = (Button) convertView.findViewById(R.id.vehicle_index_wishlist_row_delete);
+        Vehicle vehicle = vehicles.get(position);
 
-			convertView.setTag(holder);
-		} else {
-			holder = (VehicleIndexRowViewHolder) convertView.getTag();
-		}
+        VehicleIndexRowViewHolder holder;
+        if (convertView == null) {
 
-		holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
-		holder.Vin.setText(vehicle.getVin());
+            holder = new VehicleIndexRowViewHolder();
 
+            convertView = View.inflate(this.activity, R.layout.wishlist_fragment_row, null);
+            holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_mmy);
+            holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_vin);
+            holder.Delete = (Button) convertView.findViewById(R.id.vehicle_index_wishlist_row_delete);
 
-		VehicleIndexRowButtonActionHolder deleteAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);
+            convertView.setTag(holder);
+        } else {
+            holder = (VehicleIndexRowViewHolder) convertView.getTag();
+        }
 
-		holder.Delete.setTag(deleteAH);
-		holder.Delete.setOnClickListener(this);
+        holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
+        holder.Vin.setText(vehicle.getVin());
 
 
-		return convertView;
-	}
+        VehicleIndexRowButtonActionHolder deleteAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);
 
-	@Override
-	public void onClick(View view) {
+        holder.Delete.setTag(deleteAH);
+        holder.Delete.setOnClickListener(this);
 
-		// User reflection to verify the casting is appropriate
-		if (view.getTag() instanceof VehicleIndexRowButtonActionHolder) {
 
-			VehicleIndexRowButtonActionHolder btnActionHolder = (VehicleIndexRowButtonActionHolder) view.getTag();
+        return convertView;
+    }
 
-			Vehicle vehicle = btnActionHolder.getVehicle();
+    @Override
+    public void onClick(View view) {
 
-			switch (btnActionHolder.getButtonAction()) {
-			case LIKE:
-				Toast.makeText(this.activity, "Delete is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+        // User reflection to verify the casting is appropriate
+        if (view.getTag() instanceof VehicleIndexRowButtonActionHolder) {
 
-				vehicles.remove(vehicle);
-				this.notifyDataSetChanged();
-				this.dataChanged = true;
-				
-				break;
-			default:
-				break;
-			}
-		}
-	}
+            VehicleIndexRowButtonActionHolder btnActionHolder = (VehicleIndexRowButtonActionHolder) view.getTag();
 
-	/**
-	 * Class to hold the views of vehicle_index_row.xml.
-	 * 
-	 * @since 2014-08-23
-	 * @version 1.0
-	 * */
-	private class VehicleIndexRowViewHolder {
+            Vehicle vehicle = btnActionHolder.getVehicle();
 
-		protected TextView Title;
-		protected TextView Vin;
-		protected Button Delete;
-	}
+            switch (btnActionHolder.getButtonAction()) {
+                case LIKE:
+                    Toast.makeText(this.activity, "Delete is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
-	/**
-	 * Class to hold vehicle information along with button action, so button
-	 * action can be identified by OnClickListener.
+                    vehicles.remove(vehicle);
+                    this.notifyDataSetChanged();
+                    this.dataChanged = true;
 
-	 * @param buttonAction identifies which button perform the action
-	 * @param vehicle stores the {@link Vehicle} information 
-	 * 
-	 * @since 2014-08-23
-	 * @version 1.0
-	 * */
-	private class VehicleIndexRowButtonActionHolder {
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
-		private final ButtonAction buttonAction;
-		private final Vehicle vehicle;
+    /**
+     * Class to hold the views of vehicle_index_row.xml.
+     *
+     * @version 1.0
+     * @since 2014-08-23
+     */
+    private class VehicleIndexRowViewHolder {
 
-		public VehicleIndexRowButtonActionHolder(ButtonAction buttonAction, Vehicle vehicle) {
-			this.buttonAction = buttonAction;
-			this.vehicle = vehicle;
-		}
+        protected TextView Title;
+        protected TextView Vin;
+        protected Button Delete;
+    }
 
-		public ButtonAction getButtonAction() {
-			return this.buttonAction;
-		}
+    /**
+     * Class to hold vehicle information along with button action, so button
+     * action can be identified by OnClickListener.
+     *
+     * @param buttonAction identifies which button perform the action
+     * @param vehicle      stores the {@link Vehicle} information
+     * @version 1.0
+     * @since 2014-08-23
+     */
+    private class VehicleIndexRowButtonActionHolder {
 
-		public Vehicle getVehicle() {
-			return this.vehicle;
-		}
-	}
+        private final ButtonAction buttonAction;
+        private final Vehicle vehicle;
+
+        public VehicleIndexRowButtonActionHolder(ButtonAction buttonAction, Vehicle vehicle) {
+            this.buttonAction = buttonAction;
+            this.vehicle = vehicle;
+        }
+
+        public ButtonAction getButtonAction() {
+            return this.buttonAction;
+        }
+
+        public Vehicle getVehicle() {
+            return this.vehicle;
+        }
+    }
 }

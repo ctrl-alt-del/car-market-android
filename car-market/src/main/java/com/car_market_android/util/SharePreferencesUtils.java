@@ -15,7 +15,7 @@ import com.google.gson.GsonBuilder;
 
 public class SharePreferencesUtils {
 
-	private static SharedPreferences sSharedPreferences;
+    private static SharedPreferences sSharedPreferences;
 
     public static SharedPreferences getSharePreferences(Context context) {
         if (sSharedPreferences == null) {
@@ -24,31 +24,31 @@ public class SharePreferencesUtils {
         return sSharedPreferences;
     }
 
-	private static final Gson gson = new GsonBuilder().create();
-	
-	public static LinkedList<Vehicle> getVehiclesFromJsonDB(Context context, String JsonDBKey) {
-		
-		LinkedList<Vehicle> data = new LinkedList<Vehicle>();
+    private static final Gson gson = new GsonBuilder().create();
 
-		String JSON_DB = getSharePreferences(context).getString(JsonDBKey, StringUtils.EMPTY);
+    public static LinkedList<Vehicle> getVehiclesFromJsonDB(Context context, String JsonDBKey) {
 
-		if (TextUtils.isEmpty(JSON_DB)) {
-			return data;
-		}
+        LinkedList<Vehicle> data = new LinkedList<Vehicle>();
 
-		Vehicle[] vehicles = gson.fromJson(JSON_DB, Vehicle[].class);
+        String JSON_DB = getSharePreferences(context).getString(JsonDBKey, StringUtils.EMPTY);
 
-		for (Vehicle each : vehicles) {
-			data.add(each);
-		}
+        if (TextUtils.isEmpty(JSON_DB)) {
+            return data;
+        }
 
-		return data;
-	}
-	
-	public static void setVehiclesToJsonDB(Context context, String JsonDBKey, List<Vehicle> data) {
-		
-		String JSON_DB = gson.toJson(data.toArray(new Vehicle[]{}));
-		
-		getSharePreferences(context).edit().putString(JsonDBKey, JSON_DB).commit();
-	}
+        Vehicle[] vehicles = gson.fromJson(JSON_DB, Vehicle[].class);
+
+        for (Vehicle each : vehicles) {
+            data.add(each);
+        }
+
+        return data;
+    }
+
+    public static void setVehiclesToJsonDB(Context context, String JsonDBKey, List<Vehicle> data) {
+
+        String JSON_DB = gson.toJson(data.toArray(new Vehicle[]{}));
+
+        getSharePreferences(context).edit().putString(JsonDBKey, JSON_DB).commit();
+    }
 }

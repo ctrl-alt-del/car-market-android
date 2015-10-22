@@ -1,10 +1,12 @@
 package com.car_market_android;
+
 import java.util.HashMap;
 import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -22,173 +24,171 @@ import com.car_market_android.network.ButtonAction;
 import com.car_market_android.util.SharePreferencesUtils;
 
 
-public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClickListener{
+public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClickListener {
 
-	Activity activity;
-	List<Vehicle> vehicles;
-	private SharedPreferences sharedPreferences;
-	private boolean dataChanged = false;
-	private HashMap<Integer, Integer> vehicleId2ListPosition = new HashMap<Integer, Integer>();
+    Activity activity;
+    List<Vehicle> vehicles;
+    private SharedPreferences sharedPreferences;
+    private boolean dataChanged = false;
+    private HashMap<Integer, Integer> vehicleId2ListPosition = new HashMap<Integer, Integer>();
 
-	public MyVehicle_VehicleAdapter(Activity activity, List<Vehicle> rows) {
-		this.activity = activity;
-		this.vehicles = rows;
-		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
-	}
-	
-	public boolean isDataChanged() {
-		return this.dataChanged;
-	}
+    public MyVehicle_VehicleAdapter(Activity activity, List<Vehicle> rows) {
+        this.activity = activity;
+        this.vehicles = rows;
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
+    }
 
-	public void setDataChanged(boolean dataChanged) {
-		this.dataChanged = dataChanged;
-	}
-	
-	public void saveDataChanegs() {
-		if (vehicles == null || sharedPreferences == null) {
-			return;
-		}
-		
-		SharePreferencesUtils.setVehiclesToJsonDB(this.activity,
-				this.activity.getString(R.string.CM_USER_WISHLIST), vehicles);
-	}
+    public boolean isDataChanged() {
+        return this.dataChanged;
+    }
 
-	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return vehicles.size();
-	}
+    public void setDataChanged(boolean dataChanged) {
+        this.dataChanged = dataChanged;
+    }
 
-	@Override
-	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
-		return vehicles.get(arg0);
-	}
+    public void saveDataChanegs() {
+        if (vehicles == null || sharedPreferences == null) {
+            return;
+        }
 
-	@Override
-	public long getItemId(int arg0) {
-		// TODO Auto-generated method stub
-		return arg0;
-	}
+        SharePreferencesUtils.setVehiclesToJsonDB(this.activity,
+                this.activity.getString(R.string.CM_USER_WISHLIST), vehicles);
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return vehicles.size();
+    }
 
-		Vehicle vehicle = vehicles.get(position);
+    @Override
+    public Object getItem(int arg0) {
+        // TODO Auto-generated method stub
+        return vehicles.get(arg0);
+    }
 
-		VehicleIndexRowViewHolder holder;
-		if (convertView == null) {
+    @Override
+    public long getItemId(int arg0) {
+        // TODO Auto-generated method stub
+        return arg0;
+    }
 
-			holder = new VehicleIndexRowViewHolder();
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // TODO Auto-generated method stub
 
-			convertView = View.inflate(this.activity, R.layout.my_vehicles_row, null);
-			holder.Title = (TextView) convertView.findViewById(R.id.my_vehicle_row_mmy);
-			holder.Vin = (TextView) convertView.findViewById(R.id.my_vehicle_row_vin);
-			holder.Listing_switch = (Switch) convertView.findViewById(R.id.my_vehicle_row_switch);
+        Vehicle vehicle = vehicles.get(position);
 
-			convertView.setTag(holder);
-		} else {
-			holder = (VehicleIndexRowViewHolder) convertView.getTag();
-		}
+        VehicleIndexRowViewHolder holder;
+        if (convertView == null) {
 
-		holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
-		holder.Vin.setText(vehicle.getVin());
+            holder = new VehicleIndexRowViewHolder();
 
-		
+            convertView = View.inflate(this.activity, R.layout.my_vehicles_row, null);
+            holder.Title = (TextView) convertView.findViewById(R.id.my_vehicle_row_mmy);
+            holder.Vin = (TextView) convertView.findViewById(R.id.my_vehicle_row_vin);
+            holder.Listing_switch = (Switch) convertView.findViewById(R.id.my_vehicle_row_switch);
 
-		VehicleIndexRowButtonActionHolder switchAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LISTING_SWITCH, vehicle);
-		holder.Listing_switch.setTag(switchAH);
-		holder.Listing_switch.setOnClickListener(this);
+            convertView.setTag(holder);
+        } else {
+            holder = (VehicleIndexRowViewHolder) convertView.getTag();
+        }
+
+        holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
+        holder.Vin.setText(vehicle.getVin());
 
 
-		vehicleId2ListPosition.put(vehicle.getId(), position);
-		return convertView;
-	}
+        VehicleIndexRowButtonActionHolder switchAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LISTING_SWITCH, vehicle);
+        holder.Listing_switch.setTag(switchAH);
+        holder.Listing_switch.setOnClickListener(this);
 
-	@Override
-	public void onClick(View view) {
 
-		// User reflection to verify the casting is appropriate
-		if (view.getTag() instanceof VehicleIndexRowButtonActionHolder) {
+        vehicleId2ListPosition.put(vehicle.getId(), position);
+        return convertView;
+    }
 
-			VehicleIndexRowButtonActionHolder btnActionHolder = (VehicleIndexRowButtonActionHolder) view.getTag();
+    @Override
+    public void onClick(View view) {
 
-			Vehicle vehicle = btnActionHolder.getVehicle();
+        // User reflection to verify the casting is appropriate
+        if (view.getTag() instanceof VehicleIndexRowButtonActionHolder) {
 
-			switch (btnActionHolder.getButtonAction()) {
-			case LISTING_SWITCH:
-				Toast.makeText(this.activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
-				
-				CarMarketClient.getInstance(activity).getVehicleListing((long) vehicle.getId(), new Callback<Listing>() {
+            VehicleIndexRowButtonActionHolder btnActionHolder = (VehicleIndexRowButtonActionHolder) view.getTag();
 
-					@Override
-					public void success(Listing listing, Response response) {
-						
-						int position = vehicleId2ListPosition.get(listing.getVehicle().getId());
-						
-					}
+            Vehicle vehicle = btnActionHolder.getVehicle();
 
-					@Override
-					public void failure(RetrofitError retrofitError) {
-						/**
-						 * This message is for debug mode.
-						 * */
-						Toast.makeText(activity, retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
-						/**
-						 * This message is for production mode.
-						 * */
-						Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
-					}
+            switch (btnActionHolder.getButtonAction()) {
+                case LISTING_SWITCH:
+                    Toast.makeText(this.activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
-				});
-				
-				break;
-			default:
-				break;
-			}
-		}
-	}
+                    CarMarketClient.getInstance(activity).getVehicleListing((long) vehicle.getId(), new Callback<Listing>() {
 
-	/**
-	 * Class to hold the views of vehicle_index_row.xml.
-	 * 
-	 * @since 2014-08-23
-	 * @version 1.0
-	 * */
-	private class VehicleIndexRowViewHolder {
+                        @Override
+                        public void success(Listing listing, Response response) {
 
-		protected TextView Title;
-		protected TextView Vin;
-		protected Switch Listing_switch;
-	}
+                            int position = vehicleId2ListPosition.get(listing.getVehicle().getId());
 
-	/**
-	 * Class to hold vehicle information along with button action, so button
-	 * action can be identified by OnClickListener.
+                        }
 
-	 * @param buttonAction identifies which button perform the action
-	 * @param vehicle stores the {@link Vehicle} information 
-	 * 
-	 * @since 2014-08-23
-	 * @version 1.0
-	 * */
-	private class VehicleIndexRowButtonActionHolder {
+                        @Override
+                        public void failure(RetrofitError retrofitError) {
+                            /**
+                             * This message is for debug mode.
+                             * */
+                            Toast.makeText(activity, retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+                            /**
+                             * This message is for production mode.
+                             * */
+                            Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+                        }
 
-		private final ButtonAction buttonAction;
-		private final Vehicle vehicle;
+                    });
 
-		public VehicleIndexRowButtonActionHolder(ButtonAction buttonAction, Vehicle vehicle) {
-			this.buttonAction = buttonAction;
-			this.vehicle = vehicle;
-		}
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
-		public ButtonAction getButtonAction() {
-			return this.buttonAction;
-		}
+    /**
+     * Class to hold the views of vehicle_index_row.xml.
+     *
+     * @version 1.0
+     * @since 2014-08-23
+     */
+    private class VehicleIndexRowViewHolder {
 
-		public Vehicle getVehicle() {
-			return this.vehicle;
-		}
-	}
+        protected TextView Title;
+        protected TextView Vin;
+        protected Switch Listing_switch;
+    }
+
+    /**
+     * Class to hold vehicle information along with button action, so button
+     * action can be identified by OnClickListener.
+     *
+     * @param buttonAction identifies which button perform the action
+     * @param vehicle      stores the {@link Vehicle} information
+     * @version 1.0
+     * @since 2014-08-23
+     */
+    private class VehicleIndexRowButtonActionHolder {
+
+        private final ButtonAction buttonAction;
+        private final Vehicle vehicle;
+
+        public VehicleIndexRowButtonActionHolder(ButtonAction buttonAction, Vehicle vehicle) {
+            this.buttonAction = buttonAction;
+            this.vehicle = vehicle;
+        }
+
+        public ButtonAction getButtonAction() {
+            return this.buttonAction;
+        }
+
+        public Vehicle getVehicle() {
+            return this.vehicle;
+        }
+    }
 }

@@ -13,48 +13,48 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CarMarketActivity extends Activity {
 
-	protected Session mSession;
-	protected ProgressDialog mProgressDialog;
+    protected Session mSession;
+    protected ProgressDialog mProgressDialog;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-	@Override
-	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-	}
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
-	public CarMarketApplication getCarMarketApplication() {
-		return Utilities.getCarMarketApplication(this);
-	}
+    public CarMarketApplication getCarMarketApplication() {
+        return Utilities.getCarMarketApplication(this);
+    }
 
-	public Session getSession() {
-		return getCarMarketApplication().getSession();
-	}
-	
-	public Context getContext() {
-		return getCarMarketApplication().getContext();
-	}
+    public Session getSession() {
+        return getCarMarketApplication().getSession();
+    }
 
-	protected void showProgressDialog(int resourceId) {
-		Utilities.showProgressDialog(getContext() , mProgressDialog, resourceId);
-	}
+    public Context getContext() {
+        return getCarMarketApplication().getContext();
+    }
 
-	protected void dismissProgressDialog() {
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
-			mProgressDialog.dismiss();
-		}
-	}
-	
-	protected void hideSoftKeyboard() {
+    protected void showProgressDialog(int resourceId) {
+        Utilities.showProgressDialog(getContext(), mProgressDialog, resourceId);
+    }
+
+    protected void dismissProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    protected void hideSoftKeyboard() {
         InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         View currentFocus = this.getCurrentFocus();
         if (currentFocus != null) {
             imm.hideSoftInputFromWindow(
-            		currentFocus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    currentFocus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 

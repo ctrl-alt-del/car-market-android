@@ -25,197 +25,200 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-public class Marketplace_Fragment extends Fragment 
-implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
-	/**
-	 * The fragment argument representing the section number for this
-	 * fragment.
-	 */
-	private static final String ARG_SECTION_NUMBER = "section_number";
+public class Marketplace_Fragment extends Fragment
+        implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
+    /**
+     * The fragment argument representing the section number for this
+     * fragment.
+     */
+    private static final String ARG_SECTION_NUMBER = "section_number";
 
-	private ListView Vehicle_Listview;
-	private SwipeRefreshLayout swipeRefreshLayout;
-	private Marketplace_ListingAdapter vadp;
-	private LinkedList<Listing> data = new LinkedList<Listing>();
+    private ListView Vehicle_Listview;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private Marketplace_ListingAdapter vadp;
+    private LinkedList<Listing> data = new LinkedList<Listing>();
 
-	/** 
-	 * isLoadingMore is used to prevent the LOAD_MORE action being perform again
-	 * while it is performing.
-	 * */
-	private boolean isLoadingMore = false;
+    /**
+     * isLoadingMore is used to prevent the LOAD_MORE action being perform again
+     * while it is performing.
+     */
+    private boolean isLoadingMore = false;
 
-	/**
-	 * Returns a new instance of this fragment for the given section
-	 * number.
-	 */
-	public static Marketplace_Fragment newInstance(int sectionNumber) {
-		Marketplace_Fragment fragment = new Marketplace_Fragment();
-		Bundle args = new Bundle();
-		args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-		fragment.setArguments(args);
-		return fragment;
-	}
+    /**
+     * Returns a new instance of this fragment for the given section
+     * number.
+     */
+    public static Marketplace_Fragment newInstance(int sectionNumber) {
+        Marketplace_Fragment fragment = new Marketplace_Fragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-	public Marketplace_Fragment() {}
+    public Marketplace_Fragment() {
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-		EventsBus.getInstance().register(this);
+        EventsBus.getInstance().register(this);
 
-		View rootView = inflater.inflate(R.layout.marketplace_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.marketplace_fragment, container, false);
 
-		this.swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_vehicle_index);
-		this.swipeRefreshLayout.setColorScheme(R.color.dark_blue, R.color.dark_green, R.color.dark_red, R.color.dark_yellow);
-		this.swipeRefreshLayout.setEnabled(false);
+        this.swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_vehicle_index);
+        this.swipeRefreshLayout.setColorScheme(R.color.dark_blue, R.color.dark_green, R.color.dark_red, R.color.dark_yellow);
+        this.swipeRefreshLayout.setEnabled(false);
 
-		this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.vehicle_index_list);
+        this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.vehicle_index_list);
 
-		this.vadp = new Marketplace_ListingAdapter(getActivity(), data);
-		this.Vehicle_Listview.setAdapter(this.vadp);
+        this.vadp = new Marketplace_ListingAdapter(getActivity(), data);
+        this.Vehicle_Listview.setAdapter(this.vadp);
 
-		this.swipeRefreshLayout.setOnRefreshListener(this);
+        this.swipeRefreshLayout.setOnRefreshListener(this);
 
-		this.Vehicle_Listview.setOnScrollListener(this);
-		this.Vehicle_Listview.requestFocus();
+        this.Vehicle_Listview.setOnScrollListener(this);
+        this.Vehicle_Listview.requestFocus();
 
-		return rootView;
-	}
+        return rootView;
+    }
 
-	private ProgressDialog dialog;
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-		default:
-			Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
-			break;
-		}
-	}
+    private ProgressDialog dialog;
 
-	@Override
-	public void onDestroy() {
-		EventsBus.getInstance().unregister(this);
-		super.onDestroy();
-	}
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            default:
+                Toast.makeText(getActivity(), "Unexpected button pressed...", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 
-	@Override
-	public void onResume() {
-		super.onResume();
+    @Override
+    public void onDestroy() {
+        EventsBus.getInstance().unregister(this);
+        super.onDestroy();
+    }
 
-		if (this.data.size() == 0) {
-			this.onRefresh();
-		}
-	}
+    @Override
+    public void onResume() {
+        super.onResume();
 
-	@Override
-	public void onRefresh() {
+        if (this.data.size() == 0) {
+            this.onRefresh();
+        }
+    }
 
-		this.swipeRefreshLayout.setRefreshing(true);
-		(new Handler()).postDelayed(new Runnable() {
-			@Override
-			public void run() {
+    @Override
+    public void onRefresh() {
 
-				// TODO: add swipe to reload feature
-				data.clear();
-				// new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
+        this.swipeRefreshLayout.setRefreshing(true);
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
-				/**
-				 * Modify the limit and offset parameters to enable the "load more" feature
-				 * */
-				CarMarketClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
+                // TODO: add swipe to reload feature
+                data.clear();
+                // new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
 
-					@Override
-					public void success(List<Listing> listings, Response response) {
-						for (Listing each : listings) {
-							data.add(each);
-						}
+                /**
+                 * Modify the limit and offset parameters to enable the "load more" feature
+                 * */
+                CarMarketClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
 
-						vadp.notifyDataSetChanged();
-						swipeRefreshLayout.setRefreshing(false);
-					}
+                    @Override
+                    public void success(List<Listing> listings, Response response) {
+                        for (Listing each : listings) {
+                            data.add(each);
+                        }
 
-					@Override
-					public void failure(RetrofitError retrofitError) {
-						/**
-						 * This message is for debug mode.
-						 * */
-						Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
-						/**
-						 * This message is for production mode.
-						 * */
-						Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
-					}
+                        vadp.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
 
-				});
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        /**
+                         * This message is for debug mode.
+                         * */
+                        Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+                        /**
+                         * This message is for production mode.
+                         * */
+                        Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+                    }
 
-
-				// swipeRefreshLayout.setRefreshing(false);
-			}
-		}, 3000);
-	}
-
-	@Override
-	public void onScrollStateChanged(AbsListView absListView, int scrollState) {}
-
-	@Override
-	public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-		this.swipeRefreshLayout.setEnabled(firstVisibleItem == 0);
-
-		boolean loadMore = (firstVisibleItem + visibleItemCount >= totalItemCount);
-
-		// TODO: add swipe to load more feature
-		if(loadMore && !isLoadingMore && this.data.size() > 0) {
-
-			// 1. limiter used to stop the load more feature
-			if (this.data.size() >= 6) {
-				return;
-			}
-
-			this.isLoadingMore = true;
-
-			this.dialog = new ProgressDialog(getActivity());
-			this.dialog.setMessage("Loading More Listings...");
-			this.dialog.show();
-			
-			
-			// 2. download additional data
-			/**
-			 * Modify the limit and offset parameters to enable the "load more" feature
-			 * */
-			CarMarketClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
-
-				/*
-				 * the implementation is different from "Swipe to Reload"
-				 * */
-				@Override
-				public void success(List<Listing> listings, Response response) {
-					for (Listing each : listings) {
-						data.add(each);
-					}
-
-					vadp.notifyDataSetChanged();
+                });
 
 
-					if (dialog.isShowing()) {
-						dialog.dismiss();
-					}
-					isLoadingMore = false;
-				}
+                // swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 3000);
+    }
 
-				@Override
-				public void failure(RetrofitError retrofitError) {
-					/**
-					 * This message is for debug mode.
-					 * */
-					Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
-					/**
-					 * This message is for production mode.
-					 * */
-					Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
-				}
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+    }
 
-			});
-		}
-	}
+    @Override
+    public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        this.swipeRefreshLayout.setEnabled(firstVisibleItem == 0);
+
+        boolean loadMore = (firstVisibleItem + visibleItemCount >= totalItemCount);
+
+        // TODO: add swipe to load more feature
+        if (loadMore && !isLoadingMore && this.data.size() > 0) {
+
+            // 1. limiter used to stop the load more feature
+            if (this.data.size() >= 6) {
+                return;
+            }
+
+            this.isLoadingMore = true;
+
+            this.dialog = new ProgressDialog(getActivity());
+            this.dialog.setMessage("Loading More Listings...");
+            this.dialog.show();
+
+
+            // 2. download additional data
+            /**
+             * Modify the limit and offset parameters to enable the "load more" feature
+             * */
+            CarMarketClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
+
+                /*
+                 * the implementation is different from "Swipe to Reload"
+                 * */
+                @Override
+                public void success(List<Listing> listings, Response response) {
+                    for (Listing each : listings) {
+                        data.add(each);
+                    }
+
+                    vadp.notifyDataSetChanged();
+
+
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                    isLoadingMore = false;
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    /**
+                     * This message is for debug mode.
+                     * */
+                    Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+                    /**
+                     * This message is for production mode.
+                     * */
+                    Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+        }
+    }
 }
