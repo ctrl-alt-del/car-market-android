@@ -6,19 +6,19 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    buildToolsVersion "21.1.2"
-    compileSdkVersion 22
+    buildToolsVersion "23.0.1"
+    compileSdkVersion 23
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
 }
 
 dependencies {
-    def supportLibsVer = '22.2.1'
+    def supportLibsVer = '23.1.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:support-v4:${supportLibsVer}"
     compile "com.android.support:appcompat-v7:${supportLibsVer}"
