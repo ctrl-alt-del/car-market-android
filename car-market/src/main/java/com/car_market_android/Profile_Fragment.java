@@ -143,10 +143,10 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         super.onResume();
         if (mSharedPreferences != null) {
 
-            String token = mSharedPreferences.getString(getString(R.string.CM_API_TOKEN), StringUtils.EMPTY);
-            long user_id = mSharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
+            final String token = mSharedPreferences.getString(getString(R.string.CM_API_TOKEN), StringUtils.EMPTY);
+            final String user_id = mSharedPreferences.getString(getString(R.string.CM_API_USER_ID), StringUtils.EMPTY);
 
-            if (TextUtils.isEmpty(token) || user_id == -1) {
+            if (TextUtils.isEmpty(token) || TextUtils.isEmpty(user_id)) {
                 this.showGusetView();
                 return;
             }

@@ -70,7 +70,7 @@ public interface ApiInterface {
 	 * */
 	@GET("/users/{user_id}.json")
 	void getUser(
-			@Path("user_id") long user_id, 
+			@Path("user_id") String user_id,
 			@Header("authorization") String authorization, 
 			Callback<User> callback);
 
