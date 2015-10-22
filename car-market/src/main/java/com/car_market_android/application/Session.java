@@ -23,8 +23,13 @@ public class Session {
 		return (CarMarketApplication) mContext;
 	}
 
-	public void saveApiKey(ApiKey apiKey) {
+	public void saveApiKey(Context context, ApiKey apiKey) {
 		mApiKey = apiKey;
+
+		SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(context).edit();
+		edit.putString(context.getString(R.string.CM_API_TOKEN), apiKey.getToken());
+		edit.putString(context.getString(R.string.CM_API_USER_ID), apiKey.getUserId());
+		edit.apply();
 	}
 
 	public String getApiToken() {

@@ -13,6 +13,7 @@ import com.car_market_android.network.ApiInterface;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
 
+import android.text.TextUtils;
 import android.view.ViewGroup.LayoutParams;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -42,7 +43,7 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
 		setContentView(R.layout.user_auth);
 
 		this.activity = this;
-		
+
 		mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		mCarMarketClient = CarMarketClient.getInstance(this);
 		EventsBus.getInstance().register(this);
@@ -97,17 +98,12 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
 								dialog.dismiss();
 							}
 
-							if (apiKey.getToken() == null) {
+							if (TextUtils.isEmpty(apiKey.getToken())) {
 								Toast.makeText(activity, "unable to sign in, make sure your email and password are correct.", Toast.LENGTH_SHORT).show();
-							} else {
-								SharedPreferences.Editor edit = mSharedPreferences.edit();
-								edit.putString(getString(R.string.CM_API_TOKEN), apiKey.getToken());
-								edit.putString(getString(R.string.CM_API_USER_ID), apiKey.getUserId());
-								edit.apply();
-
-								getSession().saveApiKey(apiKey);
-								finish();
-							}
+						        return;
+                            }
+                            getSession().saveApiKey(getContext(), apiKey);
+                            finish();
 						}
 
 						@Override
@@ -127,7 +123,7 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
 				}
 
 			});
-			
+
 			break;
 		case R.id.cancel_auth:
 			this.onBackPressed();
