@@ -103,7 +103,7 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
                                     Toast.makeText(activity, "unable to sign in, make sure your email and password are correct.", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                                getSession().saveApiKey(getContext(), apiKey);
+                                getSession().saveApiKey(apiKey);
                                 finish();
                             }
 

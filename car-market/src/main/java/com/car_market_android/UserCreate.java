@@ -143,7 +143,7 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
                                     Toast.makeText(activity, apiKey.getMessage(), Toast.LENGTH_LONG).show();
                                     return;
                                 }
-                                getSession().saveApiKey(getContext(), apiKey);
+                                getSession().saveApiKey(apiKey);
                                 onBackPressed();
                             }
 

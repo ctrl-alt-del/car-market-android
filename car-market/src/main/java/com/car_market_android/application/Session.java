@@ -9,6 +9,7 @@ import com.car_market_android.R;
 import com.car_market_android.model.ApiKey;
 import com.car_market_android.util.GsonUtils;
 import com.car_market_android.util.LogUtils;
+import com.car_market_android.util.SessionUtils;
 import com.car_market_android.util.StringUtils;
 
 public class Session {
@@ -27,10 +28,7 @@ public class Session {
 
     private void restore() {
         try {
-            String serializedApiKey = mSharedPreferences.getString(API_KEY, StringUtils.EMPTY);
-            if (!TextUtils.isEmpty(serializedApiKey)) {
-                mApiKey = GsonUtils.getGson().fromJson(serializedApiKey, ApiKey.class);
-            }
+            SessionUtils.restoreApiKey(mContext, this);
         } catch (Exception e) {
             LogUtils.debug(e.getMessage());
         }
@@ -40,13 +38,13 @@ public class Session {
         return (CarMarketApplication) mContext;
     }
 
-    public void saveApiKey(Context context, ApiKey apiKey) {
-        mApiKey = apiKey;
+    public void saveApiKey(ApiKey apiKey) {
+        setApiKey(apiKey);
+        SessionUtils.saveApiKey(mContext, mApiKey);
+    }
 
-        String serializedApiKey = GsonUtils.getGson().toJson(mApiKey);
-        SharedPreferences.Editor edit = mSharedPreferences.edit();
-        edit.putString(API_KEY, serializedApiKey);
-        edit.apply();
+    public void setApiKey(ApiKey apiKey) {
+        mApiKey = apiKey;
     }
 
     public boolean hasSignedInUser() {
@@ -57,13 +55,8 @@ public class Session {
         return mApiKey;
     }
 
-    public void logout(Context context) {
+    public void logout() {
         mApiKey = null;
-
-        SharedPreferences.Editor edit = mSharedPreferences.edit();
-        edit.remove(API_KEY);
-        edit.remove(context.getString(R.string.CM_USER_NICKNAME));
-        edit.remove(context.getString(R.string.CM_USER_EMAIL));
-        edit.apply();
+        SessionUtils.logout(mContext);
     }
 }
