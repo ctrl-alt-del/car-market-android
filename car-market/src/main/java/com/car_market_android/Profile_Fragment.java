@@ -4,6 +4,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import com.car_market_android.model.ApiKey;
 import com.car_market_android.model.User;
 import com.car_market_android.network.ApiInterface;
 import com.car_market_android.network.CarMarketClient;
@@ -88,7 +89,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         mSignIn.setOnClickListener(this);
         mSwitchToSignUp.setOnClickListener(this);
 
-        if (mSharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
+        if (getSession().hasSignedInUser()) {
             showUserView();
         } else {
             showGusetView();
@@ -101,13 +102,8 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         switch (view.getId()) {
             case R.id.sign_in:
 
-                if (mSharedPreferences.contains(getString(R.string.CM_API_TOKEN))) {
-                    SharedPreferences.Editor edit = mSharedPreferences.edit();
-                    edit.remove(getString(R.string.CM_API_TOKEN));
-                    edit.remove(getString(R.string.CM_USER_NICKNAME));
-                    edit.remove(getString(R.string.CM_USER_EMAIL));
-                    edit.apply();
-
+                if (getSession().hasSignedInUser()) {
+                    getSession().logout(getContext());
                     this.showGusetView();
                 } else {
                     Intent authentication_intent = new Intent(getActivity(), UserAuth.class);
@@ -143,10 +139,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         super.onResume();
         if (mSharedPreferences != null) {
 
-            final String token = mSharedPreferences.getString(getString(R.string.CM_API_TOKEN), StringUtils.EMPTY);
-            final String user_id = mSharedPreferences.getString(getString(R.string.CM_API_USER_ID), StringUtils.EMPTY);
-
-            if (TextUtils.isEmpty(token) || TextUtils.isEmpty(user_id)) {
+            if (!getSession().hasSignedInUser()) {
                 this.showGusetView();
                 return;
             }
@@ -169,7 +162,8 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
             this.dialog.setMessage("Loading Profile...");
             this.dialog.show();
 
-            mCarMarketClient.getUser(user_id, "Token " + token, new Callback<User>() {
+            ApiKey apiKey = getSession().getApiKey();
+            mCarMarketClient.getUser(apiKey.getUserId(), "Token " + apiKey.getToken(), new Callback<User>() {
 
                 @Override
                 public void success(User user, Response response) {

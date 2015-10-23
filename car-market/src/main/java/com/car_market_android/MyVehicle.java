@@ -8,6 +8,8 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import com.car_market_android.application.CarMarketActivity;
+import com.car_market_android.model.ApiKey;
 import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.network.GetRequestResultEvent;
@@ -31,7 +33,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MyVehicle extends Activity
+public class MyVehicle extends CarMarketActivity
         implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
 
     private ListView MyVehicle_Listview;
@@ -61,7 +63,12 @@ public class MyVehicle extends Activity
 
 
         this.swipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.my_vehicle_swipe);
-        this.swipeRefreshLayout.setColorScheme(R.color.dark_blue, R.color.dark_green, R.color.dark_red, R.color.dark_yellow);
+        this.swipeRefreshLayout.setColorScheme(
+                getContext().getResources().getColor(R.color.dark_blue),
+                getContext().getResources().getColor(R.color.dark_green),
+                getContext().getResources().getColor(R.color.dark_red),
+                getContext().getResources().getColor(R.color.dark_yellow));
+
         this.swipeRefreshLayout.setEnabled(false);
 
         this.MyVehicle_Listview = (ListView) this.findViewById(R.id.my_vehicle_list);
@@ -154,10 +161,7 @@ public class MyVehicle extends Activity
                 data.clear();
                 // TODO: add swipe to reload feature
 
-                String token = sharedPreferences.getString(getString(R.string.CM_API_TOKEN), StringUtils.EMPTY);
-                long user_id = sharedPreferences.getLong(getString(R.string.CM_API_USER_ID), -1);
-
-                if (TextUtils.isEmpty(token) || user_id == -1) {
+                if (getSession().hasSignedInUser()) {
 
                     /** if the user is not sign in, s/he technically will not able
                      * to find the way to this page and activity, but in case s/he
@@ -166,40 +170,40 @@ public class MyVehicle extends Activity
                      */
                     onBackPressed();
                     return;
-                } else {
-//				
-                    /**
-                     * Modify the limit and offset parameters to enable the "load more" feature
-                     * */
-                    CarMarketClient.getInstance(activity).getVehicles(user_id, "Token " + token, new Callback<List<Vehicle>>() {
-
-                        @Override
-                        public void success(List<Vehicle> vehicles, Response response) {
-                            for (Vehicle each : vehicles) {
-                                data.add(each);
-                            }
-
-                            adapter.notifyDataSetChanged();
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
-
-                        @Override
-                        public void failure(RetrofitError retrofitError) {
-                            /**
-                             * This message is for debug mode.
-                             * */
-                            Toast.makeText(activity, retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
-                            /**
-                             * This message is for production mode.
-                             * */
-                            Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
-                        }
-
-                    });
                 }
+//
+                ApiKey apiKey = getSession().getApiKey();
+                /**
+                 * Modify the limit and offset parameters to enable the "load more" feature
+                 * */
+                CarMarketClient.getInstance(activity).getVehicles(apiKey.getUserId(),
+                        "Token " + apiKey.getToken(), new Callback<List<Vehicle>>() {
 
-                // swipeRefreshLayout.setRefreshing(false);
+                    @Override
+                    public void success(List<Vehicle> vehicles, Response response) {
+                        for (Vehicle each : vehicles) {
+                            data.add(each);
+                        }
+
+                        adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        /**
+                         * This message is for debug mode.
+                         * */
+                        Toast.makeText(activity, retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+                        /**
+                         * This message is for production mode.
+                         * */
+                        Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
             }
+            // swipeRefreshLayout.setRefreshing(false);
         }, 3000);
 
     }
