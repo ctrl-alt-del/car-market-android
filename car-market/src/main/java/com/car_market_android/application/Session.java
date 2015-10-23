@@ -3,6 +3,7 @@ package com.car_market_android.application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.car_market_android.R;
@@ -14,15 +15,11 @@ import com.car_market_android.util.StringUtils;
 
 public class Session {
 
-    private static final String SESSION_KEY = "SESSION_KEY";
-    private static final String API_KEY = "API_KEY";
     private Context mContext;
-    private SharedPreferences mSharedPreferences;
     private ApiKey mApiKey;
 
     public Session(Context context) {
         mContext = context;
-        mSharedPreferences = context.getSharedPreferences(SESSION_KEY,  Context.MODE_PRIVATE);
         restore();
     }
 
