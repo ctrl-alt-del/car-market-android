@@ -126,7 +126,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         switch (mViewPager.getCurrentItem()) {
             case TAB_PROFILE:
                 MessageUtils.showToastShort(this, ":" + mViewPager.getCurrentItem() + " -> Press back one more time to exit");
-                Profile_Fragment fragment = (Profile_Fragment) ((SectionsPagerAdapter) mViewPager.getAdapter()).getFragment(mViewPager.getCurrentItem());
+                AccountFragment fragment = (AccountFragment) ((SectionsPagerAdapter) mViewPager.getAdapter()).getFragment(mViewPager.getCurrentItem());
 
 //                if (fragment != null && fragment.goBackToRegistrationView()) {
 //                    fragment.setRegistrationView();
@@ -159,7 +159,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
             switch (position) {
                 case 0:
-                    f = Profile_Fragment.newInstance(position + 1);
+                    f = AccountFragment.newInstance(position + 1);
                     break;
                 case 1:
                     f = Marketplace_Fragment.newInstance(position + 1);

@@ -1,16 +1,5 @@
 package com.car_market_android;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-import com.car_market_android.model.ApiKey;
-import com.car_market_android.model.User;
-import com.car_market_android.network.ApiInterface;
-import com.car_market_android.network.CarMarketClient;
-import com.car_market_android.util.EventsBus;
-import com.car_market_android.util.StringUtils;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,8 +14,19 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.car_market_android.model.ApiKey;
+import com.car_market_android.model.User;
+import com.car_market_android.network.ApiInterface;
+import com.car_market_android.network.CarMarketClient;
+import com.car_market_android.util.EventsBus;
+import com.car_market_android.util.StringUtils;
 
-public class Profile_Fragment extends CarMarketFragment implements OnClickListener {
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+
+public class AccountFragment extends CarMarketFragment implements OnClickListener {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -44,15 +44,15 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
     private ApiInterface mCarMarketClient;
     private Button mSignIn;
 
-    public Profile_Fragment() {
+    public AccountFragment() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static Profile_Fragment newInstance(int sectionNumber) {
-        Profile_Fragment fragment = new Profile_Fragment();
+    public static AccountFragment newInstance(int sectionNumber) {
+        AccountFragment fragment = new AccountFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -89,12 +89,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         mSignIn.setOnClickListener(this);
         mSwitchToSignUp.setOnClickListener(this);
 
-        if (getSession().hasSignedInUser()) {
-            showUserView();
-        } else {
-            showGusetView();
-        }
-
+        updateAccountView();
     }
 
     @Override
@@ -104,7 +99,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
 
                 if (getSession().hasSignedInUser()) {
                     getSession().logout();
-                    this.showGusetView();
+                    updateAccountView();
                 } else {
                     Intent authentication_intent = new Intent(getActivity(), UserAuth.class);
                     startActivity(authentication_intent);
@@ -139,24 +134,16 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         super.onResume();
         if (mSharedPreferences != null) {
 
-            if (!getSession().hasSignedInUser()) {
-                this.showGusetView();
-                return;
-            }
-
             String nickname = mSharedPreferences.getString(getString(R.string.CM_USER_NICKNAME), StringUtils.EMPTY);
             String email = mSharedPreferences.getString(getString(R.string.CM_USER_EMAIL), StringUtils.EMPTY);
 
             if (!TextUtils.isEmpty(nickname) && !TextUtils.isEmpty(email)) {
-
-                this.mNickname.setText(nickname);
-                this.mEmail.setText(email);
-
-                this.showUserView();
-
+                mNickname.setText(nickname);
+                mEmail.setText(email);
                 return;
             }
 
+            updateAccountView();
 
             this.dialog = new ProgressDialog(getActivity());
             this.dialog.setMessage("Loading Profile...");
@@ -176,7 +163,7 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
                     editContent.putString(getString(R.string.CM_USER_EMAIL), user.getEmail());
                     editContent.apply();
 
-                    showUserView();
+                    updateAccountView();
 
                     if (dialog.isShowing()) {
                         dialog.dismiss();
@@ -203,15 +190,15 @@ public class Profile_Fragment extends CarMarketFragment implements OnClickListen
         }
     }
 
-    private void showUserView() {
-        mSignIn.setVisibility(View.GONE);
-        mSwitchToSignUp.setVisibility(View.GONE);
-        mUserProfileView.setVisibility(View.VISIBLE);
-    }
-
-    private void showGusetView() {
-        mSignIn.setVisibility(View.VISIBLE);
-        mSwitchToSignUp.setVisibility(View.VISIBLE);
-        mUserProfileView.setVisibility(View.GONE);
+    private void updateAccountView() {
+        if (getSession().hasSignedInUser()) {
+            mSignIn.setVisibility(View.GONE);
+            mSwitchToSignUp.setVisibility(View.GONE);
+            mUserProfileView.setVisibility(View.VISIBLE);
+        } else {
+            mSignIn.setVisibility(View.VISIBLE);
+            mSwitchToSignUp.setVisibility(View.VISIBLE);
+            mUserProfileView.setVisibility(View.GONE);
+        }
     }
 }
