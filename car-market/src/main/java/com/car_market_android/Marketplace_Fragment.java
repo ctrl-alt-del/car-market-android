@@ -68,7 +68,7 @@ public class Marketplace_Fragment extends CarMarketFragment
         View rootView = inflater.inflate(R.layout.marketplace_fragment, container, false);
 
         this.swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_vehicle_index);
-        this.swipeRefreshLayout.setColorScheme(R.color.dark_blue, R.color.dark_green, R.color.dark_red, R.color.dark_yellow);
+        this.swipeRefreshLayout.setColorSchemeResources(R.color.dark_blue, R.color.dark_green, R.color.dark_red, R.color.dark_yellow);
         this.swipeRefreshLayout.setEnabled(false);
 
         this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.vehicle_index_list);
