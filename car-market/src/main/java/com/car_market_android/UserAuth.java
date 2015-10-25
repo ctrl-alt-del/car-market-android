@@ -65,8 +65,6 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
         super.onDestroy();
     }
 
-    private ProgressDialog dialog;
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -84,10 +82,7 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
                     return;
                 }
 
-                this.dialog = new ProgressDialog(this);
-                this.dialog.setMessage("Signing in...");
-                this.dialog.show();
-
+                showProgressDialog(R.string.signing_in);
 
                 mCarMarketClient.signin(
                         email, password, new Callback<ApiKey>() {
@@ -95,9 +90,7 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
                             @Override
                             public void success(ApiKey apiKey, Response response) {
 
-                                if (dialog.isShowing()) {
-                                    dialog.dismiss();
-                                }
+                                dismissProgressDialog();
 
                                 if (TextUtils.isEmpty(apiKey.getToken())) {
                                     Toast.makeText(activity, "unable to sign in, make sure your email and password are correct.", Toast.LENGTH_SHORT).show();
@@ -118,9 +111,7 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
                                  * */
                                 Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
 
-                                if (dialog.isShowing()) {
-                                    dialog.dismiss();
-                                }
+                                dismissProgressDialog();
                             }
 
                         });

@@ -1,6 +1,7 @@
 package com.car_market_android.application;
 
 import com.car_market_android.Utilities;
+import com.car_market_android.util.StringUtils;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -39,7 +40,7 @@ public class CarMarketActivity extends Activity {
     }
 
     protected void showProgressDialog(int resourceId) {
-        Utilities.showProgressDialog(getContext(), mProgressDialog, resourceId);
+        mProgressDialog = Utilities.showProgressDialog(this, mProgressDialog, resourceId);
     }
 
     protected void dismissProgressDialog() {

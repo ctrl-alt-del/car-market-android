@@ -2,6 +2,7 @@ package com.car_market_android;
 
 import com.car_market_android.application.CarMarketApplication;
 import com.car_market_android.application.Session;
+import com.car_market_android.util.StringUtils;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -26,7 +27,10 @@ public class CarMarketFragment extends Fragment {
     }
 
     protected void showProgressDialog(int resourceId) {
-        Utilities.showProgressDialog(getContext(), mProgressDialog, resourceId);
+        if (!isAdded()) {
+            return;
+        }
+        mProgressDialog = Utilities.showProgressDialog(getActivity(), mProgressDialog, resourceId);
     }
 
     protected void dismissProgressDialog() {

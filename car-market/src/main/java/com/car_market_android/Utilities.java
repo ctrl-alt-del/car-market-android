@@ -1,13 +1,11 @@
 package com.car_market_android;
 
-import com.car_market_android.application.CarMarketApplication;
-import com.car_market_android.util.StringUtils;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+
+import com.car_market_android.application.CarMarketApplication;
+import com.car_market_android.util.StringUtils;
 
 public class Utilities {
 
@@ -15,12 +13,13 @@ public class Utilities {
         return (CarMarketApplication) activity.getApplication();
     }
 
-    public static void showProgressDialog(Context context, ProgressDialog progressDialog, int resourceId) {
-        String message = context.getString(resourceId);
-        if (progressDialog == null) {
-            progressDialog = ProgressDialog.show(context, StringUtils.EMPTY, message);
-        } else {
+    public static ProgressDialog showProgressDialog(Activity activity, ProgressDialog progressDialog, int resourceId) {
+        String message = activity.getString(resourceId);
+        if (progressDialog != null) {
             progressDialog.setMessage(message);
+            return progressDialog;
+        } else {
+            return ProgressDialog.show(activity, StringUtils.EMPTY, message);
         }
     }
 

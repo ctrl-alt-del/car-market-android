@@ -25,7 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-public class Marketplace_Fragment extends Fragment
+public class Marketplace_Fragment extends CarMarketFragment
         implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
     /**
      * The fragment argument representing the section number for this
@@ -83,8 +83,6 @@ public class Marketplace_Fragment extends Fragment
 
         return rootView;
     }
-
-    private ProgressDialog dialog;
 
     @Override
     public void onClick(View view) {
@@ -176,11 +174,7 @@ public class Marketplace_Fragment extends Fragment
             }
 
             this.isLoadingMore = true;
-
-            this.dialog = new ProgressDialog(getActivity());
-            this.dialog.setMessage("Loading More Listings...");
-            this.dialog.show();
-
+            showProgressDialog(R.string.loading_more);
 
             // 2. download additional data
             /**
@@ -199,11 +193,8 @@ public class Marketplace_Fragment extends Fragment
 
                     vadp.notifyDataSetChanged();
 
-
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
                     isLoadingMore = false;
+                    dismissProgressDialog();
                 }
 
                 @Override

@@ -21,4 +21,9 @@
     <string name="http_error_message">\"Failed : %1$s HTTP error code : %2$d\"</string>
     <string name="my_vehicles_title">My Vehicles</string>
     <string name="my_deals_title">My Deals</string>
+    <string name="please_wait">Please wait&#8230;</string>
+    <string name="loading_more">Loading more&#8230;</string>
+    <string name="signing_in">Signing in&#8230;</string>
+    <string name="signing_up">Signing up&#8230;</string>
+    <string name="updating">Updating&#8230;</string>
 </resources>

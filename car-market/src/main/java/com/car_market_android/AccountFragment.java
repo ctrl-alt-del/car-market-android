@@ -40,7 +40,6 @@ public class AccountFragment extends CarMarketFragment implements OnClickListene
     private View mUserProfileView;
 
     private SharedPreferences mSharedPreferences;
-    private ProgressDialog dialog;
     private ApiInterface mCarMarketClient;
     private Button mSignIn;
 
@@ -147,10 +146,11 @@ public class AccountFragment extends CarMarketFragment implements OnClickListene
 
 
             if (getSession().hasSignedInUser()) {
-                this.dialog = new ProgressDialog(getActivity());
-                this.dialog.setMessage("Loading Profile...");
-                this.dialog.show();
+
                 ApiKey apiKey = getSession().getApiKey();
+
+                showProgressDialog(R.string.please_wait);
+
                 mCarMarketClient.getUser(apiKey.getUserId(), "Token " + apiKey.getToken(), new Callback<User>() {
 
                     @Override
@@ -166,9 +166,7 @@ public class AccountFragment extends CarMarketFragment implements OnClickListene
 
                         updateAccountView();
 
-                        if (dialog.isShowing()) {
-                            dialog.dismiss();
-                        }
+                        dismissProgressDialog();
                     }
 
                     @Override
@@ -182,9 +180,7 @@ public class AccountFragment extends CarMarketFragment implements OnClickListene
                          * */
                         Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
 
-                        if (dialog.isShowing()) {
-                            dialog.dismiss();
-                        }
+                        dismissProgressDialog();
                     }
 
                 });

@@ -69,8 +69,6 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
         super.onDestroy();
     }
 
-    private ProgressDialog dialog;
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -116,10 +114,7 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
                     return;
                 }
 
-
-                this.dialog = new ProgressDialog(this);
-                this.dialog.setMessage("Signing up...");
-                this.dialog.show();
+                showProgressDialog(R.string.signing_up);
 
                 CarMarketClient.getInstance(this).createUser(nickname, "n/a", "n/a",
                         email, password, password_confirmation, "active",
@@ -128,16 +123,12 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
                             @Override
                             public void failure(RetrofitError arg0) {
 
-                                if (dialog.isShowing()) {
-                                    dialog.dismiss();
-                                }
+                                dismissProgressDialog();
                             }
 
                             @Override
                             public void success(ApiKey apiKey, Response arg1) {
-                                if (dialog.isShowing()) {
-                                    dialog.dismiss();
-                                }
+                                dismissProgressDialog();
 
                                 if (!TextUtils.isEmpty(apiKey.getMessage())) {
                                     Toast.makeText(activity, apiKey.getMessage(), Toast.LENGTH_LONG).show();

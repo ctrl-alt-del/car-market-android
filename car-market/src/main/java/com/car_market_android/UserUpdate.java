@@ -1,5 +1,6 @@
 package com.car_market_android;
 
+import com.car_market_android.application.CarMarketActivity;
 import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
 import com.google.gson.Gson;
@@ -17,7 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class UserUpdate extends Activity implements OnClickListener {
+public class UserUpdate extends CarMarketActivity implements OnClickListener {
 
     private Button Update;
     private Button Cacnel;
@@ -47,23 +48,17 @@ public class UserUpdate extends Activity implements OnClickListener {
         super.onDestroy();
     }
 
-    private ProgressDialog dialog;
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.update_user_update:
                 Toast.makeText(this, "Update button pressed...", Toast.LENGTH_SHORT).show();
 
-                this.dialog = new ProgressDialog(this);
-                this.dialog.setMessage("Updating...");
-                this.dialog.show();
+                showProgressDialog(R.string.updating);
 
                 //TODO: call apiClient
 
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
-                }
+                dismissProgressDialog();
                 break;
             case R.id.cancel_user_update:
                 this.onBackPressed();
@@ -84,9 +79,7 @@ public class UserUpdate extends Activity implements OnClickListener {
 
         switch (event.getCaller()) {
             default:
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
-                }
+                dismissProgressDialog();
                 break;
         }
     }
