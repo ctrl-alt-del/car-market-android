@@ -145,48 +145,50 @@ public class AccountFragment extends CarMarketFragment implements OnClickListene
 
             updateAccountView();
 
-            this.dialog = new ProgressDialog(getActivity());
-            this.dialog.setMessage("Loading Profile...");
-            this.dialog.show();
 
-            ApiKey apiKey = getSession().getApiKey();
-            mCarMarketClient.getUser(apiKey.getUserId(), "Token " + apiKey.getToken(), new Callback<User>() {
+            if (getSession().hasSignedInUser()) {
+                this.dialog = new ProgressDialog(getActivity());
+                this.dialog.setMessage("Loading Profile...");
+                this.dialog.show();
+                ApiKey apiKey = getSession().getApiKey();
+                mCarMarketClient.getUser(apiKey.getUserId(), "Token " + apiKey.getToken(), new Callback<User>() {
 
-                @Override
-                public void success(User user, Response response) {
+                    @Override
+                    public void success(User user, Response response) {
 
-                    mNickname.setText(user.getNickname());
-                    mEmail.setText(user.getEmail());
+                        mNickname.setText(user.getNickname());
+                        mEmail.setText(user.getEmail());
 
-                    SharedPreferences.Editor editContent = mSharedPreferences.edit();
-                    editContent.putString(getString(R.string.CM_USER_NICKNAME), user.getNickname());
-                    editContent.putString(getString(R.string.CM_USER_EMAIL), user.getEmail());
-                    editContent.apply();
+                        SharedPreferences.Editor editContent = mSharedPreferences.edit();
+                        editContent.putString(getString(R.string.CM_USER_NICKNAME), user.getNickname());
+                        editContent.putString(getString(R.string.CM_USER_EMAIL), user.getEmail());
+                        editContent.apply();
 
-                    updateAccountView();
+                        updateAccountView();
 
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
                     }
-                }
 
-                @Override
-                public void failure(RetrofitError retrofitError) {
-                    /**
-                     * This message is for debug mode.
-                     * */
-                    Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
-                    /**
-                     * This message is for production mode.
-                     * */
-                    Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        /**
+                         * This message is for debug mode.
+                         * */
+                        Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+                        /**
+                         * This message is for production mode.
+                         * */
+                        Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
 
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
                     }
-                }
 
-            });
+                });
+            }
         }
     }
 
