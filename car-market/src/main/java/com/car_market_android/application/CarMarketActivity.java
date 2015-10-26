@@ -44,9 +44,7 @@ public class CarMarketActivity extends Activity {
     }
 
     protected void dismissProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+        Utilities.dismissProgressDialog(mProgressDialog);
     }
 
     protected void hideSoftKeyboard() {

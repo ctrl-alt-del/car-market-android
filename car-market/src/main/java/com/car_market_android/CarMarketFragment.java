@@ -34,9 +34,7 @@ public class CarMarketFragment extends Fragment {
     }
 
     protected void dismissProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+        Utilities.dismissProgressDialog(mProgressDialog);
     }
 
     protected void hideSoftKeyboard() {
