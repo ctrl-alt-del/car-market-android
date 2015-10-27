@@ -9,10 +9,10 @@
     tools:context="com.car_market_android.MainActivity$PlaceholderFragment" >
 
      <TextView
-        android:id="@+id/json_user_profile"
+        android:id="@+id/user_profile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:text="User Profile Info" />
+        tools:text="User Profile" />
 
 </RelativeLayout>

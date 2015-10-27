@@ -35,7 +35,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        this.Json_user_profile = (TextView) rootView.findViewById(R.id.json_user_profile);
+        this.Json_user_profile = (TextView) rootView.findViewById(R.id.user_profile);
 
         this.Json_user_profile.setText(((MainActivity) getActivity()).getProfileResult());
 
