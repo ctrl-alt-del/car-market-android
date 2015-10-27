@@ -15,6 +15,15 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    lintOptions {
+        abortOnError true
+
+        /*
+         * Invalid package reference in library; not included in Android: java.nio.file. Referenced from okio.Okio.
+         * Known issue discussed on https://github.com/square/okio/issues/58
+         */
+        warning 'InvalidPackage'
+    }
 }
 
 dependencies {

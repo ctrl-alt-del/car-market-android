@@ -3,6 +3,7 @@
 
     <string name="app_name">car-market-android</string>
     <string name="action_settings">Settings</string>
+    <string name="action_add">Add</string>
     <string name="CM_API_ADDRESS">http://car-market.herokuapp.com/api/v1</string>
     <string name="CM_USER_NICKNAME">car_market_user_nickname</string>
     <string name="CM_USER_EMAIL">car_market_user_email</string>
