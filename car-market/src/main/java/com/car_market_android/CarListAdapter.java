@@ -71,9 +71,12 @@ public class CarListAdapter extends BaseAdapter implements View.OnClickListener 
             holder = (VehicleIndexRowViewHolder) convertView.getTag();
         }
 
-        holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
+        final String title = mActivity.getString(R.string.marketplace_car_title, vehicle.getManufacturer(), vehicle.getModel(), vehicle.getYear());
+        final String price = mActivity.getString(R.string.marketplace_car_price, listing.getCurrency(), listing.getPrice());
+
+        holder.Title.setText(title);
         holder.Vin.setText(vehicle.getVin());
-        holder.Price.setText(listing.getCurrency() + StringUtils.EMPTY + listing.getPrice());
+        holder.Price.setText(price);
 
         int p = Integer.valueOf(listing.getPrice());
         holder.Price.setTextColor(mActivity.getResources().getColor(this.getColorByPrice(p)));
