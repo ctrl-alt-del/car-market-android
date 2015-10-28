@@ -20,26 +20,26 @@ import com.car_market_android.util.SharePreferencesUtils;
 import com.car_market_android.util.StringUtils;
 
 
-public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnClickListener {
+public class CarListAdapter extends BaseAdapter implements View.OnClickListener {
 
     Activity mActivity;
-    List<Listing> mMarketplaces;
+    List<Listing> mCars;
     LayoutInflater mInflater;
 
-    public Marketplace_ListingAdapter(Activity activity, List<Listing> rows) {
+    public CarListAdapter(Activity activity, List<Listing> cars) {
         mActivity = activity;
-        mMarketplaces = rows;
+        mCars = cars;
         mInflater = LayoutInflater.from(activity);
     }
 
     @Override
     public int getCount() {
-        return mMarketplaces.size();
+        return mCars.size();
     }
 
     @Override
     public Listing getItem(int position) {
-        return mMarketplaces.get(position);
+        return mCars.get(position);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 
         holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
         holder.Vin.setText(vehicle.getVin());
-        holder.Price.setText(listing.getCurrency() + " " + listing.getPrice());
+        holder.Price.setText(listing.getCurrency() + StringUtils.EMPTY + listing.getPrice());
 
         int p = Integer.valueOf(listing.getPrice());
         holder.Price.setTextColor(mActivity.getResources().getColor(this.getColorByPrice(p)));

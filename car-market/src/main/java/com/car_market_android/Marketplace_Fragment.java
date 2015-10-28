@@ -11,8 +11,6 @@ import com.car_market_android.model.Listing;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
 
-import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -35,7 +33,7 @@ public class Marketplace_Fragment extends CarMarketFragment
 
     private ListView Vehicle_Listview;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private Marketplace_ListingAdapter vadp;
+    private CarListAdapter vadp;
     private LinkedList<Listing> data = new LinkedList<Listing>();
 
     /**
@@ -73,7 +71,7 @@ public class Marketplace_Fragment extends CarMarketFragment
 
         this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.vehicle_index_list);
 
-        this.vadp = new Marketplace_ListingAdapter(getActivity(), data);
+        this.vadp = new CarListAdapter(getActivity(), data);
         this.Vehicle_Listview.setAdapter(this.vadp);
 
         this.swipeRefreshLayout.setOnRefreshListener(this);
