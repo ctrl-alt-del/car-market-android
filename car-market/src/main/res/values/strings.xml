@@ -28,4 +28,5 @@
     <string name="signing_up">Signing up&#8230;</string>
     <string name="updating">Updating&#8230;</string>
     <string name="user_profile">User Profile</string>
+    <string name="like">Like</string>
 </resources>

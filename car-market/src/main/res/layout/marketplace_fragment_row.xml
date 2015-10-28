@@ -1,77 +1,66 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.car_market_android.MainActivity$AuthFragment" >
+    android:layout_height="120dp"
+    android:padding="@dimen/spacing_thin">
+
+    <Button
+        android:id="@+id/vehicle_index_row_like"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="top|start"
+        android:gravity="center"
+        android:text="@string/like"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/vehicle_index_row_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_launcher" />
 
     <RelativeLayout
-        android:id="@+id/vehicle_index_row_layout"
+        android:id="@+id/vehicle_index_row_thumbnail_frame"
         android:layout_width="match_parent"
-        android:layout_height="120sp" >
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/transparent_dark_gradient_90">
 
-        <Button
-            android:id="@+id/vehicle_index_row_like"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:gravity="center"
-            android:text="Like"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:id="@+id/vehicle_index_row_thumbnail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_launcher" />
-
-        <RelativeLayout
-            android:id="@+id/vehicle_index_row_thumbnail_frame"
-            android:layout_width="match_parent"
-            android:layout_height="60sp"
+        <TextView
+            android:id="@+id/vehicle_index_row_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/transparent_dark_gradient_90" >
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:gravity="center"
+            android:textColor="#505050"
+            android:textSize="20sp"
+            tools:text="$21,500" />
 
-            <TextView
-                android:id="@+id/vehicle_index_row_price"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="5sp"
-                android:layout_marginRight="5sp"
-                android:gravity="center"
-                android:text="$21,500"
-                android:textColor="#505050"
-                android:textSize="20sp" />
+        <TextView
+            android:id="@+id/vehicle_index_row_mmy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:textColor="#505050"
+            android:textSize="18sp"
+            tools:text="MMY" />
 
-            <TextView
-                android:id="@+id/vehicle_index_row_mmy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="2sp"
-                android:layout_marginTop="2sp"
-                android:gravity="right"
-                android:text="MMY"
-                android:textColor="#505050"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/vehicle_index_row_vin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/vehicle_index_row_mmy"
-                android:layout_marginRight="2sp"
-                android:gravity="right"
-                android:text="vin"
-                android:textColor="#505050"
-                android:textSize="10sp" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/vehicle_index_row_vin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/vehicle_index_row_mmy"
+            android:gravity="end"
+            android:textColor="#505050"
+            android:textSize="12sp"
+            tools:text="vin" />
 
         <TextView
             android:id="@+id/vehicle_index_row_location"
@@ -79,10 +68,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:gravity="right"
-            android:text="San Francisco, CA"
+            android:gravity="end"
             android:textColor="#FFFFFFFF"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="San Francisco, CA" />
     </RelativeLayout>
-
-</RelativeLayout>
+</FrameLayout>

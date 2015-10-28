@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -23,10 +24,12 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 
     Activity activity;
     List<Listing> listings;
+    LayoutInflater mInflater;
 
     public Marketplace_ListingAdapter(Activity activity, List<Listing> rows) {
         this.activity = activity;
         this.listings = rows;
+        mInflater = LayoutInflater.from(activity);
     }
 
     @Override
@@ -54,8 +57,7 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
         if (convertView == null) {
 
             holder = new VehicleIndexRowViewHolder();
-
-            convertView = View.inflate(this.activity, R.layout.marketplace_fragment_row, null);
+            convertView = LayoutInflater.from(activity).inflate(R.layout.marketplace_fragment_row, parent, false);
             holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_row_mmy);
             holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_row_vin);
             holder.Price = (TextView) convertView.findViewById(R.id.vehicle_index_row_price);
