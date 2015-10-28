@@ -1,8 +1,5 @@
 package com.car_market_android;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import android.app.Activity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,27 +16,30 @@ import com.car_market_android.network.ButtonAction;
 import com.car_market_android.util.SharePreferencesUtils;
 import com.car_market_android.util.StringUtils;
 
+import java.util.LinkedList;
+import java.util.List;
+
 
 public class CarListAdapter extends BaseAdapter implements View.OnClickListener {
 
     Activity mActivity;
-    List<Listing> mCars;
+    List<Listing> mListings;
     LayoutInflater mInflater;
 
-    public CarListAdapter(Activity activity, List<Listing> cars) {
+    public CarListAdapter(Activity activity, List<Listing> listings) {
         mActivity = activity;
-        mCars = cars;
+        mListings = listings;
         mInflater = LayoutInflater.from(activity);
     }
 
     @Override
     public int getCount() {
-        return mCars.size();
+        return mListings.size();
     }
 
     @Override
     public Listing getItem(int position) {
-        return mCars.get(position);
+        return mListings.get(position);
     }
 
     @Override
@@ -78,8 +78,7 @@ public class CarListAdapter extends BaseAdapter implements View.OnClickListener 
         holder.Vin.setText(vehicle.getVin());
         holder.Price.setText(price);
 
-        int p = Integer.valueOf(listing.getPrice());
-        holder.Price.setTextColor(mActivity.getResources().getColor(this.getColorByPrice(p)));
+        holder.Price.setTextColor(mActivity.getResources().getColor(this.getColorByPrice(listing)));
 
         String state = !TextUtils.isEmpty(listing.getState()) ? ", " + listing.getState() : StringUtils.EMPTY;
         holder.Location.setText(listing.getCity() + state);
@@ -186,23 +185,21 @@ public class CarListAdapter extends BaseAdapter implements View.OnClickListener 
     /**
      * Method to get the color theme base on price
      *
-     * @param price
+     * @param listing
      * @version 1.0
      * @since 2014-08-30
      */
-    private int getColorByPrice(int price) {
+    private int getColorByPrice(Listing listing) {
+        final int price = Integer.valueOf(listing.getPrice());
+
         if (price <= 3000) {
             return R.color.dark_red;
-        }
-
-        if (price <= 6000) {
+        } else if (price <= 6000) {
             return R.color.dark_yellow;
-        }
-
-        if (price <= 9000) {
+        } else if (price <= 9000) {
             return R.color.dark_blue;
+        } else {
+            return R.color.dark_green;
         }
-
-        return R.color.dark_green;
     }
 }
