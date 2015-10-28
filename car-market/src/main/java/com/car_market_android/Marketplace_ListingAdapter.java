@@ -22,24 +22,24 @@ import com.car_market_android.util.StringUtils;
 
 public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnClickListener {
 
-    Activity activity;
-    List<Listing> listings;
+    Activity mActivity;
+    List<Listing> mMarketplaces;
     LayoutInflater mInflater;
 
     public Marketplace_ListingAdapter(Activity activity, List<Listing> rows) {
-        this.activity = activity;
-        this.listings = rows;
+        mActivity = activity;
+        mMarketplaces = rows;
         mInflater = LayoutInflater.from(activity);
     }
 
     @Override
     public int getCount() {
-        return this.listings.size();
+        return mMarketplaces.size();
     }
 
     @Override
     public Listing getItem(int position) {
-        return this.listings.get(position);
+        return mMarketplaces.get(position);
     }
 
     @Override
@@ -55,9 +55,9 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
 
         VehicleIndexRowViewHolder holder;
         if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.marketplace_fragment_row, parent, false);
 
             holder = new VehicleIndexRowViewHolder();
-            convertView = LayoutInflater.from(activity).inflate(R.layout.marketplace_fragment_row, parent, false);
             holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_row_mmy);
             holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_row_vin);
             holder.Price = (TextView) convertView.findViewById(R.id.vehicle_index_row_price);
@@ -76,7 +76,7 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
         holder.Price.setText(listing.getCurrency() + " " + listing.getPrice());
 
         int p = Integer.valueOf(listing.getPrice());
-        holder.Price.setTextColor(this.activity.getResources().getColor(this.getColorByPrice(p)));
+        holder.Price.setTextColor(mActivity.getResources().getColor(this.getColorByPrice(p)));
 
         String state = !TextUtils.isEmpty(listing.getState()) ? ", " + listing.getState() : StringUtils.EMPTY;
         holder.Location.setText(listing.getCity() + state);
@@ -102,30 +102,30 @@ public class Marketplace_ListingAdapter extends BaseAdapter implements View.OnCl
             switch (btnActionHolder.getButtonAction()) {
                 case LIKE:
 
-                    LinkedList<Vehicle> data = SharePreferencesUtils.getVehiclesFromJsonDB(this.activity,
-                            this.activity.getString(R.string.CM_USER_WISHLIST));
+                    LinkedList<Vehicle> data = SharePreferencesUtils.getVehiclesFromJsonDB(mActivity,
+                            mActivity.getString(R.string.CM_USER_WISHLIST));
 
                     // TODO: this is O(n), will find a better solution later.
                     for (Vehicle each : data) {
                         if (each.getVin().equals(vehicle.getVin())) {
-                            Toast.makeText(this.activity, vehicle.getVin() + "\n is already in your wishlish", Toast.LENGTH_LONG).show();
+                            Toast.makeText(mActivity, vehicle.getVin() + "\n is already in your wishlish", Toast.LENGTH_LONG).show();
                             return;
                         }
                     }
 
                     data.add(vehicle);
 
-                    SharePreferencesUtils.setVehiclesToJsonDB(this.activity,
-                            this.activity.getString(R.string.CM_USER_WISHLIST), data);
+                    SharePreferencesUtils.setVehiclesToJsonDB(mActivity,
+                            mActivity.getString(R.string.CM_USER_WISHLIST), data);
 
-                    Toast.makeText(this.activity, "Like is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "Like is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
                     break;
                 case BUY:
-                    Toast.makeText(this.activity, "Buy is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "Buy is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
                     break;
                 case REVIEW:
-                    Toast.makeText(this.activity, "Review is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "Review is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
                     break;
                 default:
                     break;
