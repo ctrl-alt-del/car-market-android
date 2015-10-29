@@ -10,24 +10,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.car_market_android.application.CarMarketApplication;
+import com.car_market_android.application.Session;
 import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
-import com.car_market_android.network.ButtonAction;
-import com.car_market_android.util.SharePreferencesUtils;
 import com.car_market_android.util.StringUtils;
 
-import java.util.LinkedList;
 import java.util.List;
 
 
-public class CarListAdapter extends BaseAdapter implements View.OnClickListener {
+public class CarListAdapter extends BaseAdapter {
 
     Activity mActivity;
     List<Listing> mListings;
     LayoutInflater mInflater;
+    private Session mSession;
 
     public CarListAdapter(Activity activity, List<Listing> listings) {
         mActivity = activity;
+        mSession = ((CarMarketApplication) activity.getApplicationContext()).getSession();
         mListings = listings;
         mInflater = LayoutInflater.from(activity);
     }
@@ -51,7 +52,7 @@ public class CarListAdapter extends BaseAdapter implements View.OnClickListener 
     public View getView(int position, View convertView, ViewGroup parent) {
 
         Listing listing = this.getItem(position);
-        Vehicle vehicle = listing.getVehicle();
+        final Vehicle vehicle = listing.getVehicle();
 
         VehicleIndexRowViewHolder holder;
         if (convertView == null) {
@@ -83,56 +84,20 @@ public class CarListAdapter extends BaseAdapter implements View.OnClickListener 
         String state = !TextUtils.isEmpty(listing.getState()) ? ", " + listing.getState() : StringUtils.EMPTY;
         holder.Location.setText(listing.getCity() + state);
 
-        VehicleIndexRowButtonActionHolder likeAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LIKE, vehicle);
-
-        holder.Like.setTag(likeAH);
-        holder.Like.setOnClickListener(this);
+        holder.Like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSession.isVehicleInWishList(vehicle.getVin())) {
+                    Toast.makeText(mActivity, vehicle.getVin() + "\n is already in your wishlish", Toast.LENGTH_LONG).show();
+                } else {
+                    mSession.addVehicleToWishList(vehicle);
+                    mSession.setVehicleWishListUpdated(true);
+                    Toast.makeText(mActivity, "Like is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         return convertView;
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        // User reflection to verify the casting is appropriate
-        if (view.getTag() instanceof VehicleIndexRowButtonActionHolder) {
-
-            VehicleIndexRowButtonActionHolder btnActionHolder = (VehicleIndexRowButtonActionHolder) view.getTag();
-
-            Vehicle vehicle = btnActionHolder.getVehicle();
-
-            switch (btnActionHolder.getButtonAction()) {
-                case LIKE:
-
-                    LinkedList<Vehicle> data = SharePreferencesUtils.getVehiclesFromJsonDB(mActivity,
-                            mActivity.getString(R.string.CM_USER_WISHLIST));
-
-                    // TODO: this is O(n), will find a better solution later.
-                    for (Vehicle each : data) {
-                        if (each.getVin().equals(vehicle.getVin())) {
-                            Toast.makeText(mActivity, vehicle.getVin() + "\n is already in your wishlish", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                    }
-
-                    data.add(vehicle);
-
-                    SharePreferencesUtils.setVehiclesToJsonDB(mActivity,
-                            mActivity.getString(R.string.CM_USER_WISHLIST), data);
-
-                    Toast.makeText(mActivity, "Like is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
-
-                    break;
-                case BUY:
-                    Toast.makeText(mActivity, "Buy is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
-                    break;
-                case REVIEW:
-                    Toast.makeText(mActivity, "Review is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
     /**
@@ -150,36 +115,6 @@ public class CarListAdapter extends BaseAdapter implements View.OnClickListener 
         protected Button Like;
         //		protected Button Review;
         //		protected Button Buy;
-    }
-
-    /**
-     * Class to hold vehicle information along with button action, so button
-     * action can be identified by OnClickListener.
-     *
-     * @version 1.0
-     * @since 2014-08-23
-     */
-    private class VehicleIndexRowButtonActionHolder {
-
-        private final ButtonAction buttonAction;
-        private final Vehicle vehicle;
-
-        /**
-         * @param buttonAction identifies which button perform the action
-         * @param vehicle      stores the {@link Vehicle} information
-         */
-        public VehicleIndexRowButtonActionHolder(ButtonAction buttonAction, Vehicle vehicle) {
-            this.buttonAction = buttonAction;
-            this.vehicle = vehicle;
-        }
-
-        public ButtonAction getButtonAction() {
-            return this.buttonAction;
-        }
-
-        public Vehicle getVehicle() {
-            return this.vehicle;
-        }
     }
 
     /**

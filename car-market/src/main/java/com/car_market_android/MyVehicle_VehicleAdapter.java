@@ -1,12 +1,5 @@
 package com.car_market_android;
 
-import java.util.HashMap;
-import java.util.List;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -17,15 +10,24 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.car_market_android.application.CarMarketApplication;
+import com.car_market_android.application.Session;
 import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
-import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.network.ButtonAction;
-import com.car_market_android.util.SharePreferencesUtils;
+import com.car_market_android.network.CarMarketClient;
+
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClickListener {
 
+    private final Session mSession;
     Activity activity;
     List<Vehicle> vehicles;
     private SharedPreferences sharedPreferences;
@@ -34,6 +36,7 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
 
     public MyVehicle_VehicleAdapter(Activity activity, List<Vehicle> rows) {
         this.activity = activity;
+        mSession = ((CarMarketApplication) activity.getApplicationContext()).getSession();
         this.vehicles = rows;
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
     }
@@ -50,9 +53,7 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
         if (vehicles == null || sharedPreferences == null) {
             return;
         }
-
-        SharePreferencesUtils.setVehiclesToJsonDB(this.activity,
-                this.activity.getString(R.string.CM_USER_WISHLIST), vehicles);
+        mSession.setVehicleWishList(vehicles);
     }
 
     @Override

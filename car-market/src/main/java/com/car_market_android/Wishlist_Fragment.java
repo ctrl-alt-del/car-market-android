@@ -1,17 +1,5 @@
 package com.car_market_android;
 
-import java.util.LinkedList;
-
-import com.car_market_android.model.Vehicle;
-import com.car_market_android.network.GetRequestResultEvent;
-import com.car_market_android.network.PostRequestResultEvent;
-import com.car_market_android.util.EventsBus;
-import com.car_market_android.util.SharePreferencesUtils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.squareup.otto.Subscribe;
-
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,8 +14,19 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.car_market_android.model.Vehicle;
+import com.car_market_android.network.GetRequestResultEvent;
+import com.car_market_android.network.PostRequestResultEvent;
+import com.car_market_android.util.EventsBus;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.squareup.otto.Subscribe;
 
-public class Wishlist_Fragment extends Fragment
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class Wishlist_Fragment extends CarMarketFragment
         implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
     /**
      * The fragment argument representing the section number for this
@@ -38,9 +37,7 @@ public class Wishlist_Fragment extends Fragment
     private ListView Vehicle_Listview;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Wishlist_VehicleAdapter vadp;
-    private LinkedList<Vehicle> data = new LinkedList<Vehicle>();
-
-    private SharedPreferences sharedPreferences;
+    private List<Vehicle> data = new ArrayList<>();
 
     /**
      * isLoadingMore is used to prevent the LOAD_MORE action being perform again
@@ -67,7 +64,6 @@ public class Wishlist_Fragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         EventsBus.getInstance().register(this);
 
         View rootView = inflater.inflate(R.layout.wishlist_fragment, container, false);
@@ -109,21 +105,9 @@ public class Wishlist_Fragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        if (sharedPreferences != null) {
 
-            if (this.data.size() == 0) {
-                this.onRefresh();
-            }
-
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (vadp.isDataChanged()) {
-            vadp.saveDataChanegs();
-            vadp.setDataChanged(false);
+        if (this.data.size() == 0 || getSession().isVehicleWishListUpdated()) {
+            this.onRefresh();
         }
     }
 
@@ -195,14 +179,8 @@ public class Wishlist_Fragment extends Fragment
             @Override
             public void run() {
 
-                // TODO: add swipe to reload feature
-                if (vadp.isDataChanged()) {
-                    vadp.saveDataChanegs();
-                    vadp.setDataChanged(false);
-                }
-
                 data.clear();
-                data.addAll(SharePreferencesUtils.getVehiclesFromJsonDB(getActivity(), getString(R.string.CM_USER_WISHLIST)));
+                data.addAll(getSession().getVehicleWishList());
 
                 vadp.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
