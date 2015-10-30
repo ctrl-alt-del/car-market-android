@@ -25,7 +25,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClickListener {
+public class MyVehicleListAdapter extends BaseAdapter {
 
     private final Session mSession;
     Activity activity;
@@ -34,51 +34,32 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
     private boolean dataChanged = false;
     private HashMap<Integer, Integer> vehicleId2ListPosition = new HashMap<Integer, Integer>();
 
-    public MyVehicle_VehicleAdapter(Activity activity, List<Vehicle> rows) {
+    public MyVehicleListAdapter(Activity activity, List<Vehicle> rows) {
         this.activity = activity;
         mSession = ((CarMarketApplication) activity.getApplicationContext()).getSession();
         this.vehicles = rows;
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
     }
 
-    public boolean isDataChanged() {
-        return this.dataChanged;
-    }
-
-    public void setDataChanged(boolean dataChanged) {
-        this.dataChanged = dataChanged;
-    }
-
-    public void saveDataChanegs() {
-        if (vehicles == null || sharedPreferences == null) {
-            return;
-        }
-        mSession.setVehicleWishList(vehicles);
-    }
-
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return vehicles.size();
     }
 
     @Override
     public Object getItem(int arg0) {
-        // TODO Auto-generated method stub
         return vehicles.get(arg0);
     }
 
     @Override
     public long getItemId(int arg0) {
-        // TODO Auto-generated method stub
         return arg0;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
 
-        Vehicle vehicle = vehicles.get(position);
+        final Vehicle vehicle = vehicles.get(position);
 
         VehicleIndexRowViewHolder holder;
         if (convertView == null) {
@@ -98,29 +79,10 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
         holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
         holder.Vin.setText(vehicle.getVin());
 
-
-        VehicleIndexRowButtonActionHolder switchAH = new VehicleIndexRowButtonActionHolder(ButtonAction.LISTING_SWITCH, vehicle);
-        holder.Listing_switch.setTag(switchAH);
-        holder.Listing_switch.setOnClickListener(this);
-
-
-        vehicleId2ListPosition.put(vehicle.getId(), position);
-        return convertView;
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        // User reflection to verify the casting is appropriate
-        if (view.getTag() instanceof VehicleIndexRowButtonActionHolder) {
-
-            VehicleIndexRowButtonActionHolder btnActionHolder = (VehicleIndexRowButtonActionHolder) view.getTag();
-
-            Vehicle vehicle = btnActionHolder.getVehicle();
-
-            switch (btnActionHolder.getButtonAction()) {
-                case LISTING_SWITCH:
-                    Toast.makeText(this.activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+        holder.Listing_switch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
                     CarMarketClient.getInstance(activity).getVehicleListing((long) vehicle.getId(), new Callback<Listing>() {
 
@@ -144,12 +106,12 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
                         }
 
                     });
-
-                    break;
-                default:
-                    break;
             }
-        }
+        });
+
+
+        vehicleId2ListPosition.put(vehicle.getId(), position);
+        return convertView;
     }
 
     /**
@@ -163,33 +125,5 @@ public class MyVehicle_VehicleAdapter extends BaseAdapter implements View.OnClic
         protected TextView Title;
         protected TextView Vin;
         protected Switch Listing_switch;
-    }
-
-    /**
-     * Class to hold vehicle information along with button action, so button
-     * action can be identified by OnClickListener.
-     *
-     * @param buttonAction identifies which button perform the action
-     * @param vehicle      stores the {@link Vehicle} information
-     * @version 1.0
-     * @since 2014-08-23
-     */
-    private class VehicleIndexRowButtonActionHolder {
-
-        private final ButtonAction buttonAction;
-        private final Vehicle vehicle;
-
-        public VehicleIndexRowButtonActionHolder(ButtonAction buttonAction, Vehicle vehicle) {
-            this.buttonAction = buttonAction;
-            this.vehicle = vehicle;
-        }
-
-        public ButtonAction getButtonAction() {
-            return this.buttonAction;
-        }
-
-        public Vehicle getVehicle() {
-            return this.vehicle;
-        }
     }
 }
