@@ -1,14 +1,13 @@
 package com.car_market_android.application;
 
-import com.car_market_android.Utilities;
-import com.car_market_android.util.StringUtils;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import com.car_market_android.Utilities;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

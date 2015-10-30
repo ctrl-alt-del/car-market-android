@@ -1,16 +1,5 @@
 package com.car_market_android;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-import com.car_market_android.model.Listing;
-import com.car_market_android.network.CarMarketClient;
-import com.car_market_android.util.EventsBus;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,6 +10,17 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.car_market_android.model.Listing;
+import com.car_market_android.network.CarMarketClient;
+import com.car_market_android.util.EventsBus;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class Marketplace_Fragment extends CarMarketFragment

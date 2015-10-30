@@ -1,12 +1,9 @@
 package com.car_market_android.network;
 
-import com.car_market_android.application.Session;
-
-import android.app.Activity;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.widget.Toast;
+
+import com.car_market_android.application.Session;
 
 import retrofit.RestAdapter;
 

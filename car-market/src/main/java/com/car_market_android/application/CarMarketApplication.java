@@ -1,10 +1,10 @@
 package com.car_market_android.application;
 
-import com.car_market_android.R;
-import com.squareup.picasso.Picasso;
-
 import android.app.Application;
 import android.content.Context;
+
+import com.car_market_android.R;
+import com.squareup.picasso.Picasso;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 

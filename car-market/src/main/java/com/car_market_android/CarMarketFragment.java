@@ -1,14 +1,13 @@
 package com.car_market_android;
 
-import com.car_market_android.application.CarMarketApplication;
-import com.car_market_android.application.Session;
-import com.car_market_android.util.StringUtils;
-
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import com.car_market_android.application.CarMarketApplication;
+import com.car_market_android.application.Session;
 
 public class CarMarketFragment extends Fragment {
 

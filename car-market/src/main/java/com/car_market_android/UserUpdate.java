@@ -1,22 +1,20 @@
 package com.car_market_android;
 
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.Toast;
+
 import com.car_market_android.application.CarMarketActivity;
 import com.car_market_android.network.PostRequestResultEvent;
 import com.car_market_android.util.EventsBus;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
-
-import android.view.ViewGroup.LayoutParams;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.Toast;
 
 public class UserUpdate extends CarMarketActivity implements OnClickListener {
 

@@ -2,7 +2,6 @@ package com.car_market_android;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 
 import com.car_market_android.application.CarMarketApplication;
 import com.car_market_android.util.StringUtils;

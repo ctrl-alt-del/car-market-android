@@ -3,7 +3,6 @@ package com.car_market_android.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
 import com.car_market_android.application.Session;

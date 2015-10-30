@@ -1,12 +1,17 @@
 package com.car_market_android;
 
-import java.util.LinkedList;
-import java.util.List;
-
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.car_market_android.application.CarMarketActivity;
 import com.car_market_android.model.ApiKey;
@@ -14,24 +19,16 @@ import com.car_market_android.model.Vehicle;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.network.GetRequestResultEvent;
 import com.car_market_android.util.EventsBus;
-import com.car_market_android.util.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.ListView;
-import android.widget.Toast;
+import java.util.LinkedList;
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MyVehicle extends CarMarketActivity
         implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {

@@ -1,21 +1,21 @@
 package com.car_market_android;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
-import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.car_market_android.util.MessageUtils;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 
 public class MainActivity extends Activity implements ActionBar.TabListener {

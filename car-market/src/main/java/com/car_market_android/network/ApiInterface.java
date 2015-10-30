@@ -1,5 +1,13 @@
 package com.car_market_android.network;
 
+import com.car_market_android.model.ApiKey;
+import com.car_market_android.model.Listing;
+import com.car_market_android.model.User;
+import com.car_market_android.model.Vehicle;
+
+import java.util.List;
+
+import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
@@ -7,14 +15,6 @@ import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
-import retrofit.Callback;
-
-import java.util.List;
-
-import com.car_market_android.model.ApiKey;
-import com.car_market_android.model.Listing;
-import com.car_market_android.model.User;
-import com.car_market_android.model.Vehicle;
 
 /**
  * Interface to define REST API calls
