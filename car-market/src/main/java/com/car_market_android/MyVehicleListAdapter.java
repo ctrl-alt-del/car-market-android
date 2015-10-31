@@ -14,7 +14,6 @@ import com.car_market_android.application.CarMarketApplication;
 import com.car_market_android.application.Session;
 import com.car_market_android.model.Listing;
 import com.car_market_android.model.Vehicle;
-import com.car_market_android.network.ButtonAction;
 import com.car_market_android.network.CarMarketClient;
 
 import java.util.HashMap;
@@ -32,7 +31,7 @@ public class MyVehicleListAdapter extends BaseAdapter {
     List<Vehicle> vehicles;
     private SharedPreferences sharedPreferences;
     private boolean dataChanged = false;
-    private HashMap<Integer, Integer> vehicleId2ListPosition = new HashMap<Integer, Integer>();
+    private HashMap<String, Integer> vehicleId2ListPosition = new HashMap<>();
 
     public MyVehicleListAdapter(Activity activity, List<Vehicle> rows) {
         this.activity = activity;
@@ -84,7 +83,7 @@ public class MyVehicleListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Toast.makeText(activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
-                    CarMarketClient.getInstance(activity).getVehicleListing((long) vehicle.getId(), new Callback<Listing>() {
+                    CarMarketClient.getInstance(activity).getVehicleListing(vehicle.getId(), new Callback<Listing>() {
 
                         @Override
                         public void success(Listing listing, Response response) {

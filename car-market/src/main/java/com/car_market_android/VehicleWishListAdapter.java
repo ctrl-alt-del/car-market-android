@@ -1,8 +1,6 @@
 package com.car_market_android;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,62 +11,38 @@ import android.widget.Toast;
 import com.car_market_android.application.CarMarketApplication;
 import com.car_market_android.application.Session;
 import com.car_market_android.model.Vehicle;
-import com.car_market_android.network.ButtonAction;
 
 import java.util.List;
 
-
-public class Wishlist_VehicleAdapter extends BaseAdapter {
+public class VehicleWishListAdapter extends BaseAdapter {
 
     private final Session mSession;
     Activity activity;
     List<Vehicle> vehicles;
-    private SharedPreferences sharedPreferences;
-    private boolean dataChanged = false;
 
-    public Wishlist_VehicleAdapter(Activity activity, List<Vehicle> rows) {
+    public VehicleWishListAdapter(Activity activity, List<Vehicle> rows) {
         this.activity = activity;
         mSession = ((CarMarketApplication) activity.getApplicationContext()).getSession();
         this.vehicles = rows;
-        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
     }
-
-//    public boolean isDataChanged() {
-//        return this.dataChanged;
-//    }
-//
-//    public void setDataChanged(boolean dataChanged) {
-//        this.dataChanged = dataChanged;
-//    }
-//
-//    public void saveDataChanegs() {
-//        if (vehicles == null || sharedPreferences == null) {
-//            return;
-//        }
-//        mSession.setVehicleWishList(vehicles);
-//    }
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return vehicles.size();
     }
 
     @Override
     public Object getItem(int arg0) {
-        // TODO Auto-generated method stub
         return vehicles.get(arg0);
     }
 
     @Override
     public long getItemId(int arg0) {
-        // TODO Auto-generated method stub
         return arg0;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
 
         final Vehicle vehicle = vehicles.get(position);
 

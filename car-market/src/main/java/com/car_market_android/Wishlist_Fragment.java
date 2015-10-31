@@ -1,10 +1,8 @@
 package com.car_market_android;
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +34,7 @@ public class Wishlist_Fragment extends CarMarketFragment
 
     private ListView Vehicle_Listview;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private Wishlist_VehicleAdapter vadp;
+    private VehicleWishListAdapter vadp;
     private List<Vehicle> data = new ArrayList<>();
 
     /**
@@ -74,7 +72,7 @@ public class Wishlist_Fragment extends CarMarketFragment
 
         this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.vehicle_index_wishlist_list);
 
-        this.vadp = new Wishlist_VehicleAdapter(getActivity(), data);
+        this.vadp = new VehicleWishListAdapter(getActivity(), data);
         this.Vehicle_Listview.setAdapter(this.vadp);
 
         this.swipeRefreshLayout.setOnRefreshListener(this);

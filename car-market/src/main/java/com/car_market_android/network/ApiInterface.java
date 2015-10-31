@@ -82,7 +82,7 @@ public interface ApiInterface {
      */
     @GET("/vehicles/{vehicle_id}/listing.json")
     void getVehicleListing(
-            @Path("vehicle_id") long vehicle_id,
+            @Path("vehicle_id") String vehicle_id,
             Callback<Listing> callback);
 
 
