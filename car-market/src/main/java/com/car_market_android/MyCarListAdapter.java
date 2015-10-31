@@ -1,8 +1,7 @@
 package com.car_market_android;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,30 +23,29 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class MyVehicleListAdapter extends BaseAdapter {
+public class MyCarListAdapter extends BaseAdapter {
 
     private final Session mSession;
-    Activity activity;
-    List<Vehicle> vehicles;
-    private SharedPreferences sharedPreferences;
-    private boolean dataChanged = false;
+    private final LayoutInflater mInflater;
+    private final Activity mActivity;
+    private List<Vehicle> mVehicles;
     private HashMap<String, Integer> vehicleId2ListPosition = new HashMap<>();
 
-    public MyVehicleListAdapter(Activity activity, List<Vehicle> rows) {
-        this.activity = activity;
+    public MyCarListAdapter(Activity activity, List<Vehicle> vehicles) {
+        mActivity = activity;
+        mInflater = LayoutInflater.from(activity);
         mSession = ((CarMarketApplication) activity.getApplicationContext()).getSession();
-        this.vehicles = rows;
-        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
+        mVehicles = vehicles;
     }
 
     @Override
     public int getCount() {
-        return vehicles.size();
+        return mVehicles.size();
     }
 
     @Override
     public Object getItem(int arg0) {
-        return vehicles.get(arg0);
+        return mVehicles.get(arg0);
     }
 
     @Override
@@ -58,14 +56,13 @@ public class MyVehicleListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final Vehicle vehicle = vehicles.get(position);
+        final Vehicle vehicle = mVehicles.get(position);
 
         VehicleIndexRowViewHolder holder;
         if (convertView == null) {
 
             holder = new VehicleIndexRowViewHolder();
-
-            convertView = View.inflate(this.activity, R.layout.my_vehicles_row, null);
+            convertView = mInflater.inflate(R.layout.my_vehicles_row, parent, false);
             holder.Title = (TextView) convertView.findViewById(R.id.my_vehicle_row_mmy);
             holder.Vin = (TextView) convertView.findViewById(R.id.my_vehicle_row_vin);
             holder.Listing_switch = (Switch) convertView.findViewById(R.id.my_vehicle_row_switch);
@@ -75,40 +72,40 @@ public class MyVehicleListAdapter extends BaseAdapter {
             holder = (VehicleIndexRowViewHolder) convertView.getTag();
         }
 
-        holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
+        final String title = mActivity.getString(R.string.marketplace_car_title, vehicle.getManufacturer(), vehicle.getModel(), vehicle.getYear());
+
+        holder.Title.setText(title);
         holder.Vin.setText(vehicle.getVin());
 
         holder.Listing_switch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
-                    CarMarketClient.getInstance(activity).getVehicleListing(vehicle.getId(), new Callback<Listing>() {
+                CarMarketClient.getInstance(mActivity).getVehicleListing(vehicle.getId(), new Callback<Listing>() {
 
-                        @Override
-                        public void success(Listing listing, Response response) {
+                    @Override
+                    public void success(Listing listing, Response response) {
 
-                            int position = vehicleId2ListPosition.get(listing.getVehicle().getId());
+                        int position = vehicleId2ListPosition.get(listing.getVehicle().getId());
 
-                        }
+                    }
 
-                        @Override
-                        public void failure(RetrofitError retrofitError) {
-                            /**
-                             * This message is for debug mode.
-                             * */
-                            Toast.makeText(activity, retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
-                            /**
-                             * This message is for production mode.
-                             * */
-                            Toast.makeText(activity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
-                        }
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        /**
+                         * This message is for debug mode.
+                         * */
+                        Toast.makeText(mActivity, retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
+                        /**
+                         * This message is for production mode.
+                         * */
+                        Toast.makeText(mActivity, "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+                    }
 
-                    });
+                });
             }
         });
-
-
         vehicleId2ListPosition.put(vehicle.getId(), position);
         return convertView;
     }

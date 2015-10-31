@@ -35,7 +35,7 @@ public class MyVehicle extends CarMarketActivity
 
     private ListView MyVehicle_Listview;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private MyVehicleListAdapter adapter;
+    private MyCarListAdapter adapter;
     private LinkedList<Vehicle> data = new LinkedList<Vehicle>();
     private Activity activity;
 
@@ -70,7 +70,7 @@ public class MyVehicle extends CarMarketActivity
 
         this.MyVehicle_Listview = (ListView) this.findViewById(R.id.my_vehicle_list);
 
-        this.adapter = new MyVehicleListAdapter(this, data);
+        this.adapter = new MyCarListAdapter(this, data);
         this.MyVehicle_Listview.setAdapter(this.adapter);
 
         this.swipeRefreshLayout.setOnRefreshListener(this);

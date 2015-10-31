@@ -1,6 +1,7 @@
 package com.car_market_android;
 
 import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,14 +15,16 @@ import com.car_market_android.model.Vehicle;
 
 import java.util.List;
 
-public class VehicleWishListAdapter extends BaseAdapter {
+public class WishListAdapter extends BaseAdapter {
 
     private final Session mSession;
-    Activity activity;
+    private final LayoutInflater mInflater;
+    private final Activity mActivity;
     List<Vehicle> vehicles;
 
-    public VehicleWishListAdapter(Activity activity, List<Vehicle> rows) {
-        this.activity = activity;
+    public WishListAdapter(Activity activity, List<Vehicle> rows) {
+        mActivity = activity;
+        mInflater = LayoutInflater.from(activity);
         mSession = ((CarMarketApplication) activity.getApplicationContext()).getSession();
         this.vehicles = rows;
     }
@@ -50,8 +53,7 @@ public class VehicleWishListAdapter extends BaseAdapter {
         if (convertView == null) {
 
             holder = new VehicleIndexRowViewHolder();
-
-            convertView = View.inflate(this.activity, R.layout.wishlist_fragment_row, null);
+            convertView = mInflater.inflate(R.layout.wishlist_fragment_row, parent, false);
             holder.Title = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_mmy);
             holder.Vin = (TextView) convertView.findViewById(R.id.vehicle_index_wishlist_row_vin);
             holder.Delete = (Button) convertView.findViewById(R.id.vehicle_index_wishlist_row_delete);
@@ -67,7 +69,7 @@ public class VehicleWishListAdapter extends BaseAdapter {
         holder.Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, "Delete is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity, "Delete is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
                 mSession.removeVehicleToWishList(vehicle.getVin());
                 vehicles.remove(vehicle);

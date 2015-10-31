@@ -34,7 +34,7 @@ public class Wishlist_Fragment extends CarMarketFragment
 
     private ListView Vehicle_Listview;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private VehicleWishListAdapter vadp;
+    private WishListAdapter vadp;
     private List<Vehicle> data = new ArrayList<>();
 
     /**
@@ -72,7 +72,7 @@ public class Wishlist_Fragment extends CarMarketFragment
 
         this.Vehicle_Listview = (ListView) rootView.findViewById(R.id.vehicle_index_wishlist_list);
 
-        this.vadp = new VehicleWishListAdapter(getActivity(), data);
+        this.vadp = new WishListAdapter(getActivity(), data);
         this.Vehicle_Listview.setAdapter(this.vadp);
 
         this.swipeRefreshLayout.setOnRefreshListener(this);
