@@ -63,7 +63,8 @@ public class WishListAdapter extends BaseAdapter {
             holder = (VehicleIndexRowViewHolder) convertView.getTag();
         }
 
-        holder.Title.setText(vehicle.getManufacturer() + ", " + vehicle.getModel() + ", " + vehicle.getYear());
+        final String title = mActivity.getString(R.string.marketplace_car_title, vehicle.getManufacturer(), vehicle.getModel(), vehicle.getYear());
+        holder.Title.setText(title);
         holder.Vin.setText(vehicle.getVin());
 
         holder.Delete.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +77,6 @@ public class WishListAdapter extends BaseAdapter {
                 notifyDataSetChanged();
             }
         });
-
-
         return convertView;
     }
 
