@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.car_market_android.model.Listing;
 import com.car_market_android.network.CarMarketClient;
 import com.car_market_android.util.EventsBus;
+import com.car_market_android.views.ICarListView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -23,8 +24,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class Marketplace_Fragment extends CarMarketFragment
-        implements OnClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
+public class CarListFragment extends CarMarketFragment implements OnClickListener,
+        SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener,
+        ICarListView {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -46,15 +48,15 @@ public class Marketplace_Fragment extends CarMarketFragment
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static Marketplace_Fragment newInstance(int sectionNumber) {
-        Marketplace_Fragment fragment = new Marketplace_Fragment();
+    public static CarListFragment newInstance(int sectionNumber) {
+        CarListFragment fragment = new CarListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public Marketplace_Fragment() {
+    public CarListFragment() {
     }
 
     @Override
@@ -185,29 +187,36 @@ public class Marketplace_Fragment extends CarMarketFragment
                  * */
                 @Override
                 public void success(List<Listing> listings, Response response) {
-                    for (Listing each : listings) {
-                        data.add(each);
-                    }
-
-                    vadp.notifyDataSetChanged();
-
-                    isLoadingMore = false;
-                    dismissProgressDialog();
+                    onReceiveCarListSucceed(listings);
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-                    /**
-                     * This message is for debug mode.
-                     * */
-                    Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
-                    /**
-                     * This message is for production mode.
-                     * */
-                    Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
+                    onReceiveCarListFailed(retrofitError.getMessage());
                 }
 
             });
         }
+    }
+
+    @Override
+    public void onReceiveCarListSucceed(List<Listing> listings) {
+        data.addAll(listings);
+        vadp.notifyDataSetChanged();
+        isLoadingMore = false;
+        dismissProgressDialog();
+    }
+
+    @Override
+    public void onReceiveCarListFailed(String errorMessage) {
+        dismissProgressDialog();
+        /**
+         * This message is for debug mode.
+         * */
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+        /**
+         * This message is for production mode.
+         * */
+        Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
     }
 }

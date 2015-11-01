@@ -162,7 +162,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                     f = AccountFragment.newInstance(position + 1);
                     break;
                 case 1:
-                    f = Marketplace_Fragment.newInstance(position + 1);
+                    f = CarListFragment.newInstance(position + 1);
                     break;
                 case 3:
                     f = Wishlist_Fragment.newInstance(position + 1);
