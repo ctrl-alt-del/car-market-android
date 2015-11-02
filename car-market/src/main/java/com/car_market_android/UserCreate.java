@@ -115,7 +115,7 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
 
                 showProgressDialog(R.string.signing_up);
 
-                CarMarketClient.getInstance(this).createUser(nickname, "n/a", "n/a",
+                CarMarketClient.getInstance().createUser(nickname, "n/a", "n/a",
                         email, password, password_confirmation, "active",
                         new Callback<ApiKey>() {
 

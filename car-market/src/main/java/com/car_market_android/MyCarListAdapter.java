@@ -82,7 +82,7 @@ public class MyCarListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Toast.makeText(mActivity, "Switch is clicked!\n" + vehicle.getVin(), Toast.LENGTH_LONG).show();
 
-                CarMarketClient.getInstance(mActivity).getVehicleListing(vehicle.getId(), new Callback<Listing>() {
+                CarMarketClient.getInstance().getVehicleListing(vehicle.getId(), new Callback<Listing>() {
 
                     @Override
                     public void success(Listing listing, Response response) {

@@ -20,35 +20,29 @@ public class CarMarketClient {
      */
     private static final String API_V1_ENDPOINT = "https://car-market.herokuapp.com/api/v1";
 
-    private static ApiInterface _instance;
-    private Session mSession;
-
-    public static ApiInterface getInstance(Session session) {
-        return getInstance(session.getCarMarketApplication());
-    }
+    private static ApiInterface sClient;
 
     /**
      * Method to create or get an running instance to {@link RestAdapter}
      *
-     * @param context the {@link android.content.Context}
      * @return an {@link ApiInterface} if network is connected, otherwise null
      * @version 1.0
      * @since 2014-09-07
      */
-    public static ApiInterface getInstance(Context context) {
+    public static ApiInterface getInstance() {
 
-		/*
-         * check if device is connected to an active network
-		 * */
-        if (!NetworkUtils.isNetworkConnected(context)) {
-            Toast.makeText(context, "Please connect to internet...", Toast.LENGTH_SHORT).show();
-            return null;
-        }
+//		/*
+//         * check if device is connected to an active network
+//		 * */
+//        if (!NetworkUtils.isNetworkConnected(context)) {
+//            Toast.makeText(context, "Please connect to internet...", Toast.LENGTH_SHORT).show();
+//            return null;
+//        }
 
 		/*
 		 * if {@link ApiInterface} has not been created yet, create one
 		 * */
-        if (_instance == null) {
+        if (sClient == null) {
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint(API_V1_ENDPOINT)
                     .build();
@@ -61,9 +55,9 @@ public class CarMarketClient {
 //				}
 //			})
 
-            _instance = restAdapter.create(ApiInterface.class);
+            sClient = restAdapter.create(ApiInterface.class);
         }
 
-        return _instance;
+        return sClient;
     }
 }

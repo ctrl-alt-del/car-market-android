@@ -61,7 +61,7 @@ public class AccountFragment extends CarMarketFragment implements OnClickListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mCarMarketClient = CarMarketClient.getInstance(getActivity());
+        mCarMarketClient = CarMarketClient.getInstance();
         EventsBus.getInstance().register(this);
     }
 

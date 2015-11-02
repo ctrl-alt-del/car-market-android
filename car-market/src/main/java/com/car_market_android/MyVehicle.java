@@ -173,7 +173,7 @@ public class MyVehicle extends CarMarketActivity
                 /**
                  * Modify the limit and offset parameters to enable the "load more" feature
                  * */
-                CarMarketClient.getInstance(activity).getVehicles(apiKey.getUserId(),
+                CarMarketClient.getInstance().getVehicles(apiKey.getUserId(),
                         "Token " + apiKey.getToken(), new Callback<List<Vehicle>>() {
 
                     @Override

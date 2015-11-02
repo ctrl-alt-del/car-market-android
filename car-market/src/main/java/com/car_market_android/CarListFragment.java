@@ -12,16 +12,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.car_market_android.model.Listing;
-import com.car_market_android.network.CarMarketClient;
+import com.car_market_android.network.NetworkUtils;
+import com.car_market_android.presenters.impl.CarListPresenter;
 import com.car_market_android.util.EventsBus;
 import com.car_market_android.views.ICarListView;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 
 public class CarListFragment extends CarMarketFragment implements OnClickListener,
@@ -37,6 +34,7 @@ public class CarListFragment extends CarMarketFragment implements OnClickListene
     private SwipeRefreshLayout swipeRefreshLayout;
     private CarListAdapter vadp;
     private LinkedList<Listing> data = new LinkedList<Listing>();
+    private CarListPresenter mCarListPresenter;
 
     /**
      * isLoadingMore is used to prevent the LOAD_MORE action being perform again
@@ -64,7 +62,7 @@ public class CarListFragment extends CarMarketFragment implements OnClickListene
                              Bundle savedInstanceState) {
 
         EventsBus.getInstance().register(this);
-
+        mCarListPresenter = new CarListPresenter(this);
         View rootView = inflater.inflate(R.layout.marketplace_fragment, container, false);
 
         this.swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_vehicle_index);
@@ -116,40 +114,14 @@ public class CarListFragment extends CarMarketFragment implements OnClickListene
             @Override
             public void run() {
 
+                if (!NetworkUtils.isNetworkConnected(getContext())) {
+                    Toast.makeText(getContext(), "Please connect to internet...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // TODO: add swipe to reload feature
                 data.clear();
-                // new GetRequest(R.string.REFRESH_MARKETPLACE).execute(getString(R.string.CM_API_ADDRESS) + "/listings");
-
-                /**
-                 * Modify the limit and offset parameters to enable the "load more" feature
-                 * */
-                CarMarketClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
-
-                    @Override
-                    public void success(List<Listing> listings, Response response) {
-                        for (Listing each : listings) {
-                            data.add(each);
-                        }
-
-                        vadp.notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        /**
-                         * This message is for debug mode.
-                         * */
-                        Toast.makeText(getActivity(), retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
-                        /**
-                         * This message is for production mode.
-                         * */
-                        Toast.makeText(getActivity(), "Connection failed, please try again :(", Toast.LENGTH_SHORT).show();
-                    }
-
-                });
-
-
+                mCarListPresenter.getListings(1, 0);
                 // swipeRefreshLayout.setRefreshing(false);
             }
         }, 3000);
@@ -174,28 +146,16 @@ public class CarListFragment extends CarMarketFragment implements OnClickListene
             }
 
             this.isLoadingMore = true;
+
+            if (!NetworkUtils.isNetworkConnected(getContext())) {
+                Toast.makeText(getContext(), "Please connect to internet...", Toast.LENGTH_SHORT).show();
+                return;
+            }
             showProgressDialog(R.string.loading_more);
 
             // 2. download additional data
-            /**
-             * Modify the limit and offset parameters to enable the "load more" feature
-             * */
-            CarMarketClient.getInstance(getActivity()).getListings(1, 0, new Callback<List<Listing>>() {
+            mCarListPresenter.getListings(1, 0);
 
-                /*
-                 * the implementation is different from "Swipe to Reload"
-                 * */
-                @Override
-                public void success(List<Listing> listings, Response response) {
-                    onReceiveCarListSucceed(listings);
-                }
-
-                @Override
-                public void failure(RetrofitError retrofitError) {
-                    onReceiveCarListFailed(retrofitError.getMessage());
-                }
-
-            });
         }
     }
 

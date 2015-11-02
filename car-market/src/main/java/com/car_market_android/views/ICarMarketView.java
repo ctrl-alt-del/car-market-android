@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.car_market_android.application.Session;
 
-public interface ICMBaseView {
+public interface ICarMarketView {
     Context getContext();
     Session getSession();
 }

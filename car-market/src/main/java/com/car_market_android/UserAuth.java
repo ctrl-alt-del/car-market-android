@@ -44,7 +44,7 @@ public class UserAuth extends CarMarketActivity implements OnClickListener {
         this.activity = this;
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mCarMarketClient = CarMarketClient.getInstance(this);
+        mCarMarketClient = CarMarketClient.getInstance();
         EventsBus.getInstance().register(this);
 
         getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
