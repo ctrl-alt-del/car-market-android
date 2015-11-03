@@ -31,4 +31,6 @@
     <string name="like">Like</string>
     <string name="marketplace_car_title">%1$s, %2$s, %3$s</string>
     <string name="marketplace_car_price">%1$s %2$s</string>
+    <string name="email_not_valid">Please enter a valid email</string>
+    <string name="password_not_valid">Please enter a valid password</string>
 </resources>
