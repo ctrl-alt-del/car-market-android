@@ -39,17 +39,17 @@ public class UserCreate extends CarMarketActivity implements OnClickListener, IU
 
         getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-        this.mNickname = (EditText) this.findViewById(R.id.nickname_user_create);
-        this.mEmail = (EditText) this.findViewById(R.id.email_user_create);
-        this.mPassword = (EditText) this.findViewById(R.id.password_user_create);
-        this.mPasswordConfirmation = (EditText) this.findViewById(R.id.password_confirmation_user_create);
-        this.mTerms = (TextView) this.findViewById(R.id.terms_and_policy_user_create);
-        this.mSignUp = (Button) this.findViewById(R.id.sign_up_user_create);
-        this.mCacnel = (Button) this.findViewById(R.id.cancel_user_create);
+        mNickname = (EditText) findViewById(R.id.nickname_user_create);
+        mEmail = (EditText) findViewById(R.id.email_user_create);
+        mPassword = (EditText) findViewById(R.id.password_user_create);
+        mPasswordConfirmation = (EditText) findViewById(R.id.password_confirmation_user_create);
+        mTerms = (TextView) findViewById(R.id.terms_and_policy_user_create);
+        mSignUp = (Button) findViewById(R.id.sign_up_user_create);
+        mCacnel = (Button) findViewById(R.id.cancel_user_create);
 
-        this.mTerms.setOnClickListener(this);
-        this.mSignUp.setOnClickListener(this);
-        this.mCacnel.setOnClickListener(this);
+        mTerms.setOnClickListener(this);
+        mSignUp.setOnClickListener(this);
+        mCacnel.setOnClickListener(this);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class UserCreate extends CarMarketActivity implements OnClickListener, IU
                     MessageUtils.showToastLong(getContext(), "nickname cannot be empty...");
                 } else if (TextUtils.isEmpty(email) || !EMAIL_VALIDATOR.isValid(email)) {
                     MessageUtils.showToastLong(getContext(), R.string.email_not_valid);
-                } else if (TextUtils.isEmpty(password) || password.length() < 6) {
+                } else if (password.length() < 6) {
                     MessageUtils.showToastLong(getContext(), R.string.password_not_valid);
                 } else if (TextUtils.isEmpty(passwordConfirmation) || !password.equals(passwordConfirmation)) {
                     MessageUtils.showToastLong(getContext(), "password and password confirmation do not match...");

@@ -2,6 +2,7 @@ package com.car_market_android;
 
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -20,10 +21,10 @@ import org.apache.commons.validator.routines.EmailValidator;
 public class UserAuth extends CarMarketActivity implements OnClickListener, IUserAuthView {
 
     private static final EmailValidator EMAIL_VALIDATOR = EmailValidator.getInstance();
-    private EditText Email;
-    private EditText Password;
-    private Button SignIn;
-    private Button Cacnel;
+    private EditText mEmail;
+    private EditText mPassword;
+    private Button mSignIn;
+    private Button mCacnel;
     private UserAuthPresenter mUserAuthPresenter;
 
     @Override
@@ -35,13 +36,13 @@ public class UserAuth extends CarMarketActivity implements OnClickListener, IUse
 
         getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-        this.Email = (EditText) this.findViewById(R.id.email_auth);
-        this.Password = (EditText) this.findViewById(R.id.password_auth);
-        this.SignIn = (Button) this.findViewById(R.id.sign_in_auth);
-        this.Cacnel = (Button) this.findViewById(R.id.cancel_auth);
+        mEmail = (EditText) findViewById(R.id.email_auth);
+        mPassword = (EditText) findViewById(R.id.password_auth);
+        mSignIn = (Button) findViewById(R.id.sign_in_auth);
+        mCacnel = (Button) findViewById(R.id.cancel_auth);
 
-        this.SignIn.setOnClickListener(this);
-        this.Cacnel.setOnClickListener(this);
+        mSignIn.setOnClickListener(this);
+        mCacnel.setOnClickListener(this);
     }
 
     @Override
@@ -49,10 +50,10 @@ public class UserAuth extends CarMarketActivity implements OnClickListener, IUse
         switch (view.getId()) {
             case R.id.sign_in_auth:
 
-                final String email = StringUtils.getEditTextString(Email);
-                final String password = StringUtils.getEditTextString(Password);
+                final String email = StringUtils.getEditTextString(mEmail);
+                final String password = StringUtils.getEditTextString(mPassword);
 
-                if (!EMAIL_VALIDATOR.isValid(email)) {
+                if (TextUtils.isEmpty(email) || !EMAIL_VALIDATOR.isValid(email)) {
                     MessageUtils.showToastLong(getContext(), R.string.email_not_valid);
                 } else if (password.length() < 6) {
                     MessageUtils.showToastLong(getContext(), R.string.password_not_valid);
