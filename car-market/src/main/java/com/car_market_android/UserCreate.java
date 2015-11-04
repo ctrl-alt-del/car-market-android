@@ -1,9 +1,6 @@
 package com.car_market_android;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,61 +8,48 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.car_market_android.application.CarMarketActivity;
 import com.car_market_android.model.ApiKey;
-import com.car_market_android.network.CarMarketClient;
-import com.car_market_android.util.EventsBus;
+import com.car_market_android.presenters.impl.UserCreatePresenter;
+import com.car_market_android.util.MessageUtils;
+import com.car_market_android.util.StringUtils;
+import com.car_market_android.views.IUserCreateView;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-public class UserCreate extends CarMarketActivity implements OnClickListener {
+public class UserCreate extends CarMarketActivity implements OnClickListener, IUserCreateView {
 
     private static final EmailValidator EMAIL_VALIDATOR = EmailValidator.getInstance();
-    private EditText Nickname;
-    private EditText Email;
-    private EditText Password;
-    private EditText Password_Confirmation;
-    private TextView Terms_and_policy;
-    private Button Sign_up;
-    private Button Cacnel;
-    private SharedPreferences sharedPreferences;
-    private Activity activity;
+    private EditText mNickname;
+    private EditText mEmail;
+    private EditText mPassword;
+    private EditText mPasswordConfirmation;
+    private TextView mTerms;
+    private Button mSignUp;
+    private Button mCacnel;
+    private UserCreatePresenter mUserCreatePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_create);
 
-        this.activity = this;
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        EventsBus.getInstance().register(this);
+        mUserCreatePresenter = new UserCreatePresenter(this);
 
         getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-        this.Nickname = (EditText) this.findViewById(R.id.nickname_user_create);
-        this.Email = (EditText) this.findViewById(R.id.email_user_create);
-        this.Password = (EditText) this.findViewById(R.id.password_user_create);
-        this.Password_Confirmation = (EditText) this.findViewById(R.id.password_confirmation_user_create);
-        this.Terms_and_policy = (TextView) this.findViewById(R.id.terms_and_policy_user_create);
-        this.Sign_up = (Button) this.findViewById(R.id.sign_up_user_create);
-        this.Cacnel = (Button) this.findViewById(R.id.cancel_user_create);
+        this.mNickname = (EditText) this.findViewById(R.id.nickname_user_create);
+        this.mEmail = (EditText) this.findViewById(R.id.email_user_create);
+        this.mPassword = (EditText) this.findViewById(R.id.password_user_create);
+        this.mPasswordConfirmation = (EditText) this.findViewById(R.id.password_confirmation_user_create);
+        this.mTerms = (TextView) this.findViewById(R.id.terms_and_policy_user_create);
+        this.mSignUp = (Button) this.findViewById(R.id.sign_up_user_create);
+        this.mCacnel = (Button) this.findViewById(R.id.cancel_user_create);
 
-        this.Terms_and_policy.setOnClickListener(this);
-        this.Sign_up.setOnClickListener(this);
-        this.Cacnel.setOnClickListener(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        EventsBus.getInstance().unregister(this);
-        super.onDestroy();
+        this.mTerms.setOnClickListener(this);
+        this.mSignUp.setOnClickListener(this);
+        this.mCacnel.setOnClickListener(this);
     }
 
     @Override
@@ -73,80 +57,44 @@ public class UserCreate extends CarMarketActivity implements OnClickListener {
         switch (view.getId()) {
             case R.id.sign_up_user_create:
 
-                String nickname = this.Nickname.getText().toString();
-                String email = this.Email.getText().toString();
-                String password = this.Password.getText().toString();
-                String password_confirmation = this.Password_Confirmation.getText().toString();
+                final String nickname = StringUtils.getEditTextString(mNickname);
+                final String email = StringUtils.getEditTextString(mEmail);
+                final String password = StringUtils.getEditTextString(mPassword);
+                final String passwordConfirmation = StringUtils.getEditTextString(mPasswordConfirmation);
 
                 if (TextUtils.isEmpty(nickname)) {
-                    Toast.makeText(this, "nickname cannot be empty...", Toast.LENGTH_SHORT).show();
-                    return;
+                    MessageUtils.showToastLong(getContext(), "nickname cannot be empty...");
+                } else if (TextUtils.isEmpty(email) || !EMAIL_VALIDATOR.isValid(email)) {
+                    MessageUtils.showToastLong(getContext(), R.string.email_not_valid);
+                } else if (TextUtils.isEmpty(password) || password.length() < 6) {
+                    MessageUtils.showToastLong(getContext(), R.string.password_not_valid);
+                } else if (TextUtils.isEmpty(passwordConfirmation) || !password.equals(passwordConfirmation)) {
+                    MessageUtils.showToastLong(getContext(), "password and password confirmation do not match...");
+                } else {
+                    showProgressDialog(R.string.signing_up);
+                    mUserCreatePresenter.signUp(nickname, "n/a", "n/a", email, password, "active");
                 }
-
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(this, "email cannot be empty...", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(this, "password cannot be empty...", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password_confirmation)) {
-                    Toast.makeText(this, "password confirmation cannot be empty...", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!EMAIL_VALIDATOR.isValid(email)) {
-                    Toast.makeText(this, "Email: " + email + " is not a valid email...", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (password.length() < 6) {
-                    Toast.makeText(this, "password must be at least 6 characters long...", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!password.equals(password_confirmation)) {
-                    Toast.makeText(this, "password and password confirmation do not match...", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                showProgressDialog(R.string.signing_up);
-
-                CarMarketClient.getInstance().createUser(nickname, "n/a", "n/a",
-                        email, password, password_confirmation, "active",
-                        new Callback<ApiKey>() {
-
-                            @Override
-                            public void failure(RetrofitError arg0) {
-
-                                dismissProgressDialog();
-                            }
-
-                            @Override
-                            public void success(ApiKey apiKey, Response arg1) {
-                                dismissProgressDialog();
-
-                                if (!TextUtils.isEmpty(apiKey.getMessage())) {
-                                    Toast.makeText(activity, apiKey.getMessage(), Toast.LENGTH_LONG).show();
-                                    return;
-                                }
-                                getSession().saveApiKey(apiKey);
-                                onBackPressed();
-                            }
-
-                        });
-
                 break;
             case R.id.terms_and_policy_user_create:
                 break;
             case R.id.cancel_user_create:
-                this.onBackPressed();
+                finish();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onSignUpSucceed(ApiKey apiKey) {
+        dismissProgressDialog();
+        getSession().saveApiKey(apiKey);
+        finish();
+    }
+
+    @Override
+    public void onSignUpFailed(String errorMessage) {
+        dismissProgressDialog();
+        MessageUtils.showToastLong(getContext(), errorMessage);
     }
 }
